@@ -38,6 +38,8 @@ export type OpenIssue = {
 
 export type Plan = {
   tools: PlanTool[];
+  /** Tools that fit or fit with a catch: the only ones you'd buy and set up. */
+  usable: PlanTool[];
   seams: Seam[];
   costLines: { label: string; monthly_usd: number | null; note?: string }[];
   total: number;
@@ -108,10 +110,14 @@ export function buildPlan(
 
   const seams = evaluateSeams(profile, uniqueTools, catalog);
 
+  const usable = tools.filter(
+    (t) => t.verdict.visible === "fits" || t.verdict.visible === "catch",
+  );
+
   // Cost: new spending only. What you already pay for isn't counted, except upgrades.
   const costLines: Plan["costLines"] = [];
   const seenAdapters = new Set<string>();
-  for (const pt of tools) {
+  for (const pt of usable) {
     for (const line of pt.cost.lines) {
       if (pt.verdict.adapter && line.label.includes("to link them")) {
         if (seenAdapters.has(pt.verdict.adapter)) continue;
@@ -158,9 +164,7 @@ export function buildPlan(
       why: blockedBase.reasons[0]?.message ?? "Your main system has a connection that doesn't fit.",
     });
   }
-  const placed = [...tools]
-    .filter((t) => t.verdict.visible === "fits" || t.verdict.visible === "catch")
-    .sort((a, b) => order(a.blockId) - order(b.blockId));
+  const placed = [...usable].sort((a, b) => order(a.blockId) - order(b.blockId));
   const anchorFirst = (t: PlanTool) => (t.tool.kind === "base_system" ? 0 : 1);
   placed.sort((a, b) => anchorFirst(a) - anchorFirst(b) || order(a.blockId) - order(b.blockId));
   for (const pt of placed) {
@@ -199,6 +203,7 @@ export function buildPlan(
 
   return {
     tools,
+    usable,
     seams,
     costLines,
     total,

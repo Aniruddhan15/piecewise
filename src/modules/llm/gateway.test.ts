@@ -117,6 +117,24 @@ describe("guards keep the LLM to rephrasing", () => {
     expect(await gw.call("explain_verdict", explainInput)).toBeNull();
   });
 
+  it("rejects a rewrite that turns doubt into fact", async () => {
+    const input = {
+      ...explainInput,
+      verdict: {
+        state: "doesnt_fit",
+        visible: "no_fit",
+        reasons: ["Toast only opens its data to approved partners, and NiceJob isn't one we could confirm."],
+      },
+    };
+    const hardened = JSON.stringify({ sentence: "NiceJob is not an approved Toast partner." });
+    const gw = createGateway({ config, client: clientReturning(hardened, hardened), precomputed: {} });
+    expect(await gw.call("explain_verdict", input)).toBeNull();
+
+    const fair = JSON.stringify({ sentence: "We couldn't confirm NiceJob is an approved Toast partner." });
+    const ok = createGateway({ config, client: clientReturning(fair), precomputed: {} });
+    expect(await ok.call("explain_verdict", input)).not.toBeNull();
+  });
+
   it("accepts one that keeps the given numbers", async () => {
     const client = clientReturning(JSON.stringify({ sentence: "It updates every 15 minutes." }));
     const gw = createGateway({ config, client, precomputed: {} });

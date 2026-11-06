@@ -1,0 +1,299 @@
+{
+  "id": "vinyl",
+  "name": "Vinyl",
+  "vendor_url": "https://apps.xero.com/us/app/vinyl",
+  "is_ai_tool": true,
+  "ai_capabilities": [
+    "AI notetaker",
+    "meeting assistant",
+    "AI-powered summaries",
+    "AI-generated action items"
+  ],
+  "suggested_blocks": [],
+  "suggested_archetypes": [],
+  "works_with": [
+    "Xero Practice Manager (XPM)",
+    "Zoom",
+    "Google Meet",
+    "Microsoft Teams",
+    "Google Calendar",
+    "Microsoft Outlook",
+    "FYI",
+    "Karbon"
+  ],
+  "tiers": [],
+  "free_tier": false,
+  "evidence": [
+    {
+      "claim": "Vinyl is an AI notetaker and meeting assistant for accountants and bookkeepers.",
+      "quote": "Vinyl is your AI notetaker and meeting assistant for accountants and bookkeepers.",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "It records, transcribes, and files meeting notes.",
+      "quote": "It records, transcribes, and files meeting notes, syncing your client records from XPM—saving time, boosting",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "It is trusted by over 220 firms.",
+      "quote": "Trusted by 220+ firms.",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "It offers a free 10-day trial.",
+      "quote": "Free 10 day trial available",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl is an AI meeting assistant purpose-built for accountants and bookkeepers.",
+      "quote": "Vinyl is the AI meeting assistant purpose-built for accountants and bookkeepers.",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "It helps save time, eliminate manual admin, and ensure accurate meeting documentation.",
+      "quote": "It helps you save time, eliminate manual admin, and ensure every client meeting is documented",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl joins meetings on Zoom, Google Meet, or Microsoft Teams.",
+      "quote": "Vinyl joins your meetings on Zoom, Google Meet or Microsoft Teams.",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "It records audio and video, creates transcripts, and generates smart summaries and action items.",
+      "quote": "It records the audio and video, creates a full transcript, and generates smart summaries, action",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "It syncs client records from Xero Practice Manager (XPM).",
+      "quote": "With Vinyl’s native integration to Xero Practice Manager (XPM), your meeting data becomes part of",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl syncs clients, contacts, and groups from XPM.",
+      "quote": "Vinyl syncs your clients, contacts and groups from XPM, so when a meeting is booked",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "It creates a time-stamped note in XPM with summary and transcript.",
+      "quote": "Once the meeting is complete, Vinyl creates a time-stamped note in XPM (coming soon) with",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "It captures, summarises, and stores conversations against the right client in XPM.",
+      "quote": "Vinyl ensures that all conversations are captured, summarised and securely stored against the right client",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Key features include AI-generated meeting summaries, discussion points, and action items.",
+      "quote": "AI-generated meeting summaries, discussion points, and action items",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Key features include full transcripts of each meeting stored in Vinyl.",
+      "quote": "Full transcripts of each meeting stored in Vinyl",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Key features include automatic syncing with XPM: clients, contacts, and groups.",
+      "quote": "Automatic syncing with XPM: clients, contacts, and groups",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Key features include meeting summaries and transcripts filed back into XPM.",
+      "quote": "Meeting summaries and transcripts filed back into XPM",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Key features include secure, encrypted storage with full control over access.",
+      "quote": "Secure, encrypted storage with full control over access and permissions",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Key features include nightly sync of contact data to keep XPM and Vinyl aligned.",
+      "quote": "Nightly sync of contact data to keep XPM and Vinyl aligned",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Key features include easy filtering and search to find past conversations.",
+      "quote": "Easy filtering and search to find any past conversation fast",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl eliminates hours of follow-up meetings and writing notes.",
+      "quote": "Vinyl eliminates that. It’s like having an extra admin in every meeting—without the overhead.",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "It boosts productivity, ensures compliance, and reduces errors.",
+      "quote": "It boosts productivity, ensures compliance, and reduces errors across the entire client workflow.",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Over 220 firms in Australia and the UK use Vinyl.",
+      "quote": "With over 220 firms across Australia and the UK already using Vinyl, it’s fast becoming",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl's integration with Xero Practice Manager (XPM) brings meeting records and client data into one seamless workflow.",
+      "quote": "Vinyl’s integration with Xero Practice Manager (XPM) brings your meeting records and client data into",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl syncs XPM contacts, matches them to meetings, and files summaries/transcripts back into XPM.",
+      "quote": "Vinyl pulls in your XPM contacts, matches them to meetings, and soon will file meeting",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Meeting notes contain a direct link back to the full Vinyl record.",
+      "quote": "Meeting notes contain a direct link back to the full Vinyl record",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Audit trail of all client conversations stored in both Vinyl and XPM.",
+      "quote": "Audit trail of all client conversations stored in both Vinyl and XPM",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Setup takes less than 5 minutes.",
+      "quote": "Setup is easy and takes less than 5 minutes.",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl helps accounting and bookkeeping firms save time and reduce admin.",
+      "quote": "Vinyl helps accounting and bookkeeping firms save time, reduce admin, and capture every client conversation—without",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl works with Google Calendar and Microsoft Outlook.",
+      "quote": "Vinyl works with Google Calendar and Microsoft Outlook.",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl joins calls on Zoom, Teams, and Meet, recording conversations and creating AI summaries.",
+      "quote": "When Vinyl joins your calls (Zoom, Teams, Meet), it records the conversation, creates an AI-powered",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "It provides a clean, editable summary after every meeting.",
+      "quote": "Get a clean, editable summary after every meeting.",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Users can customise preferences like audio or video capture.",
+      "quote": "Choose audio or video capture, manage consent settings, and adjust user permissions to fit your",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl helps identify patterns, surface risks, and uncover client needs across meetings.",
+      "quote": "Vinyl helps you identify patterns, surface risks, and uncover client needs across meetings—making it easier",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl will soon sync action items into XPM/Karbon and summarise emails.",
+      "quote": "Soon, Vinyl will sync action items into XPM/Karbon, summarise emails, and support voice commands.",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "The app has a 5 out of 5 stars rating from 41 reviews.",
+      "quote": "5 out of 5 stars 41 reviews",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Kieran Phelan calls Vinyl the best AI notetaker and more.",
+      "quote": "Best AI notetaker and more",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Diane de Garis states Vinyl is leagues ahead for an accounting firm.",
+      "quote": "We went via a generic notetaker before Vinyl, and this is leagues ahead for an",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Sam Toy says the app summarises meetings better than he could.",
+      "quote": "This app is great - it summarises my meetings better than I could.",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl shares contacts from Xero to Vinyl.",
+      "quote": "Shared data Xero Vinyl Contacts shared from Xero to Vinyl",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl is listed under Accountant tools and Practice manager functions.",
+      "quote": "Functions Accountant tools Practice manager",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl is available in Australia, Canada, Global, Hong Kong, Indonesia, Ireland, Malaysia, New Zealand, Philippines, Singapore, South Africa, United Kingdom, United States.",
+      "quote": "Countries Australia, Canada, Global, Hong Kong, Indonesia, Ireland, Malaysia, New Zealand, Philippines, Singapore, South Africa,",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Support is available via setup walkthrough and email.",
+      "quote": "Support Setup walkthrough Contact support support@usevinyl.com",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    },
+    {
+      "claim": "Vinyl has a LinkedIn page.",
+      "quote": "Follow LinkedIn",
+      "url": "https://apps.xero.com/us/app/vinyl",
+      "grade": 1
+    }
+  ],
+  "kind": "ai_tool",
+  "source_url": "https://apps.xero.com/us/app/vinyl",
+  "source": "Xero App Store (US)",
+  "proposed_edges": [
+    {
+      "from": "vinyl",
+      "to": "xero",
+      "type": "certified",
+      "evidence_url": "https://apps.xero.com/us/app/vinyl"
+    }
+  ],
+  "discovered_at": "2026-11-06",
+  "verified": false
+}

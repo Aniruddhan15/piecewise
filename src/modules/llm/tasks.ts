@@ -115,11 +115,24 @@ export function addsNewNumbers(output: string, input: string): boolean {
   return numbersIn(output).some((n) => !allowed.has(n));
 }
 
+const UNCERTAIN = /could confirm|could ?n[o']t confirm|could not|we found no|confirmed no|disagree|unverified|reported|may |might /i;
+const HEDGED = /confirm|found no|disagree|unverified|reported|may |might |could ?n[o']t|not sure|unclear|check with|ask /i;
+
+/** True when the input is unsure but the rewrite states it as plain fact. */
+export function dropsUncertainty(output: string, inputReasons: string[]): boolean {
+  return inputReasons.some((r) => UNCERTAIN.test(r)) && !HEDGED.test(output);
+}
+
 /** Rules the schema can't express. A failure is treated like a parse failure. */
 export function passesGuards(task: TaskId, input: unknown, output: unknown): boolean {
   if (task === "explain_verdict") {
     const { sentence } = output as z.infer<typeof ExplainOutput>;
-    return sentence.trim().length > 0 && !addsNewNumbers(sentence, JSON.stringify(input));
+    const reasons = (input as z.infer<typeof ExplainInput>).verdict.reasons;
+    return (
+      sentence.trim().length > 0 &&
+      !addsNewNumbers(sentence, JSON.stringify(input)) &&
+      !dropsUncertainty(sentence, reasons)
+    );
   }
   if (task === "personalize_steps") {
     const inp = input as z.infer<typeof PersonalizeInput>;

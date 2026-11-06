@@ -83,7 +83,12 @@ function SetupChecklist({
           <strong>Data you&apos;ll need:</strong> {tool.setup.data_needed.join("; ")}
         </p>
       ) : null}
-      <ExternalButton href={tool.how_to_start.url} variant="secondary" size="sm" className="no-print">
+      <ExternalButton
+        href={tool.how_to_start.url}
+        variant="secondary"
+        size="sm"
+        className="no-print"
+      >
         Go to {tool.name}
         <ExternalLink aria-hidden className="size-4" />
       </ExternalButton>
@@ -154,7 +159,11 @@ export function PlanView() {
 
       <div className="no-print flex flex-wrap gap-2">
         <Button onClick={() => void copyLink()} variant="secondary">
-          {copied ? <Check aria-hidden className="size-4" /> : <Copy aria-hidden className="size-4" />}
+          {copied ? (
+            <Check aria-hidden className="size-4" />
+          ) : (
+            <Copy aria-hidden className="size-4" />
+          )}
           {copied ? "Link copied" : "Copy a link to this plan"}
         </Button>
         <Button onClick={() => window.print()} variant="secondary">
@@ -168,11 +177,25 @@ export function PlanView() {
 
       <section aria-labelledby="stack">
         <Card className="space-y-4">
-          <h2 id="stack" className="text-2xl font-bold">Your stack</h2>
-          <ul aria-hidden className="grid grid-cols-3 pr-[3%] pb-[3%] sm:grid-cols-5 lg:grid-cols-7">
-            {[...base.map((t) => ({ id: t.id, name: t.name, state: "base" as const })),
-              ...plan.tools.map((t) => ({ id: t.tool.id, name: t.tool.name, state: t.verdict.visible }))].map((p) => (
-              <li key={p.id} className={`state-${p.state} relative flex min-h-20 items-center justify-center p-3 text-center text-xs font-semibold`}>
+          <h2 id="stack" className="text-2xl font-bold">
+            Your stack
+          </h2>
+          <ul
+            aria-hidden
+            className="grid grid-cols-3 pr-[3%] pb-[3%] sm:grid-cols-5 lg:grid-cols-7"
+          >
+            {[
+              ...base.map((t) => ({ id: t.id, name: t.name, state: "base" as const })),
+              ...plan.tools.map((t) => ({
+                id: t.tool.id,
+                name: t.tool.name,
+                state: t.verdict.visible,
+              })),
+            ].map((p) => (
+              <li
+                key={p.id}
+                className={`state-${p.state} relative flex min-h-20 items-center justify-center p-3 text-center text-xs font-semibold`}
+              >
                 <PieceShape mismatch={p.state === "no_fit"} heavy={p.state === "not_allowed"} />
                 <span className="relative">{p.name}</span>
               </li>
@@ -183,13 +206,23 @@ export function PlanView() {
               <li key={t.id} className="flex flex-wrap items-center justify-between gap-2 py-2">
                 <span>
                   <strong>{t.name}</strong>
-                  <span className="text-ink-2"> ({t.id === anchor?.id ? "your main system" : "already in place"})</span>
-                  {t.contract_term ? <span className="block text-sm text-ink-2">Hard to swap later: {t.contract_term}</span> : null}
+                  <span className="text-ink-2">
+                    {" "}
+                    ({t.id === anchor?.id ? "your main system" : "already in place"})
+                  </span>
+                  {t.contract_term ? (
+                    <span className="block text-sm text-ink-2">
+                      Hard to swap later: {t.contract_term}
+                    </span>
+                  ) : null}
                 </span>
               </li>
             ))}
             {plan.tools.map((t) => (
-              <li key={t.blockId} className="flex flex-wrap items-center justify-between gap-2 py-2">
+              <li
+                key={t.blockId}
+                className="flex flex-wrap items-center justify-between gap-2 py-2"
+              >
                 <span>
                   <strong>{t.tool.name}</strong>
                   <span className="text-ink-2"> · {t.blockName}</span>
@@ -203,10 +236,15 @@ export function PlanView() {
 
       <section aria-labelledby="cost">
         <Card className="space-y-3">
-          <h2 id="cost" className="text-2xl font-bold">What it costs each month</h2>
+          <h2 id="cost" className="text-2xl font-bold">
+            What it costs each month
+          </h2>
           <table className="w-full text-left">
             <thead className="sr-only">
-              <tr><th>Item</th><th>Monthly cost</th></tr>
+              <tr>
+                <th>Item</th>
+                <th>Monthly cost</th>
+              </tr>
             </thead>
             <tbody>
               {plan.costLines.map((l) => (
@@ -221,7 +259,9 @@ export function PlanView() {
             </tbody>
             <tfoot>
               <tr>
-                <th scope="row" className="py-2 pr-3 text-lg">New monthly cost</th>
+                <th scope="row" className="py-2 pr-3 text-lg">
+                  New monthly cost
+                </th>
                 <td className="py-2 text-right text-xl font-bold">
                   {formatUsd(plan.total)}
                   {plan.hasUnknownPrice ? " +" : ""}
@@ -229,29 +269,47 @@ export function PlanView() {
               </tr>
             </tfoot>
           </table>
-          <p className={plan.overBudget ? "state-catch font-semibold" : "text-ink-2"} style={plan.overBudget ? { color: "var(--state)" } : undefined}>
+          <p
+            className={plan.overBudget ? "state-catch font-semibold" : "text-ink-2"}
+            style={plan.overBudget ? { color: "var(--state)" } : undefined}
+          >
             {plan.overBudget
               ? `That's ${formatUsd(plan.total - plan.budget)} over your ${formatUsd(plan.budget)} budget.`
               : `That's within your ${formatUsd(plan.budget)} budget.`}
-            {plan.hasUnknownPrice ? " Some vendors don't publish a price, so the real total is higher." : ""}
+            {plan.hasUnknownPrice
+              ? " Some vendors don't publish a price, so the real total is higher."
+              : ""}
           </p>
           <p className="text-sm text-ink-2">
-            You pay vendors directly. PieceWise never charges you or takes a cut. Systems you already
-            run aren&apos;t counted here. Usage fees (per call or per message) can add to this.
+            You pay vendors directly. PieceWise never charges you or takes a cut. Systems you
+            already run aren&apos;t counted here, and neither are tools that don&apos;t fit or
+            aren&apos;t allowed. Usage fees (per call or per message) can add to this.
           </p>
         </Card>
       </section>
 
       <section aria-labelledby="order">
         <Card className="space-y-3">
-          <h2 id="order" className="text-2xl font-bold">What to do, in order</h2>
+          <h2 id="order" className="text-2xl font-bold">
+            What to do, in order
+          </h2>
           <p className="text-ink-2">About {hours} hours in total (our estimate).</p>
           <ol className="space-y-3">
             {plan.rollout.map((step, i) => (
               <li key={step.title} className="flex gap-3">
-                <span aria-hidden className="flex size-7 shrink-0 items-center justify-center rounded-full bg-brand font-bold text-brand-ink">{i + 1}</span>
+                <span
+                  aria-hidden
+                  className="flex size-7 shrink-0 items-center justify-center rounded-full bg-brand font-bold text-brand-ink"
+                >
+                  {i + 1}
+                </span>
                 <div>
-                  <p className="font-semibold">{step.title} <span className="font-normal text-ink-2">(about {step.hours} {step.hours === 1 ? "hour" : "hours"})</span></p>
+                  <p className="font-semibold">
+                    {step.title}{" "}
+                    <span className="font-normal text-ink-2">
+                      (about {step.hours} {step.hours === 1 ? "hour" : "hours"})
+                    </span>
+                  </p>
                   <p className="text-ink-2">{step.why}</p>
                 </div>
               </li>
@@ -263,16 +321,24 @@ export function PlanView() {
       {plan.issues.length > 0 ? (
         <section aria-labelledby="issues">
           <Card className="space-y-4">
-            <h2 id="issues" className="text-2xl font-bold">Things to watch ({plan.issues.length})</h2>
+            <h2 id="issues" className="text-2xl font-bold">
+              Things to watch ({plan.issues.length})
+            </h2>
             <ul className="space-y-4">
               {plan.issues.map((issue) => (
-                <li key={`${issue.title}-${issue.reason.rule}-${issue.reason.message}`} className={`state-${issue.state} space-y-1 border-l-4 pl-3`} style={{ borderColor: "var(--state-line)" }}>
+                <li
+                  key={`${issue.title}-${issue.reason.rule}-${issue.reason.message}`}
+                  className={`state-${issue.state} space-y-1 border-l-4 pl-3`}
+                  style={{ borderColor: "var(--state-line)" }}
+                >
                   <p className="flex flex-wrap items-center gap-2 font-semibold">
                     {issue.title}
                     <span className="sr-only">: {STATE_INFO[issue.state].label}</span>
                   </p>
                   <ReasonList reasons={[issue.reason]} />
-                  <p><strong>What to do:</strong> {issue.todo}</p>
+                  <p>
+                    <strong>What to do:</strong> {issue.todo}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -280,17 +346,27 @@ export function PlanView() {
         </section>
       ) : null}
 
-      <section aria-labelledby="setup">
-        <Card className="space-y-5">
-          <h2 id="setup" className="text-2xl font-bold">Setup checklists</h2>
-          <p className="text-ink-2">Your checkmarks are saved in this browser.</p>
-          <div className="grid gap-6 lg:grid-cols-2">
-            {plan.tools.map((t) => (
-              <SetupChecklist key={t.tool.id} tool={t.tool} description={profile.description} checks={checks} onCheck={setCheck} />
-            ))}
-          </div>
-        </Card>
-      </section>
+      {plan.usable.length > 0 ? (
+        <section aria-labelledby="setup">
+          <Card className="space-y-5">
+            <h2 id="setup" className="text-2xl font-bold">
+              Setup checklists
+            </h2>
+            <p className="text-ink-2">Your checkmarks are saved in this browser.</p>
+            <div className="grid gap-6 lg:grid-cols-2">
+              {plan.usable.map((t) => (
+                <SetupChecklist
+                  key={t.tool.id}
+                  tool={t.tool}
+                  description={profile.description}
+                  checks={checks}
+                  onCheck={setCheck}
+                />
+              ))}
+            </div>
+          </Card>
+        </section>
+      ) : null}
 
       <section aria-label="Free help">
         <SbaPanel urgent={urgent} />

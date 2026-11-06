@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import OpenAI from "openai";
 import { z } from "zod";
 import precomputed from "@data/cache/llm.json";
-import { SYSTEM_PROMPTS } from "./prompts/v1";
+import { PROMPT_VERSION, SYSTEM_PROMPTS } from "./prompts/v1";
 import { passesGuards, TASKS, type TaskId } from "./tasks";
 
 /**
@@ -31,13 +31,18 @@ export type GatewayConfig = {
   hourlyPerIp: number;
 };
 
+/**
+ * Default models must support temperature as well as structured output: require_parameters
+ * means a model missing either one gets no route at all. Newer models that dropped
+ * temperature (Claude 5.x, GPT-5.x) fail this way, so check before changing these.
+ */
 export function configFromEnv(env: NodeJS.ProcessEnv = process.env): GatewayConfig {
   return {
     enabled: env.LLM_ENABLED !== "false" && Boolean(env.OPENROUTER_API_KEY),
     models: {
-      fast: env.LLM_MODEL_FAST || "anthropic/claude-haiku-5.5",
-      smart: env.LLM_MODEL_SMART || "anthropic/claude-sonnet-5.5",
-      fallback: env.LLM_MODEL_FALLBACK || "openai/gpt-5-nano",
+      fast: env.LLM_MODEL_FAST || "openai/gpt-4o-mini",
+      smart: env.LLM_MODEL_SMART || "anthropic/claude-sonnet-4.6",
+      fallback: env.LLM_MODEL_FALLBACK || "google/gemini-2.5-flash-lite",
     },
     dailyCap: Number(env.LLM_DAILY_CALL_CAP) || 500,
     hourlyPerIp: 30,
@@ -74,7 +79,7 @@ function openRouterClient(apiKey: string): LLMClient {
 }
 
 export function cacheKey(task: TaskId, input: unknown): string {
-  return createHash("sha256").update(`${task}\n${JSON.stringify(input)}`).digest("hex");
+  return createHash("sha256").update(`${PROMPT_VERSION}\n${task}\n${JSON.stringify(input)}`).digest("hex");
 }
 
 export function jsonSchemaFor(schema: z.ZodType): Record<string, unknown> {

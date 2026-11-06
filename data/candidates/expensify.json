@@ -1,0 +1,95 @@
+{
+  "id": "expensify",
+  "name": "Expensify",
+  "vendor_url": "https://www.expensify.com",
+  "is_ai_tool": true,
+  "ai_capabilities": [
+    "SmartScan receipt scanning extracts details with industry-leading accuracy",
+    "Automated categorization learns expense mappings to automate bookkeeping",
+    "Concierge AI provides more accurate receipt coding",
+    "Handles text commands to create and update expenses",
+    "Flags prohibited items"
+  ],
+  "suggested_blocks": [],
+  "suggested_archetypes": [],
+  "works_with": [
+    "Xero",
+    "Uber",
+    "Lyft",
+    "Delta",
+    "ADP",
+    "Gusto",
+    "Zenefits",
+    "Workday"
+  ],
+  "tiers": [
+    {
+      "name": "Free trial",
+      "monthly_usd": null
+    }
+  ],
+  "free_tier": false,
+  "evidence": [
+    {
+      "claim": "Trusted by 15 million members worldwide",
+      "quote": "trusted by 15 million members worldwide",
+      "url": "https://apps.xero.com/us/app/expensify",
+      "grade": 1
+    },
+    {
+      "claim": "SmartScan extracts receipt details with industry-leading accuracy",
+      "quote": "SmartScan extracts the details with industry-leading accuracy",
+      "url": "https://apps.xero.com/us/app/expensify",
+      "grade": 1
+    },
+    {
+      "claim": "Concierge AI provides more accurate receipt coding and handles text commands",
+      "quote": "Concierge AI provides more accurate receipt coding, handles text commands to create and update expenses",
+      "url": "https://apps.xero.com/us/app/expensify",
+      "grade": 1
+    },
+    {
+      "claim": "Flags prohibited items",
+      "quote": "flags prohibited items, and offers more powerful support",
+      "url": "https://apps.xero.com/us/app/expensify",
+      "grade": 1
+    },
+    {
+      "claim": "Free trial available",
+      "quote": "Free trial available",
+      "url": "https://apps.xero.com/us/app/expensify",
+      "grade": 1
+    },
+    {
+      "claim": "Special offer: 50% off for 6 months for new Xero customers",
+      "quote": "Get 50% off Expensify for 6 months!",
+      "url": "https://apps.xero.com/us/app/expensify",
+      "grade": 1
+    },
+    {
+      "claim": "Two-way sync with Xero automates pre-accounting workflow",
+      "quote": "a dynamic two-way sync that automates your entire pre-accounting workflow",
+      "url": "https://apps.xero.com/us/app/expensify",
+      "grade": 1
+    },
+    {
+      "claim": "Supports 10 languages",
+      "quote": "Support for 10 languages means more of your international employees",
+      "url": "https://apps.xero.com/us/app/expensify",
+      "grade": 1
+    }
+  ],
+  "kind": "ai_tool",
+  "source_url": "https://apps.xero.com/us/app/expensify",
+  "source": "Xero App Store (US)",
+  "proposed_edges": [
+    {
+      "from": "expensify",
+      "to": "xero",
+      "type": "certified",
+      "evidence_url": "https://apps.xero.com/us/app/expensify"
+    }
+  ],
+  "discovered_at": "2026-11-06",
+  "verified": false
+}

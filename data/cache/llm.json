@@ -1,1 +1,396 @@
-{}
+{
+ "a3bedac9bef428b68852a09ebac4ff71be35fd33483cb714aa1be2978d9c7575": {
+  "archetypes": [
+   "food_bev"
+  ],
+  "naics": {
+   "code": "722511",
+   "title": "Full-Service Restaurants"
+  },
+  "confidence": 0.9,
+  "suggested_extra_blocks": []
+ },
+ "b89f2cc5a97639d7ced922dab0ed9bdce206a6b8ee76b135700b5cd293b0f1e9": {
+  "archetypes": [
+   "food_bev"
+  ],
+  "naics": {
+   "code": "722515",
+   "title": "Snack and Nonalcoholic Beverage Bars"
+  },
+  "confidence": 0.9,
+  "suggested_extra_blocks": []
+ },
+ "e915855215a66fbeded790b879654edb436615fb55e37d537f635ff22f8a0b99": {
+  "archetypes": [
+   "field_services"
+  ],
+  "naics": {
+   "code": "238220",
+   "title": "Plumbing, Heating, and Air-Conditioning Contractors"
+  },
+  "confidence": 0.9,
+  "suggested_extra_blocks": []
+ },
+ "2f248cf1f269a19d375b2cf15d523b9fcfd11190f05988d23a0a6ccac66e798d": {
+  "archetypes": [
+   "field_services"
+  ],
+  "naics": {
+   "code": "561730",
+   "title": "Landscaping Services"
+  },
+  "confidence": 0.9,
+  "suggested_extra_blocks": []
+ },
+ "e74289334cfc862a0dfe1bcdc200fc299e23225a37f3f41c4620180463fa93d5": {
+  "archetypes": [
+   "food_bev",
+   "retail"
+  ],
+  "naics": {
+   "code": "311811",
+   "title": "Retail Bakeries"
+  },
+  "confidence": 0.9,
+  "suggested_extra_blocks": []
+ },
+ "c61cf8b30408a8922c88150d28f905baaeeda5fb50f7f46c8c359d8165316674": {
+  "archetypes": [
+   "food_bev"
+  ],
+  "naics": {
+   "code": "722511",
+   "title": "Full-Service Restaurants"
+  },
+  "confidence": 0.9,
+  "suggested_extra_blocks": []
+ },
+ "c8c52cd459a84bd36fb19799ee7319bf250ff7010c5a72e4a0a8908e6012e2d7": {
+  "archetypes": [
+   "food_bev"
+  ],
+  "naics": {
+   "code": "722515",
+   "title": "Snack and Nonalcoholic Beverage Bars"
+  },
+  "confidence": 0.9,
+  "suggested_extra_blocks": []
+ },
+ "0eb1e9fe1f5bd4c2f8c593be52e734694595680cd91f50d137b8b03d7fa37f5d": {
+  "archetypes": [
+   "field_services"
+  ],
+  "naics": {
+   "code": "238220",
+   "title": "Plumbing, Heating, and Air-Conditioning Contractors"
+  },
+  "confidence": 0.9,
+  "suggested_extra_blocks": []
+ },
+ "1cebb78d8f99b95843ae6c554b78813a9dccdb8933d0037b0fee92a174f7164d": {
+  "archetypes": [
+   "field_services"
+  ],
+  "naics": {
+   "code": "561730",
+   "title": "Landscaping Services"
+  },
+  "confidence": 0.9,
+  "suggested_extra_blocks": []
+ },
+ "ea5d99b842bee2bdf8fc5e44328942ca35ac081cefc4530f14ce4a54942ce6bb": {
+  "archetypes": [
+   "clinics",
+   "professional"
+  ],
+  "naics": {
+   "code": "621210",
+   "title": "Offices of Dentists"
+  },
+  "confidence": 0.9,
+  "suggested_extra_blocks": [
+   "patient_records",
+   "insurance_billing"
+  ]
+ },
+ "84849f0b41f6c42edfd79992e9e8a7232b6c27d98771af40a9268463da2fc46c": {
+  "sentence": "MarginEdge connects directly to Toast and QuickBooks Online, which means it can work well with your systems. Just keep an eye on how it handles your specific needs."
+ },
+ "f1c85de168bcf2c11dba0a3f2ca688218ff7030687cc6d968c5e0d9605ae9d51": {
+  "sentence": "7shifts connects directly to Toast, which means it can work well with your restaurant's point of sale system. Just watch for how the AI Course Builder creates staff training, as we couldn't confirm its effectiveness."
+ },
+ "2de8553764c9cbd12bc5272c20e7a523af8a317c7f39f44c2ed1768fe6b04c2b": {
+  "sentence": "Homebase connects directly to Toast, but for QuickBooks, you need the QuickBooks Online Plus plan. Both Homebase and 7shifts keep timesheets, so choose one to avoid duplicates."
+ },
+ "7da4f874c65eeb983fde44fc292f1cf0fb60aa4fe4be0892cb19032001e3599d": {
+  "sentence": "GatherUp can help you analyze reviews and respond to them, but we couldn't confirm that it will automatically send requests after each sale since there's no direct link to your main system."
+ },
+ "dd7a42b8d59c99d7f98968478163dbe4f3e5b6e3e152e9327cead2bd30024ba7": {
+  "sentence": "Birdeye can help with reviews, listings, social media, and front desk tasks, but we couldn't confirm a direct connection to your main system."
+ },
+ "5989ececcd3999ec64323fc473670fc25644de1f99761b5a24ce5d63eb098e22": {
+  "sentence": "Podium overlaps with your current tools because it combines messaging, phone, and payment features, which might duplicate what you already use. You should choose either Podium or your existing tools like Toast and QuickBooks Online to avoid having duplicate customer records."
+ },
+ "5ab074e1b4972030f740705aab00604157511d1ce33edcecc51d17679e010b32": {
+  "steps": [
+   "Speak with the sales team",
+   "Link your Toast system and QuickBooks Online",
+   "Take pictures of your first invoices"
+  ]
+ },
+ "8395128bc598cbb82c4ed961176aecb1229364226ffc5741bd9c2aaecf977bf9": {
+  "steps": [
+   "Create a free account",
+   "Link your Toast POS system",
+   "Invite your team members",
+   "Create a work schedule"
+  ]
+ },
+ "c5605850ac1046619b54f18237808aaa9659fd26a512f4910edcd15bfdaaa373": {
+  "sentence": "NiceJob doesn't connect with Toast because Toast only shares its data with approved partners, and we couldn't confirm that NiceJob is one of them."
+ },
+ "c9f8ee00d909431e374078a83334c72bf43e85ee0caa2bbaca75fe068ed2e956": {
+  "steps": [
+   "Create an account",
+   "Connect Toast and QuickBooks Online",
+   "Link your Google Business Profile",
+   "Activate review requests"
+  ]
+ },
+ "01db179fc1a32bb6c245b35ff4343ae30778a1e1a71c568ca31827c0f4b803c5": {
+  "block_ids": [
+   "customer_comm",
+   "channels",
+   "online_ordering"
+  ],
+  "why": "These tools will help you stay connected with customers even when you're busy."
+ },
+ "2daafb6e0c2ab4fea7e302f8e293493f076c90c358a573f6a29cc036840c3b99": {
+  "block_ids": [
+   "recipe_costing",
+   "food_inventory",
+   "reporting"
+  ],
+  "why": "These tools will help you understand your costs better and reduce waste."
+ },
+ "6fd6983c25633fe3ed1da7e17478e8c36cf32d51d39e493466f61b48f2040d06": {
+  "block_ids": [
+   "reservations",
+   "customer_comm",
+   "marketing"
+  ],
+  "why": "These tools can help you manage appointments better and remind customers to show up."
+ },
+ "04f43060886d274b9a10860b45cc8c34df28bb65d4090baf88af5e8ab635a82b": {
+  "sentence": "Klaviyo fits well with your business because it can receive in-store sales data every 30 minutes, which helps in managing marketing campaigns."
+ },
+ "461e456489dcd79af0b87a4100f61892549f59e1c66c1d1ac914503729b5854a": {
+  "sentence": "Mailchimp connects directly to Square POS, which means you can use it for your email marketing. Just make sure to confirm which AI features are included in your plan."
+ },
+ "1c2b8628e0927082a8d3d7ddcc2c3f1ded0434cd0d453af80275d9a60a2339bb": {
+  "sentence": "Homebase connects directly to Square POS, which is useful for your business, but to link it with QuickBooks, you'll need the QuickBooks Online Plus plan."
+ },
+ "20a1c9b2e55bfdfcb6d8fb85490e1b29ef5cf53ce1b4b4c3342c6afe9f344bc3": {
+  "sentence": "7shifts connects directly to Square POS, but both 7shifts and Homebase keep timesheets, so you need to choose one as the main source to avoid duplicates."
+ },
+ "8ae15af0f1701bce61cca7dc25f4f7bb982cc4cdbc23c847b28b25bd8b7e0c64": {
+  "sentence": "NiceJob can connect directly to QuickBooks Online, but it doesn't have a direct link to Square; instead, it relies on Zapier to watch for new sales and send updates to NiceJob. Keep in mind that updates through Zapier happen about every 15 minutes on the cheapest plan."
+ },
+ "3662af62975a530b06a2bef064e229908ff0ce8f250343e48d9b06b3bed0993e": {
+  "sentence": "GatherUp connects to your business through Zapier, which has a free plan, but updates only every 15 minutes on the cheapest plan, so you should watch for any delays in getting your data."
+ },
+ "f801d742d7b817c6def371904e1f8225f3acb25baeb7a6369fab062cd5ffcf7e": {
+  "sentence": "Podium overlaps with your current tools because it combines inbox, AI phone, and payments, which may duplicate what you already use. Since both Podium and Square POS, as well as Podium and QuickBooks Online, keep customer information, you'll need to choose one as the main source to avoid duplicates."
+ },
+ "e6aed35778f25e453795498cabdc458ec6385c9155bd8a9cbb6b08c90649672a": {
+  "sentence": "Synder connects directly to Square POS and QuickBooks Online, which means it can automatically record your sales. However, since both Synder and Square POS write sales to your books, you need to be careful to keep only one to avoid double entries."
+ },
+ "d3da5340cb6c3cd64f99bf1494bfd1bd5578ca649da2da108bd087bdbe5fca32": {
+  "sentence": "MarginEdge connects directly to QuickBooks Online and claims to work with over 60 POS systems, but Square isn't listed among them, so we couldn't confirm if it connects with Square."
+ },
+ "27ae6e9ad5c3b57685b7fea00e806f03bc769b79c627afc5a6eaa82996e60971": {
+  "sentence": "Owner.com connects directly to Square POS, so you need to choose one as the main source for sales and customers to avoid duplicates. It also connects with QuickBooks Online in the same way, so be careful to pick one for customer management."
+ },
+ "29c72c71d94d49c8a1708192ac311c9c78b26f492835f2bc84f861f1fd1b1718": {
+  "steps": [
+   "Sign up for a free account",
+   "Link your Square system or QuickBooks Online",
+   "Set up a welcome email for new customers"
+  ]
+ },
+ "533055dbef2fe9bf2e4c4b09ab7fd0458562f3a8faea1083082ca688da3fcac6": {
+  "steps": [
+   "Create a free account",
+   "Link your Square POS system",
+   "Add your staff members",
+   "Set up and share your first work schedule"
+  ]
+ },
+ "e6f97dc75c9cf9ebe3afec49e4a550ed1020ae0cc1b0b56a00ce1b83cdf84af7": {
+  "steps": [
+   "Create an account",
+   "Connect your Square system",
+   "Link your Google Business Profile",
+   "Activate review requests"
+  ]
+ },
+ "899b45cef10768152dd1bdc3bd30a927ffc02ffe2f1b3b222353e0fb15aa7286": {
+  "steps": [
+   "Begin your 15-day trial",
+   "Link your Square sales and QuickBooks Online",
+   "Disable any other tools that are posting sales first"
+  ]
+ },
+ "b37f9cf4965f222d2951f9d93aeb9f6006f59aab11ab578463763c54b693f166": {
+  "sentence": "Marlie connects directly to Jobber, which means it can work with your business. Just watch for how it handles booking jobs automatically during calls."
+ },
+ "ce253eca49248b7371e2b8dba87ada195eb419c3b69491e5f6ed7b1ba4523880": {
+  "sentence": "Smith.ai connects directly to Jobber, which means it can work with your scheduling and calls. Just watch for how well it fits with your specific needs in field services."
+ },
+ "1dd53535d798ec65733116adc68327c7530b8bcd19c389733167fcbd5b8fe96f": {
+  "sentence": "Rosie can answer calls in English and Spanish and send you a summary, but it doesn't connect to Jobber for booking. You can use Zapier to pass caller details, but it only updates every 15 minutes on the cheapest plan."
+ },
+ "5e61a561fe4ab5344b53a2e299276b1c9e570c45fe3fc9260c1a7e727b543f7b": {
+  "sentence": "Upfirst can help with answering calls and scheduling appointments, but we couldn't confirm if it will automatically connect to your main system, so you may need to manage details manually."
+ },
+ "a3f6e8e605504d9ed6ce0c884f78898e490664307e39536e79a23f9991b858b9": {
+  "sentence": "Goodcall can answer calls and take bookings, but we couldn't confirm if it will book directly into your main system, so you should be ready for it to work separately."
+ },
+ "d9de2a3746778f550c64fcc4afa34527efa3502c4d9793a9b53278291877acd1": {
+  "sentence": "Sameday connects directly to Jobber, which is good for your field service business. However, to send text messages to customers, you need to complete a one-time registration that requires your legal business name and EIN, or your messages might be blocked."
+ },
+ "4447deefca43c5406da673475580cb1d1f422d5f1dbc41f493e48cacf3daddc8": {
+  "sentence": "Birdeye can help with reviews, listings, social media, and front desk tasks, but we couldn't confirm a direct connection to your main system."
+ },
+ "f8dc8ffe95e962b43d1c5e59fa6abdc4cc20d94336acbc34386cf50731165739": {
+  "sentence": "Podium overlaps with your current tools because it includes features like an inbox and AI phone that you might already have. Be careful to choose one source for customer information between Podium and Jobber, and between Podium and QuickBooks Desktop, to avoid having duplicate customer entries."
+ },
+ "395553740bea019eb7cc5e45903f07a80a979579a0cda0b5a4592846d24347ae": {
+  "sentence": "NiceJob connects directly to Jobber, which means it can work with your field services business. Just watch for how well the AI replies and automates responses to your reviews."
+ },
+ "d708829ed17a6039a333271cc3641bd7085efd8fc90f02652b5329ca97498b27": {
+  "sentence": "GatherUp connects to your business only through Zapier, which has a free plan, but updates every 15 minutes on the cheapest plan. You should watch for how this might affect the timing of your data updates."
+ },
+ "48f1903fadc5f40bf784e1eb99437de0bf4bb41c758177b303c80bd5e4716142": {
+  "steps": [
+   "Begin your 7-day trial",
+   "Provide Rosie with your website so it can understand your HVAC business",
+   "Set up call forwarding for any missed calls"
+  ]
+ },
+ "7007bcd7a56c70f3656ccdeb95b63ed666a0f5997fcf9974ebe730e49faa52cd": {
+  "steps": [
+   "Create an account",
+   "Connect Jobber to NiceJob",
+   "Link your Google Business Profile",
+   "Activate review requests"
+  ]
+ },
+ "c4d3f48151a7c59eb16338de19613e89564f34227a2b995858b8aa1376c836a7": {
+  "block_ids": [
+   "customer_comm",
+   "channels",
+   "dispatch"
+  ],
+  "why": "These tools will help you stay connected and manage calls while you're busy."
+ },
+ "e31e607845ede4281b9ef402784626ed8992355695296aeeae5968072615c67b": {
+  "block_ids": [
+   "reporting",
+   "accounting",
+   "invoicing"
+  ],
+  "why": "These tools will help you track costs and manage your finances better."
+ },
+ "a08560a7498e12403e77b2030f6588ac5a1ac543f15d356e0c8fe82dbe4f05bc": {
+  "block_ids": [
+   "marketing",
+   "customer_comm",
+   "scheduling_payroll"
+  ],
+  "why": "These will help you remind patients about their appointments and improve communication."
+ },
+ "c7e3410b034a9186ba9b2fabc7c2fd1a11ca068dd138919145514b97532de488": {
+  "sentence": "Podium overlaps with your current tools because it combines inbox, AI phone, and payments, which might duplicate what you already use. Since both Podium and Jobber keep customer information, you should choose one to avoid having duplicate records."
+ },
+ "b9d7ff207c4f8246ed8cece1c6e0c1b2203e1dd4b9fbfee3c622d8eef36619a5": {
+  "sentence": "NiceJob connects directly to Jobber and QuickBooks Online, which means it can work with your existing tools. However, we couldn't confirm any other specific requirements that might affect its use."
+ },
+ "a36de69d312d1c14723fe22977919f70735a279d36a0187fdb2c36a247a608fc": {
+  "sentence": "Homebase connects directly to Gusto and can handle scheduling, but it can't compare labor with sales since it's not linked to your main system. Also, to connect to QuickBooks, you'll need the QuickBooks Online Plus plan."
+ },
+ "84df87e2fc790d7aa0f8deb70df0cc70b7980e0bf3ef49fb86b1288a219fb629": {
+  "steps": [
+   "Begin with the free plan",
+   "Try it out with practice calls",
+   "Link your calendar",
+   "Forward your phone number"
+  ]
+ },
+ "4b2a9e77f812abd68949cc62824356edf1baeabd3b9a51eb8030290178a0b583": {
+  "steps": [
+   "Create an account",
+   "Connect Jobber to NiceJob",
+   "Link your Google Business Profile",
+   "Activate review requests"
+  ]
+ },
+ "4d208e417d136a8106ec5dd879055355de51445611d260e004950c53971a039e": {
+  "sentence": "Gusto fits with your business because it connects directly to QuickBooks Online and can handle hours for hourly employees, but be aware that Approved Jobber hours will overwrite any hours you type into Gusto."
+ },
+ "7e9cd80c2c6c3dba4a503343683e3a4541f7ea8359c2444bc22fd620eb123106": {
+  "steps": [
+   "Sign up for an account",
+   "Include your team members",
+   "Link your accounting software"
+  ]
+ },
+ "2dd039fdbf8a9ef5d410be3cc91efb1b74005b6c1064d3ea4e8ff0c31db3628e": {
+  "sentence": "NexHealth connects directly to Open Dental, which means it can automate patient booking and write it back to your chart. However, we couldn't confirm any specific AI features."
+ },
+ "e57320d92c63d590c2d2ea0fd8a69e0a54d6adcf344bedfbb6281e08736eb0fc": {
+  "sentence": "Weave connects directly to Open Dental, but we couldn't confirm that it signs a BAA, which is needed for HIPAA compliance when sharing patient data. Make sure to get a BAA in writing before using it for patient information."
+ },
+ "c34cd8d9ff07305df301edefc0735b65251a334d71ad2f1368c0681a5a45609b": {
+  "steps": [
+   "Schedule a demonstration",
+   "Complete the Business Associate Agreement",
+   "Link your Open Dental and QuickBooks Online systems"
+  ]
+ },
+ "56a7d864ec3394226d37e210c6e487da256c2eaa836f2925a2cc378d467de950": {
+  "sentence": "Mailchimp can connect to your system, but you can't legally use it for your clinic because it won't sign the necessary contract for handling patient data."
+ },
+ "224a82d314908647b5c4debb4dc852107ec61ac5f79f8f5e782bf15e025c8f22": {
+  "steps": [
+   "Set up an account",
+   "Link your Open Dental system or upload your patient list",
+   "Send a welcome email to new patients"
+  ]
+ },
+ "57a60c1a7a462e615a93cafc71b878ea1b98e422c30ac81fc07a3742c735ac71": {
+  "block_ids": [
+   "customer_comm",
+   "channels",
+   "payments_pos"
+  ],
+  "why": "These tools will help you stay connected and never miss important calls."
+ },
+ "5ea34236769f5fe748c9d0f43892d364a7e33d135a7cdda642000dbb31fed673": {
+  "block_ids": [
+   "reporting",
+   "accounting",
+   "invoicing"
+  ],
+  "why": "These tools will help you track costs and manage your finances better."
+ },
+ "8d52fea8010515d7a934e13cf04676fbcf304d37d1039707bb55f99b2340aafc": {
+  "block_ids": [
+   "patient_scheduling",
+   "customer_comm",
+   "marketing"
+  ],
+  "why": "These tools will help remind patients about their appointments and improve communication."
+ }
+}

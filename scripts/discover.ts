@@ -156,6 +156,7 @@ for (const url of todo) {
         source: source?.name ?? "manual URL list",
         evidence: profile.evidence.map((e) => ({
           ...e,
+          quote: e.quote.split(/\s+/).slice(0, 15).join(" "),
           url,
           grade: source?.evidence_grade ?? 3,
         })),
@@ -168,7 +169,7 @@ for (const url of todo) {
       writeFileSync(path, `${JSON.stringify(candidate, null, 2)}\n`);
       log(`+ NEW candidate: ${profile.name}`);
       for (const c of profile.ai_capabilities) log(`    AI: ${c}`);
-      for (const e of profile.evidence.slice(0, 2)) log(`    quote: "${e.quote}"`);
+      for (const e of candidate.evidence.slice(0, 2)) log(`    quote: "${e.quote}"`);
       results.written += 1;
     }
   } catch (err) {
