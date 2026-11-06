@@ -1,0 +1,42 @@
+[
+  {
+    "id": "restaurant", "label": "Restaurant on Toast", "blurb": "Full-service restaurant, 12 staff, Toast and QuickBooks Online",
+    "profile": { "description": "Family restaurant with 12 staff, using Toast and QuickBooks Online", "archetypes": ["food_bev"], "naics": { "code": "722511", "title": "Full-service restaurants" }, "employees": 12, "locations": 1, "mobile": false, "monthly_budget_usd": 500,
+      "base": { "payments_pos": "toast", "accounting": "qbo", "accounting_edition": "qbo", "customer_records": "toast", "channels": ["phone", "email", "google_profile"] },
+      "anchor": "toast", "selected_tiers": { "toast": "Point of Sale" }, "devices": ["android"], "connectivity": "reliable", "regulated": "none", "sells_on": [] },
+    "pieces": { "recipe_costing": "marginedge", "scheduling_payroll": "seven_shifts", "reviews": "nicejob" },
+    "stories": ["Outside card processors don't fit Toast", "Toast already includes several pieces", "Toast's contract makes it hard to swap later"]
+  },
+  {
+    "id": "coffee", "label": "Coffee shop on Square", "blurb": "Neighborhood cafe, 5 staff, Square and QuickBooks Online",
+    "profile": { "description": "Neighborhood coffee shop with 5 staff, using Square and QuickBooks Online", "archetypes": ["food_bev"], "naics": { "code": "722515", "title": "Snack and nonalcoholic beverage bars" }, "employees": 5, "locations": 1, "mobile": false, "monthly_budget_usd": 200,
+      "base": { "payments_pos": "square_pos", "accounting": "qbo", "accounting_edition": "qbo", "customer_records": "square_pos", "channels": ["phone", "email", "google_profile"] },
+      "anchor": "square_pos", "selected_tiers": { "square_pos": "Free" }, "devices": ["ios"], "connectivity": "reliable", "regulated": "none", "sells_on": [] },
+    "pieces": { "marketing": "klaviyo", "scheduling_payroll": "homebase", "reviews": "nicejob", "accounting": "synder" },
+    "stories": ["Square's QuickBooks link sends every sale, not daily totals", "Two tools posting sales to QuickBooks: pick one", "Zapier bridges NiceJob to Square, with a 15-minute delay"]
+  },
+  {
+    "id": "hvac", "label": "HVAC tech on Jobber + QuickBooks Desktop", "blurb": "Two-truck HVAC shop, Jobber Core and QuickBooks Desktop",
+    "profile": { "description": "Two-truck HVAC company using Jobber and QuickBooks Desktop", "archetypes": ["field_services"], "naics": { "code": "238220", "title": "Plumbing, heating and air-conditioning contractors" }, "employees": 3, "locations": 1, "mobile": true, "monthly_budget_usd": 200,
+      "base": { "payments_pos": "jobber", "accounting": "qbd", "accounting_edition": "qbd", "customer_records": "jobber", "channels": ["phone", "text", "google_profile"] },
+      "anchor": "jobber", "selected_tiers": { "jobber": "Core" }, "devices": ["ios", "android"], "connectivity": "reliable", "regulated": "none", "sells_on": [] },
+    "pieces": { "customer_comm": "rosie", "reviews": "nicejob" },
+    "stories": ["Jobber doesn't connect to QuickBooks Desktop", "Jobber AI Receptionist is an add-on, not a new vendor", "Sameday is over budget and hidden by the Under budget filter"]
+  },
+  {
+    "id": "landscaper", "label": "Landscaper on Jobber + QuickBooks Online", "blurb": "Landscaping crew, Jobber Core, QuickBooks Online and Gusto",
+    "profile": { "description": "Landscaping company with 6 staff, using Jobber, QuickBooks Online and Gusto", "archetypes": ["field_services"], "naics": { "code": "561730", "title": "Landscaping services" }, "employees": 6, "locations": 1, "mobile": true, "monthly_budget_usd": 300,
+      "base": { "payments_pos": "jobber", "accounting": "qbo", "accounting_edition": "qbo", "customer_records": "jobber", "channels": ["phone", "text", "google_profile"] },
+      "anchor": "jobber", "selected_tiers": { "jobber": "Core" }, "devices": ["ios", "android"], "connectivity": "reliable", "regulated": "none", "sells_on": [] },
+    "pieces": { "customer_comm": "smith_ai", "reviews": "nicejob", "scheduling_payroll": "gusto" },
+    "stories": ["Green seams: these tools fit", "QuickBooks sync needs Jobber Connect, +$70/month", "That sync only runs one way"]
+  },
+  {
+    "id": "dental", "label": "Dental office on Open Dental", "blurb": "Dental practice under HIPAA, Open Dental and QuickBooks Online",
+    "profile": { "description": "Dental office with 6 staff, using Open Dental and QuickBooks Online", "archetypes": ["clinics"], "naics": { "code": "621210", "title": "Offices of dentists" }, "employees": 6, "locations": 1, "mobile": false, "monthly_budget_usd": 500,
+      "base": { "accounting": "qbo", "accounting_edition": "qbo", "customer_records": "open_dental", "channels": ["phone", "email"] },
+      "anchor": "open_dental", "selected_tiers": {}, "devices": ["windows"], "connectivity": "reliable", "regulated": "hipaa", "sells_on": [] },
+    "pieces": { "patient_scheduling": "nexhealth", "marketing": "mailchimp" },
+    "stories": ["Mailchimp connects, but HIPAA doesn't allow it: no BAA", "The same Mailchimp is fine for a vet or a salon", "NexHealth signs a BAA and writes back to the chart"]
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "food_bev": [ { "code": "722511", "title": "Full-service restaurants" }, { "code": "722515", "title": "Snack and nonalcoholic beverage bars" } ],
+  "field_services": [ { "code": "238220", "title": "Plumbing, heating and air-conditioning contractors" }, { "code": "561730", "title": "Landscaping services" } ],
+  "construction": [ { "code": "236118", "title": "Residential remodelers" }, { "code": "238990", "title": "All other specialty trade contractors" } ],
+  "retail": [ { "code": "458110", "title": "Clothing and clothing accessories retailers" }, { "code": "444140", "title": "Hardware retailers" } ],
+  "ecommerce": [ { "code": "459999", "title": "All other miscellaneous retailers" } ],
+  "appointments": [ { "code": "812112", "title": "Beauty salons" }, { "code": "812990", "title": "All other personal services" } ],
+  "clinics": [ { "code": "621210", "title": "Offices of dentists" }, { "code": "541940", "title": "Veterinary services" } ],
+  "lodging": [ { "code": "721110", "title": "Hotels and motels" }, { "code": "721191", "title": "Bed-and-breakfast inns" } ],
+  "professional": [ { "code": "541110", "title": "Offices of lawyers" }, { "code": "541213", "title": "Tax preparation services" } ]
+}

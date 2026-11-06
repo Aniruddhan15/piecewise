@@ -1,0 +1,66 @@
+[
+  { "id": "payments_pos", "name": "Payments & POS", "plain_name": "Take payments", "layer": "base", "archetypes": "all", "description": "How customers pay you: card reader, register or online checkout." },
+  { "id": "accounting", "name": "Accounting & bookkeeping", "plain_name": "Keep your books", "layer": "base", "archetypes": "all", "description": "Where your income and expenses are recorded." },
+  { "id": "customer_records", "name": "Customer records", "plain_name": "Know your customers", "layer": "base", "archetypes": "all", "description": "The one place your customer list lives." },
+  { "id": "channels", "name": "Communication channels", "plain_name": "Stay reachable", "layer": "base", "archetypes": "all", "description": "Phone, text, email and online profiles customers use to reach you." },
+
+  { "id": "marketing", "name": "Marketing & promotion", "plain_name": "Bring customers back", "layer": "universal", "archetypes": "all", "description": "Email and text campaigns that bring in new and repeat business." },
+  { "id": "reviews", "name": "Online reputation & reviews", "plain_name": "Get more good reviews", "layer": "universal", "archetypes": "all", "description": "Ask every customer for a review and answer what people post." },
+  { "id": "customer_comm", "name": "Customer communication", "plain_name": "Never miss a call", "layer": "universal", "archetypes": "all", "description": "Answer calls and messages when you can't pick up. AI receptionists live here." },
+  { "id": "invoicing", "name": "Invoicing & cash flow", "plain_name": "Get paid faster", "layer": "universal", "archetypes": "all", "description": "Send bills, chase what's overdue and see cash coming in.", "sba_resource": "lender_match" },
+  { "id": "legal", "name": "Legal, compliance & risk", "plain_name": "Stay out of trouble", "layer": "universal", "archetypes": "all", "description": "Rules that apply to your business, including a simple policy for staff using AI." },
+  { "id": "reporting", "name": "Reporting & insights", "plain_name": "See what's working", "layer": "universal", "archetypes": "all", "description": "Plain answers about sales, costs and busy times." },
+
+  { "id": "scheduling_payroll", "name": "Staff scheduling & payroll", "plain_name": "Schedule and pay your team", "layer": "universal", "archetypes": "all", "condition": "has_employees", "description": "Build the schedule, track hours and run payroll." },
+  { "id": "hiring_training", "name": "Hiring & training", "plain_name": "Hire and train people", "layer": "universal", "archetypes": "all", "condition": "has_employees", "description": "Post jobs, onboard new staff and keep training consistent.", "sba_resource": "sba_learning" },
+  { "id": "multi_location", "name": "Multi-location management", "plain_name": "Run more than one site", "layer": "universal", "archetypes": "all", "condition": "multi_location", "description": "Compare sites and keep them consistent." },
+
+  { "id": "recipe_costing", "name": "Menu & recipe costing", "plain_name": "Know what each dish costs", "layer": "archetype", "archetypes": ["food_bev"], "description": "Track ingredient prices and see the real cost of each menu item.", "sba_resource": "sba_learning" },
+  { "id": "online_ordering", "name": "Online ordering & delivery", "plain_name": "Take orders online", "layer": "archetype", "archetypes": ["food_bev"], "description": "Let customers order from your own site or from delivery apps." },
+  { "id": "reservations", "name": "Reservations & waitlist", "plain_name": "Fill your tables", "layer": "archetype", "archetypes": ["food_bev"], "description": "Bookings and a waitlist. Full-service restaurants only: cafes and food trucks can skip this." },
+  { "id": "food_inventory", "name": "Food inventory & waste", "plain_name": "Waste less food", "layer": "archetype", "archetypes": ["food_bev"], "description": "Count stock, spot waste and order the right amount." },
+  { "id": "food_safety", "name": "Food-safety compliance", "plain_name": "Pass inspections", "layer": "archetype", "archetypes": ["food_bev"], "description": "Temperature logs, checklists and records for your health inspector." },
+
+  { "id": "dispatch", "name": "Job dispatch & routing", "plain_name": "Send the right tech", "layer": "archetype", "archetypes": ["field_services"], "description": "Assign jobs and plan the day's route." },
+  { "id": "estimates", "name": "Estimates & quotes", "plain_name": "Quote jobs faster", "layer": "archetype", "archetypes": ["field_services"], "description": "Write quotes quickly and follow up on them." },
+  { "id": "maintenance_plans", "name": "Maintenance plans", "plain_name": "Earn steady income", "layer": "archetype", "archetypes": ["field_services"], "description": "Recurring service agreements that smooth out slow seasons." },
+  { "id": "truck_inventory", "name": "Truck & parts inventory", "plain_name": "Keep the truck stocked", "layer": "archetype", "archetypes": ["field_services"], "description": "Know which parts are on which truck." },
+
+  { "id": "bids_takeoffs", "name": "Bids & takeoffs", "plain_name": "Bid from your plans", "layer": "archetype", "archetypes": ["construction"], "description": "A takeoff measures materials from your drawings so you can price a job.", "sba_resource": "sba_learning" },
+  { "id": "project_scheduling", "name": "Project scheduling", "plain_name": "Keep jobs on schedule", "layer": "archetype", "archetypes": ["construction"], "description": "Plan phases and crews across a job." },
+  { "id": "subcontractors", "name": "Subcontractor management", "plain_name": "Manage your subs", "layer": "archetype", "archetypes": ["construction"], "description": "Sub payments and lien waivers, the papers proving a sub has been paid." },
+  { "id": "permits", "name": "Permits", "plain_name": "Get permits sorted", "layer": "archetype", "archetypes": ["construction"], "description": "Track permit applications and deadlines." },
+
+  { "id": "inventory_reorder", "name": "Inventory & reordering", "plain_name": "Never run out of stock", "layer": "archetype", "archetypes": ["retail"], "description": "Track stock and know what to reorder and when." },
+  { "id": "catalog_store", "name": "Product catalog & online store", "plain_name": "Sell online too", "layer": "archetype", "archetypes": ["retail"], "description": "Sell your in-store products online without keeping two stock lists." },
+  { "id": "demand_forecast", "name": "Demand forecasting", "plain_name": "Predict what will sell", "layer": "archetype", "archetypes": ["retail"], "description": "Use past sales to predict what to buy next." },
+  { "id": "suppliers", "name": "Supplier management", "plain_name": "Manage your suppliers", "layer": "archetype", "archetypes": ["retail"], "description": "Purchase orders, prices and delivery times in one place." },
+
+  { "id": "listings", "name": "Multichannel listings", "plain_name": "Sell in more places", "layer": "archetype", "archetypes": ["ecommerce"], "description": "Keep products and stock matched across every place you sell." },
+  { "id": "payout_recon", "name": "Payout reconciliation", "plain_name": "Match payouts to your books", "layer": "archetype", "archetypes": ["ecommerce"], "description": "Deposits arrive after fees and refunds. This matches them to your sales." },
+  { "id": "sales_tax", "name": "Sales tax", "plain_name": "Get sales tax right", "layer": "archetype", "archetypes": ["ecommerce"], "description": "Know where you owe tax. Selling enough in a state can create a duty to collect there." },
+  { "id": "fulfillment", "name": "Fulfillment & shipping", "plain_name": "Ship orders faster", "layer": "archetype", "archetypes": ["ecommerce"], "description": "Print labels and compare carriers." },
+  { "id": "returns", "name": "Returns", "plain_name": "Make returns easy", "layer": "archetype", "archetypes": ["ecommerce"], "description": "Let customers start a return without emailing you." },
+  { "id": "ads", "name": "Ad management", "plain_name": "Run better ads", "layer": "archetype", "archetypes": ["ecommerce"], "description": "Plan and measure paid ads across channels." },
+
+  { "id": "booking", "name": "Booking & no-show reduction", "plain_name": "Keep the chairs full", "layer": "archetype", "archetypes": ["appointments"], "description": "Online booking, reminders and rebooking." },
+  { "id": "memberships", "name": "Memberships & packages", "plain_name": "Sell memberships", "layer": "archetype", "archetypes": ["appointments"], "description": "Sell packages and recurring plans." },
+  { "id": "client_history", "name": "Client history", "plain_name": "Remember every client", "layer": "archetype", "archetypes": ["appointments"], "description": "Notes and past visits for each client." },
+  { "id": "commissions", "name": "Staff commissions", "plain_name": "Work out commissions", "layer": "archetype", "archetypes": ["appointments"], "description": "Calculate what each team member earned." },
+
+  { "id": "patient_scheduling", "name": "Patient scheduling & reminders", "plain_name": "Keep patients coming back", "layer": "archetype", "archetypes": ["clinics"], "description": "Confirmations and recall that write back to your practice system." },
+  { "id": "insurance_billing", "name": "Insurance billing", "plain_name": "Get insurance paid", "layer": "archetype", "archetypes": ["clinics"], "description": "Check coverage and send claims." },
+  { "id": "patient_records", "name": "Patient records", "plain_name": "Keep patient charts", "layer": "archetype", "archetypes": ["clinics"], "description": "Charts and notes in your practice system." },
+  { "id": "hipaa", "name": "HIPAA compliance", "plain_name": "Check the HIPAA rules", "layer": "archetype", "archetypes": ["clinics"], "description": "Any vendor touching patient data must sign a BAA, a contract promising to protect it. Vets can skip this." },
+
+  { "id": "channel_mgmt", "name": "Channel management", "plain_name": "List on every booking site", "layer": "archetype", "archetypes": ["lodging"], "description": "Keep Airbnb, Vrbo and others in sync to avoid double bookings." },
+  { "id": "dynamic_pricing", "name": "Dynamic pricing", "plain_name": "Charge the right rate", "layer": "archetype", "archetypes": ["lodging"], "description": "Change nightly prices automatically based on local demand." },
+  { "id": "guest_messaging", "name": "Guest messaging", "plain_name": "Answer guests fast", "layer": "archetype", "archetypes": ["lodging"], "description": "Reply to guests across booking sites." },
+  { "id": "housekeeping", "name": "Housekeeping", "plain_name": "Get rooms cleaned on time", "layer": "archetype", "archetypes": ["lodging"], "description": "Schedule cleaners around check-outs." },
+
+  { "id": "client_intake", "name": "Client intake", "plain_name": "Bring on new clients", "layer": "archetype", "archetypes": ["professional"], "description": "Capture new client details and screen them." },
+  { "id": "proposals_esign", "name": "Proposals & e-sign", "plain_name": "Get proposals signed", "layer": "archetype", "archetypes": ["professional"], "description": "Send proposals and collect signatures online." },
+  { "id": "time_billing", "name": "Time tracking & billing", "plain_name": "Bill every hour", "layer": "archetype", "archetypes": ["professional"], "description": "Track time and turn it into invoices." },
+  { "id": "documents", "name": "Document management", "plain_name": "Find any document", "layer": "archetype", "archetypes": ["professional"], "description": "Store client files safely and request new ones." },
+  { "id": "project_tracking", "name": "Project tracking", "plain_name": "Track client work", "layer": "archetype", "archetypes": ["professional"], "description": "See what's due and who's doing it." }
+]

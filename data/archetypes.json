@@ -1,0 +1,72 @@
+[
+  {
+    "id": "food_bev", "name": "Food & beverage", "plain_name": "Restaurants, cafes and food trucks",
+    "examples": ["Restaurant", "Coffee shop", "Bakery", "Food truck"],
+    "block_ids": ["recipe_costing", "online_ordering", "reservations", "food_inventory", "food_safety"],
+    "starter_blocks": ["recipe_costing", "scheduling_payroll", "online_ordering"],
+    "anchor_label": "Restaurant POS", "anchor_description": "Your register (POS) runs payments, orders and your menu."
+  },
+  {
+    "id": "field_services", "name": "Field & home services", "plain_name": "Trades that go to the customer",
+    "examples": ["HVAC", "Plumbing", "Landscaping", "Electrical"],
+    "block_ids": ["dispatch", "estimates", "maintenance_plans", "truck_inventory"],
+    "starter_blocks": ["customer_comm", "estimates", "reviews"],
+    "anchor_label": "Field-service app", "anchor_description": "Your field-service app runs customers, jobs, estimates and invoices."
+  },
+  {
+    "id": "construction", "name": "Construction & contracting", "plain_name": "Builders and contractors",
+    "examples": ["General contractor", "Remodeler", "Specialty subcontractor"],
+    "block_ids": ["bids_takeoffs", "project_scheduling", "subcontractors", "permits"],
+    "starter_blocks": ["invoicing", "bids_takeoffs"],
+    "anchor_label": "Construction-management app", "anchor_description": "Your construction app runs projects, estimates and invoices."
+  },
+  {
+    "id": "retail", "name": "Retail", "plain_name": "Shops with a storefront",
+    "examples": ["Boutique", "Hardware store", "Florist", "Grocer"],
+    "block_ids": ["inventory_reorder", "catalog_store", "demand_forecast", "suppliers"],
+    "starter_blocks": ["inventory_reorder", "accounting", "demand_forecast"],
+    "anchor_label": "Retail POS", "anchor_description": "Your register (POS) runs payments, stock and your customer list."
+  },
+  {
+    "id": "ecommerce", "name": "E-commerce", "plain_name": "Selling online",
+    "examples": ["Shopify store", "Etsy shop", "Amazon seller"],
+    "block_ids": ["listings", "payout_recon", "sales_tax", "fulfillment", "returns", "ads"],
+    "starter_blocks": ["listings", "payout_recon", "sales_tax"],
+    "anchor_label": "Online store platform", "anchor_description": "Your store platform runs your catalog, orders and payments."
+  },
+  {
+    "id": "appointments", "name": "Appointment services", "plain_name": "Salons, spas, studios and tutors",
+    "examples": ["Hair salon", "Barbershop", "Spa", "Fitness studio"],
+    "block_ids": ["booking", "memberships", "client_history", "commissions"],
+    "starter_blocks": ["booking", "reviews", "commissions"],
+    "anchor_label": "Booking platform", "anchor_description": "Your booking platform runs your calendar, payments and client records."
+  },
+  {
+    "id": "clinics", "name": "Health & wellness clinics", "plain_name": "Dentists, chiropractors, therapists and vets",
+    "examples": ["Dental office", "Chiropractor", "Physical therapy", "Veterinary clinic"],
+    "block_ids": ["patient_scheduling", "insurance_billing", "patient_records", "hipaa"],
+    "starter_blocks": ["hipaa", "patient_scheduling", "insurance_billing"],
+    "anchor_label": "Practice system", "anchor_description": "Your practice system (PMS or EHR) holds patient records, schedule and insurance.",
+    "regulated_question": [
+      { "prompt": "Do you handle human patient health records?", "help": "If yes, HIPAA applies and any vendor touching patient data must sign a BAA. Veterinary clinics answer no: HIPAA does not directly cover animal care.", "yes_value": "hipaa" }
+    ]
+  },
+  {
+    "id": "lodging", "name": "Lodging & hospitality", "plain_name": "Inns, B&Bs and short-term rentals",
+    "examples": ["Airbnb host", "Bed and breakfast", "Boutique inn"],
+    "block_ids": ["channel_mgmt", "dynamic_pricing", "guest_messaging", "housekeeping"],
+    "starter_blocks": ["dynamic_pricing", "housekeeping"],
+    "anchor_label": "Property-management system", "anchor_description": "Your property system (PMS) runs reservations, rates and availability."
+  },
+  {
+    "id": "professional", "name": "Professional services", "plain_name": "Lawyers, accountants and consultants",
+    "examples": ["Law firm", "Tax preparer", "Consultant", "Bookkeeper"],
+    "block_ids": ["client_intake", "proposals_esign", "time_billing", "documents", "project_tracking"],
+    "starter_blocks": ["accounting", "client_intake", "legal"],
+    "anchor_label": "Practice hub", "anchor_description": "Your practice hub runs intake, billing, documents and e-sign.",
+    "regulated_question": [
+      { "prompt": "Do you prepare tax returns for clients?", "help": "Federal tax law (IRC section 7216) requires written client consent before tax return data goes to outside tools.", "yes_value": "tax_7216" },
+      { "prompt": "Are you a law firm?", "help": "ABA Formal Opinion 512 asks lawyers to protect client information and consult clients about AI use.", "yes_value": "legal_aba" }
+    ]
+  }
+]

@@ -1,0 +1,21 @@
+node_modules/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Secrets: never commit
+.env
+.env.local
+.env.*.local
+
+# Vercel
+.vercel/
+
+# Playwright
+test-results/
+playwright-report/
+
+.DS_Store
+Thumbs.db
