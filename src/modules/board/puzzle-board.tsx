@@ -1,8 +1,19 @@
 "use client";
 
-import { ArrowRight, Grid3x3, List, Lock, Search, ShieldAlert, Sparkles } from "lucide-react";
+import {
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useDraggable,
+  useDroppable,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
+import { ArrowRight, GripVertical, Grid3x3, List, Lock, Search, ShieldAlert, Sparkles, X } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Button, ButtonLink, Card, Chip, cn, inputClass } from "@/components/ui";
 import {
   evaluate,
@@ -12,7 +23,7 @@ import {
 } from "@/modules/compat-engine/engine";
 import { callTask } from "@/modules/llm/client-api";
 import { mapProblemPayload } from "@/modules/llm/payloads";
-import { blocksForProfile, starterBlocks } from "@/modules/matcher/match";
+import { blocksForProfile, matchBlock, starterBlocks } from "@/modules/matcher/match";
 import { keywordMap } from "@/modules/problem-mapper/keyword";
 import { catalog } from "@/modules/taxonomy/catalog";
 import type { Block, BusinessProfile, Seam, Tool, VisibleState } from "@/modules/taxonomy/types";
@@ -42,12 +53,15 @@ type PieceView = {
   starter: number;
   hardToSwap: boolean;
   covered: boolean;
+  /** Dashed "suggested" piece from the profiler, which the owner can remove (M3.F7). */
+  suggested: boolean;
 };
 
 function buildPieces(
   profile: BusinessProfile,
   pieces: Record<string, string>,
   seams: Seam[],
+  suggested: string[],
 ): PieceView[] {
   const anchor = resolveAnchor(profile, catalog);
   const starters = starterBlocks(profile, catalog);
@@ -56,7 +70,14 @@ function buildPieces(
   // A system can fill two pieces (Jobber is both payments and records); list its seams once.
   const seamsShownFor = new Set<string>();
 
-  return blocksForProfile(profile, catalog).map((block) => {
+  const standard = blocksForProfile(profile, catalog);
+  const standardIds = new Set(standard.map((b) => b.id));
+  const extras = suggested
+    .filter((id) => !standardIds.has(id))
+    .map((id) => catalog.blockById.get(id))
+    .filter((b): b is Block => Boolean(b));
+
+  return [...standard, ...extras].map((block) => {
     let tool: Tool | undefined;
     let label: string | undefined;
     if (pieces[block.id]) tool = catalog.byId.get(pieces[block.id]);
@@ -104,6 +125,7 @@ function buildPieces(
       starter: starters.indexOf(block.id),
       hardToSwap: Boolean(tool?.contract_term) && isAnchor,
       covered: !tool && !label && (anchor?.covers?.some((c) => c.block === block.id) ?? false),
+      suggested: !standardIds.has(block.id),
     };
   });
 }
@@ -142,33 +164,66 @@ function SeamButton({
   );
 }
 
+type DropEffect = { block: string; kind: "snap" | "no_snap" };
+
 function PieceCard({
   piece,
   highlight,
   onSeam,
+  effect,
+  onDismiss,
 }: {
   piece: PieceView;
   highlight?: string;
   onSeam: (s: Seam) => void;
+  effect?: DropEffect["kind"];
+  onDismiss: (blockId: string) => void;
 }) {
   const { block, tool, label, state, starter } = piece;
+  const { setNodeRef, isOver } = useDroppable({ id: block.id });
+  const stacked = piece.seams.some((s) => s.state === "overlaps");
   const started = starter >= 0 && !tool && !label;
   const stateName =
     state === "empty" ? "Empty" : state === "base" ? "Already in place" : STATE_INFO[state].label;
 
   return (
     <li
-      className={cn(`state-${state === "empty" ? "empty" : state === "base" ? "base" : state}`, "relative flex min-h-48 flex-col")}
+      ref={setNodeRef}
+      data-block={block.id}
+      className={cn(
+        `state-${state === "empty" ? "empty" : state === "base" ? "base" : state}`,
+        "relative flex min-h-48 flex-col",
+        effect === "snap" && "piece-snap",
+        effect === "no_snap" && "piece-no-snap",
+      )}
     >
+      {stacked ? (
+        <div aria-hidden className="absolute inset-0 translate-x-2 translate-y-2 opacity-50">
+          <PieceShape />
+        </div>
+      ) : null}
       <PieceShape
         mismatch={state === "no_fit"}
         dashed={state === "empty"}
-        heavy={state === "not_allowed" || Boolean(highlight)}
+        heavy={state === "not_allowed" || Boolean(highlight) || isOver}
       />
       <div className="relative flex flex-1 flex-col gap-2 px-7 py-6 sm:px-8 sm:py-7">
         {started ? (
           <span className="w-fit rounded-full bg-brand px-2 py-0.5 text-xs font-bold text-brand-ink">
             Start here{starter >= 0 ? ` · ${starter + 1}` : ""}
+          </span>
+        ) : null}
+        {piece.suggested ? (
+          <span className="flex w-fit items-center gap-1 rounded-full border border-line bg-surface py-0.5 pl-2 text-xs font-bold">
+            Suggested for you
+            <button
+              type="button"
+              onClick={() => onDismiss(block.id)}
+              aria-label={`Remove the suggested piece: ${block.plain_name}`}
+              className="relative z-10 flex size-7 items-center justify-center rounded-full hover:bg-surface-2"
+            >
+              <X aria-hidden className="size-3.5" />
+            </button>
           </span>
         ) : null}
         {piece.anchorGap ? (
@@ -240,12 +295,16 @@ function PieceGrid({
   items,
   highlights,
   onSeam,
+  effect,
+  onDismiss,
 }: {
   title: string;
   intro: string;
   items: PieceView[];
   highlights: Record<string, string>;
   onSeam: (s: Seam) => void;
+  effect: DropEffect | null;
+  onDismiss: (blockId: string) => void;
 }) {
   if (items.length === 0) return null;
   return (
@@ -256,7 +315,14 @@ function PieceGrid({
       </div>
       <ul className="grid auto-rows-fr grid-cols-1 pr-[4%] pb-[3%] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {items.map((p) => (
-          <PieceCard key={p.block.id} piece={p} highlight={highlights[p.block.id]} onSeam={onSeam} />
+          <PieceCard
+            key={p.block.id}
+            piece={p}
+            highlight={highlights[p.block.id]}
+            onSeam={onSeam}
+            effect={effect?.block === p.block.id ? effect.kind : undefined}
+            onDismiss={onDismiss}
+          />
         ))}
       </ul>
     </section>
@@ -308,6 +374,47 @@ function PieceList({
         </li>
       ))}
     </ul>
+  );
+}
+
+function DraggableTool({ tool }: { tool: Tool }) {
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id: tool.id });
+  return (
+    <button
+      ref={setNodeRef}
+      type="button"
+      {...listeners}
+      {...attributes}
+      aria-label={`Drag ${tool.name} onto a piece`}
+      style={{ transform: CSS.Translate.toString(transform), touchAction: "none" }}
+      className={cn(
+        "relative flex min-h-11 cursor-grab items-center gap-1 rounded-lg border border-line bg-surface px-2.5 py-1.5 text-sm font-semibold active:cursor-grabbing",
+        isDragging && "z-30 shadow-lg",
+      )}
+    >
+      <GripVertical aria-hidden className="size-4 text-ink-2" />
+      {tool.name}
+    </button>
+  );
+}
+
+/** A few good options to try by dragging. Tapping a piece does the same job without dragging. */
+function ToolTray({ tools }: { tools: Tool[] }) {
+  if (tools.length === 0) return null;
+  return (
+    <section aria-label="Tools to try" className="no-print z-20 space-y-2 rounded-xl border border-line bg-surface p-3 shadow-sm sm:sticky sm:top-2">
+      <p className="font-semibold">
+        Try a tool: drag it onto a piece
+        <span className="font-normal text-ink-2"> (or tap the piece to see every option)</span>
+      </p>
+      <ul className="flex flex-wrap gap-2">
+        {tools.map((t) => (
+          <li key={t.id}>
+            <DraggableTool tool={t} />
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
@@ -370,15 +477,26 @@ function HeadacheBox({
 }
 
 export function PuzzleBoard() {
-  const { state } = useStore();
+  const { state, setPiece, setSuggested } = useStore();
   const { profile, pieces } = state;
   const [view, setView] = useState<"puzzle" | "list">("puzzle");
+  const [effect, setEffect] = useState<DropEffect | null>(null);
+  const [dropMessage, setDropMessage] = useState("");
+  const effectTimer = useRef<number | undefined>(undefined);
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(KeyboardSensor),
+  );
   const [openSeam, setOpenSeam] = useState<Seam | null>(null);
   const [highlights, setHighlights] = useState<Record<string, string>>({});
 
   const chosen = useMemo(() => chosenTools(pieces), [pieces]);
   const seams = useMemo(() => evaluateSeams(profile, chosen, catalog), [profile, chosen]);
-  const items = useMemo(() => buildPieces(profile, pieces, seams), [profile, pieces, seams]);
+  const suggested = useMemo(() => state.suggested ?? [], [state.suggested]);
+  const items = useMemo(
+    () => buildPieces(profile, pieces, seams, suggested),
+    [profile, pieces, seams, suggested],
+  );
   const blocks = useMemo(() => items.map((i) => i.block), [items]);
   const anchor = resolveAnchor(profile, catalog);
   const filled = Object.keys(pieces).length;
@@ -389,6 +507,62 @@ export function PuzzleBoard() {
   const names = profile.archetypes.map((a) => catalog.archetypeById.get(a)?.name).join(" + ");
   const showHighlights = (ids: string[], why: string) =>
     setHighlights(Object.fromEntries(ids.map((id) => [id, why])));
+  const dismissSuggested = (blockId: string) =>
+    setSuggested(suggested.filter((id) => id !== blockId));
+
+  // Top options for the empty pieces, starter pieces first.
+  const trayTools = useMemo(() => {
+    const placed = new Set(Object.values(pieces));
+    const starters = starterBlocks(profile, catalog);
+    const seen = new Set<string>();
+    const result: Tool[] = [];
+    for (const blockId of [...starters, ...blocks.map((b) => b.id)]) {
+      if (pieces[blockId] || result.length >= 8) continue;
+      const block = catalog.blockById.get(blockId);
+      if (!block || block.layer === "base") continue;
+      const r = matchBlock(block, profile, chosen, catalog);
+      for (const m of [...r.fits, ...r.catches].slice(0, 2)) {
+        if (!placed.has(m.tool.id) && !seen.has(m.tool.id)) {
+          seen.add(m.tool.id);
+          result.push(m.tool);
+        }
+      }
+    }
+    return result.slice(0, 8);
+  }, [pieces, profile, blocks, chosen]);
+
+  function flash(block: string, kind: DropEffect["kind"]) {
+    setEffect({ block, kind });
+    window.clearTimeout(effectTimer.current);
+    effectTimer.current = window.setTimeout(() => setEffect(null), 700);
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    const blockId = event.over?.id;
+    const tool = catalog.byId.get(String(event.active.id));
+    if (!blockId || !tool) return;
+    const block = catalog.blockById.get(String(blockId));
+    if (!block) return;
+    if (!tool.blocks.includes(block.id)) {
+      const homes = tool.blocks.map((b) => catalog.blockById.get(b)?.plain_name).filter(Boolean);
+      flash(block.id, "no_snap");
+      setDropMessage(`${tool.name} doesn't go on "${block.plain_name}". Try: ${homes.join(", ")}.`);
+      return;
+    }
+    const verdict = evaluate(tool, profile, chosen.filter((t) => t.id !== tool.id), catalog);
+    if (verdict.visible === "no_fit" || verdict.visible === "not_allowed") {
+      flash(block.id, "no_snap");
+      setDropMessage(`${tool.name} didn't snap in: ${verdict.reasons[0]?.message ?? "it doesn't fit."}`);
+      return;
+    }
+    setPiece(block.id, tool.id);
+    flash(block.id, "snap");
+    setDropMessage(
+      verdict.visible === "fits"
+        ? `${tool.name} snapped into "${block.plain_name}".`
+        : `${tool.name} snapped into "${block.plain_name}", with a catch. Tap its label to see why.`,
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -422,11 +596,19 @@ export function PuzzleBoard() {
       </ul>
 
       {view === "puzzle" ? (
-        <div className="space-y-8">
-          <PieceGrid title="What you already run" intro="Your foundation. Everything else has to fit around it." items={base} highlights={highlights} onSeam={setOpenSeam} />
-          <PieceGrid title={`Pieces for ${names}`} intro="The jobs that matter most in your line of work." items={trade} highlights={highlights} onSeam={setOpenSeam} />
-          <PieceGrid title="Pieces every business has" intro="Common jobs where AI tools often help first." items={universal} highlights={highlights} onSeam={setOpenSeam} />
-        </div>
+        <DndContext id="puzzle-board" sensors={sensors} onDragEnd={handleDragEnd}>
+          <div className="space-y-6">
+            <ToolTray tools={trayTools} />
+            <p role="status" className="min-h-6 font-medium">
+              {dropMessage}
+            </p>
+            <div className="space-y-8">
+              <PieceGrid title="What you already run" intro="Your foundation. Everything else has to fit around it." items={base} highlights={highlights} onSeam={setOpenSeam} effect={effect} onDismiss={dismissSuggested} />
+              <PieceGrid title={`Pieces for ${names}`} intro="The jobs that matter most in your line of work." items={trade} highlights={highlights} onSeam={setOpenSeam} effect={effect} onDismiss={dismissSuggested} />
+              <PieceGrid title="Pieces every business has" intro="Common jobs where AI tools often help first." items={universal} highlights={highlights} onSeam={setOpenSeam} effect={effect} onDismiss={dismissSuggested} />
+            </div>
+          </div>
+        </DndContext>
       ) : (
         <PieceList items={items} highlights={highlights} onSeam={setOpenSeam} />
       )}
@@ -445,7 +627,16 @@ export function PuzzleBoard() {
         ) : null}
       </div>
 
-      <SeamDialog seam={openSeam} profile={profile} onClose={() => setOpenSeam(null)} />
+      <SeamDialog
+        seam={openSeam}
+        profile={profile}
+        pieces={pieces}
+        onRemovePiece={(blockId) => {
+          setPiece(blockId, null);
+          setOpenSeam(null);
+        }}
+        onClose={() => setOpenSeam(null)}
+      />
     </div>
   );
 }

@@ -71,13 +71,47 @@ function EditionWhatIf({
   );
 }
 
+/** "Overlaps" is a choice, not a failure, so it opens a prompt rather than blocking (M5.F9). */
+function SourceOfTruth({
+  seam,
+  pieces,
+  onRemovePiece,
+}: {
+  seam: Seam;
+  pieces: Record<string, string>;
+  onRemovePiece: (blockId: string) => void;
+}) {
+  if (seam.state !== "overlaps") return null;
+  const removable = Object.entries(pieces).filter(([, id]) => id === seam.a || id === seam.b);
+  return (
+    <div className="space-y-2 rounded-lg border border-line bg-surface-2 p-3">
+      <h3 className="font-semibold">Pick one as the source of truth</h3>
+      <p className="text-ink-2">
+        Decide which one holds the real record, and only make changes there. Many businesses keep
+        both this way.
+      </p>
+      <div className="flex flex-wrap gap-2">
+        {removable.map(([blockId, id]) => (
+          <Button key={blockId} size="sm" variant="secondary" onClick={() => onRemovePiece(blockId)}>
+            Remove {catalog.byId.get(id)?.name} from my puzzle
+          </Button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function SeamDialog({
   seam,
   profile,
+  pieces,
+  onRemovePiece,
   onClose,
 }: {
   seam: Seam | null;
   profile: BusinessProfile;
+  pieces: Record<string, string>;
+  onRemovePiece: (blockId: string) => void;
   onClose: () => void;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
@@ -106,6 +140,7 @@ export function SeamDialog({
           </div>
           <StateBadge state={seam.visible} />
           <ReasonList reasons={seam.reasons} />
+          <SourceOfTruth seam={seam} pieces={pieces} onRemovePiece={onRemovePiece} />
           <EditionWhatIf seam={seam} profile={profile} />
         </div>
       ) : null}

@@ -146,6 +146,26 @@
   --state-line: var(--line);
 }
 
+/* A piece clicking home, or bouncing off when it doesn't fit (M5.F7). */
+@keyframes piece-snap {
+  0% { transform: scale(1.06); }
+  60% { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}
+@keyframes piece-no-snap {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+.piece-snap {
+  animation: piece-snap 0.4s ease-out;
+  z-index: 5;
+}
+.piece-no-snap {
+  animation: piece-no-snap 0.4s ease-in-out;
+  z-index: 5;
+}
+
 dialog {
   margin: auto;
   background: var(--surface);

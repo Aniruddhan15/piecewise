@@ -1,3 +1,4 @@
+import blocks from "@data/blocks.json";
 import type { TaskId } from "../tasks";
 
 /** Versioned prompts (M15.F5). Change the file name when a prompt's meaning changes. */
@@ -19,7 +20,7 @@ Business types:
 - clinics: dentists, chiropractors, therapists, doctors, veterinary clinics
 - lodging: inns, B&Bs, short-term rentals
 - professional: lawyers, accountants, tax preparers, consultants, agencies
-Return every type that clearly applies; a bakery that also sells packaged coffee beans is food_bev and retail. Return the most likely 6-digit NAICS code and title, a confidence from 0 to 1, and suggested_extra_blocks as an empty list unless the description names a clear need. ${SHARED}`,
+Return every type that clearly applies; a bakery that also sells packaged coffee beans is food_bev and retail. Return the most likely 6-digit NAICS code and title, a confidence from 0 to 1, and suggested_extra_blocks: ids from this list that the description clearly calls for beyond those business types, usually an empty list: ${blocks.map((b) => b.id).join(", ")}. ${SHARED}`,
 
   map_problem: `A small business owner describes their biggest headache. Pick up to 3 ids from the provided puzzle pieces that would help most, best first. Use only ids from the input. "why" is one short sentence to the owner. ${SHARED}`,
 

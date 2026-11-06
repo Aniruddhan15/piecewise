@@ -56,7 +56,7 @@ export function StartForm() {
       return;
     }
     setProfile((p) => ({ ...p, archetypes: result.archetypes, naics: result.naics }));
-    setSuggested(result.suggested_extra_blocks);
+    setSuggested(result.suggested_extra_blocks.filter((id) => catalog.blockById.has(id)));
     setNote("Here's our best guess. Remove or add anything below.");
   }
 

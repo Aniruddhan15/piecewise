@@ -18,6 +18,25 @@ describe("robots.txt", () => {
     expect(robotsAllow(parseRobots("User-agent: *\nDisallow:"), "/anything")).toBe(true);
   });
 
+  it("a wildcard rule doesn't block the whole site", () => {
+    const rules = parseRobots("User-agent: *\nDisallow: /*?utm_\nDisallow: /search");
+    expect(robotsAllow(rules, "/pricing")).toBe(true);
+    expect(robotsAllow(rules, "/pricing?utm_source=x")).toBe(false);
+    expect(robotsAllow(rules, "/search/results")).toBe(false);
+  });
+
+  it("the longest matching rule wins", () => {
+    const rules = parseRobots("User-agent: *\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php");
+    expect(robotsAllow(rules, "/wp-admin/admin-ajax.php")).toBe(true);
+    expect(robotsAllow(rules, "/wp-admin/edit")).toBe(false);
+  });
+
+  it("$ anchors the end of a path", () => {
+    const rules = parseRobots("User-agent: *\nDisallow: /*.pdf$");
+    expect(robotsAllow(rules, "/a.pdf")).toBe(false);
+    expect(robotsAllow(rules, "/a.pdf/more")).toBe(true);
+  });
+
   it("Disallow: / blocks everything", () => {
     expect(robotsAllow(parseRobots("User-agent: *\nDisallow: /"), "/anything")).toBe(false);
   });

@@ -95,3 +95,40 @@ test("list view shows the same pieces", async ({ page }) => {
   await expect(page.getByText("Mailchimp").first()).toBeVisible();
   await expect(page.getByText("Not allowed").first()).toBeVisible();
 });
+
+test.describe("drag and drop", () => {
+  test.skip(({ viewport }) => (viewport?.width ?? 0) < 700, "Dragging is tested on desktop");
+
+  async function drag(page: Page, name: RegExp, blockId: string) {
+    const target = page.locator(`li[data-block="${blockId}"]`);
+    await target.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(100);
+    const from = await page.getByRole("button", { name }).first().boundingBox();
+    const to = await target.boundingBox();
+    if (!from || !to) throw new Error("missing element");
+    await page.mouse.move(from.x + 10, from.y + 10);
+    await page.mouse.down();
+    await page.mouse.move(from.x + 30, from.y + 30, { steps: 5 });
+    await page.mouse.move(to.x + to.width / 2, to.y + to.height / 2, { steps: 12 });
+    await page.mouse.up();
+  }
+
+  test("a tool bounces off the wrong piece", async ({ page }) => {
+    await page.goto("/board?demo=hvac");
+    await page.waitForURL(/\/board$/);
+    await expect(page.getByRole("heading", { name: "Your puzzle" })).toBeVisible();
+    await page.waitForLoadState("networkidle");
+    await drag(page, /^Drag .* onto a piece$/, "reporting");
+    await expect(page.getByRole("status").filter({ hasText: /doesn't go on/ })).toBeVisible();
+  });
+
+  test("a tool snaps into its piece", async ({ page }) => {
+    await page.goto("/board?demo=restaurant");
+    await page.waitForURL(/\/board$/);
+    await expect(page.getByRole("heading", { name: "Your puzzle" })).toBeVisible();
+    await page.waitForLoadState("networkidle");
+    await drag(page, /^Drag Homebase onto a piece$|^Drag FoodDocs onto a piece$/, "food_safety");
+    await expect(page.getByRole("status").filter({ hasText: /snapped/ })).toBeVisible();
+    await expect(page.locator('li[data-block="food_safety"]').getByText(/FoodDocs|SafetyCulture/).first()).toBeVisible();
+  });
+});
