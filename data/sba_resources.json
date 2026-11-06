@@ -2,7 +2,7 @@
   { "id": "md_sbdc_request", "name": "Maryland SBDC: request free help", "description": "One-on-one help for Maryland small businesses from the lead center at UMD.", "url": "https://mdsbdc.ecenterdirect.com/signup?reset=1", "last_checked": "2026-11-06", "verified": true },
   { "id": "md_sbdc_locations", "name": "Maryland SBDC locations", "description": "Find your nearest Maryland SBDC office.", "url": "https://www.marylandsbdc.org/locations", "last_checked": "2026-11-06", "verified": true },
   { "id": "sbdc_locator", "name": "Find your SBDC (national)", "description": "Free business advisors in every state.", "url": "https://americassbdc.org/find-your-sbdc/", "last_checked": "2026-11-06", "verified": true },
-  { "id": "score", "name": "SCORE mentors", "description": "Free mentoring from experienced business owners.", "url": "https://www.score.org/find-mentor", "last_checked": "2026-11-06", "verified": false },
+  { "id": "score", "name": "SCORE mentors", "description": "Free mentoring from experienced business owners.", "url": "https://www.score.org/how-mentoring-works/", "last_checked": "2026-11-06", "verified": true },
   { "id": "sba_learning", "name": "SBA Learning Platform", "description": "Free online courses for small business owners.", "url": "https://www.sba.gov/sba-learning-platform", "last_checked": "2026-11-06", "verified": true },
   { "id": "lender_match", "name": "SBA Lender Match", "description": "Get matched with lenders that work with small businesses.", "url": "https://www.sba.gov/funding-programs/loans/lender-match-connects-you-lenders", "last_checked": "2026-11-06", "verified": true }
 ]

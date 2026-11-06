@@ -1,0 +1,207 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  color-scheme: light;
+  --bg: #faf7f2;
+  --surface: #ffffff;
+  --surface-2: #f3eee6;
+  --ink: #1d2433;
+  --ink-2: #4a5365;
+  --line: #d9d2c5;
+  --brand: #24408e;
+  --brand-ink: #ffffff;
+  --brand-soft: #e4e9f7;
+  --focus: #b4530a;
+
+  /* The 4 visible states: text on tint passes WCAG AA in both themes. */
+  --fits: #14642f;
+  --fits-tint: #dff5e4;
+  --fits-line: #2f9e55;
+  --catch: #7a4305;
+  --catch-tint: #fdf0cc;
+  --catch-line: #d99a1c;
+  --nofit: #475064;
+  --nofit-tint: #e8e9ee;
+  --nofit-line: #8d94a5;
+  --notallowed: #9f1d1d;
+  --notallowed-tint: #fde4e2;
+  --notallowed-line: #d33a3a;
+  --empty-tint: #fbf9f5;
+  --empty-line: #b9b09f;
+  --start: #24408e;
+  --start-tint: #e4e9f7;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #14171f;
+    --surface: #1c2029;
+    --surface-2: #262b36;
+    --ink: #eef0f5;
+    --ink-2: #b4bbca;
+    --line: #3a4150;
+    --brand: #9db4f5;
+    --brand-ink: #10152a;
+    --brand-soft: #232c49;
+    --focus: #f6ad55;
+
+    --fits: #86e3a0;
+    --fits-tint: #12331d;
+    --fits-line: #3fb568;
+    --catch: #f8cf6c;
+    --catch-tint: #3a2a08;
+    --catch-line: #d99a1c;
+    --nofit: #c6ccda;
+    --nofit-tint: #2a2f3b;
+    --nofit-line: #7b8496;
+    --notallowed: #fca8a4;
+    --notallowed-tint: #421616;
+    --notallowed-line: #e25c5c;
+    --empty-tint: #1a1e27;
+    --empty-line: #545c6d;
+    --start: #b9caf9;
+    --start-tint: #232c49;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  a {
+    color: var(--brand);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+/* State helpers: color always comes with an icon and a text label. */
+.state-fits {
+  --state: var(--fits);
+  --state-tint: var(--fits-tint);
+  --state-line: var(--fits-line);
+}
+.state-catch {
+  --state: var(--catch);
+  --state-tint: var(--catch-tint);
+  --state-line: var(--catch-line);
+}
+.state-no_fit {
+  --state: var(--nofit);
+  --state-tint: var(--nofit-tint);
+  --state-line: var(--nofit-line);
+}
+.state-not_allowed {
+  --state: var(--notallowed);
+  --state-tint: var(--notallowed-tint);
+  --state-line: var(--notallowed-line);
+}
+.state-empty {
+  --state: var(--ink-2);
+  --state-tint: var(--empty-tint);
+  --state-line: var(--empty-line);
+}
+.state-base {
+  --state: var(--ink);
+  --state-tint: var(--surface-2);
+  --state-line: var(--line);
+}
+
+dialog {
+  margin: auto;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0;
+  width: min(36rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+}
+dialog::backdrop {
+  background: rgb(10 12 20 / 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print / Save as PDF for the plan page (M11.F7) */
+@media print {
+  :root {
+    color-scheme: light;
+    --bg: #fff;
+    --surface: #fff;
+    --surface-2: #f4f4f4;
+    --ink: #000;
+    --ink-2: #333;
+    --line: #bbb;
+    --brand: #000;
+    --fits: #0b4d22;
+    --fits-tint: #fff;
+    --catch: #5e3303;
+    --catch-tint: #fff;
+    --nofit: #333;
+    --nofit-tint: #fff;
+    --notallowed: #7f1414;
+    --notallowed-tint: #fff;
+  }
+  .no-print {
+    display: none !important;
+  }
+  body {
+    font-size: 11pt;
+  }
+  section,
+  article {
+    break-inside: avoid;
+  }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    word-break: break-all;
+  }
+}

@@ -15,6 +15,7 @@ next-env.d.ts
 
 # Playwright
 test-results/
+/.claude/
 playwright-report/
 
 .DS_Store

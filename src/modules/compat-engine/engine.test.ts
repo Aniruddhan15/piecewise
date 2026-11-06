@@ -224,6 +224,37 @@ describe("MUST rules", () => {
   });
 });
 
+describe("a tool's problem stays with that tool", () => {
+  it("Mailchimp's HIPAA block doesn't make NexHealth look not allowed", () => {
+    const chosen = [t("nexhealth"), t("mailchimp")];
+    const seams = evaluateSeams(dental, chosen, catalog);
+    const nexhealth = seams.filter((s) => s.a === "nexhealth" || s.b === "nexhealth");
+    expect(nexhealth.every((s) => s.visible !== "not_allowed")).toBe(true);
+    const qbo = seams.filter((s) => s.a === "qbo" || s.b === "qbo");
+    expect(qbo.every((s) => s.visible !== "not_allowed")).toBe(true);
+    const others = [t("mailchimp")];
+    expect(evaluate(t("nexhealth"), dental, others, catalog).visible).toBe("fits");
+  });
+
+  it("QuickBooks warns to keep patient data out instead of being blocked", () => {
+    const seam = evaluateSeam(t("qbo"), t("open_dental"), dental, catalog);
+    expect(seam.visible).toBe("catch");
+    expect(seam.reasons.some((r) => /patient/.test(r.message))).toBe(true);
+  });
+
+  it("a tool with no confirmed link to the anchor is a catch, not a fit", () => {
+    for (const id of ["upfirst", "birdeye", "goodcall"]) {
+      expect(evaluate(t(id), landscaperOnline, [], catalog).visible, id).toBe("catch");
+    }
+  });
+
+  it("a standalone tool that needs no link fits, and says it works alone", () => {
+    const v = evaluate(t("fooddocs"), squareCafe, [], catalog);
+    expect(v.visible).toBe("fits");
+    expect(v.reasons[0].message).toMatch(/on its own/);
+  });
+});
+
 describe("SHOULD rules", () => {
   function withTool(tool: Partial<Tool> & { id: string }): { tool: Tool; cat: Catalog } {
     const full: Tool = { ...t("mailchimp"), standalone_ok: { message: "alone" }, needs: undefined, baa: undefined, ...tool };

@@ -261,8 +261,9 @@
     "slots": ["accounting"],
     "tiers": [ { "name": "Your current plan", "monthly_usd": null, "includes": ["Already paid for"] } ], "free_tier": false,
     "setup": { "hours_estimate": 4, "no_code": true, "steps": ["Sign up", "Connect your bank"], "data_needed": ["Bank login"] },
-    "how_to_start": { "type": "signup", "url": "https://quickbooks.intuit.com/online/" }, "privacy": { "trains_on_customer_data": null },
-    "evidence": [ { "claim": "Connects to more than 800 business apps", "url": "https://quickbooks.intuit.com/online/integrations/", "grade": 3 } ],
+    "how_to_start": { "type": "signup", "url": "https://quickbooks.intuit.com/online/" }, "privacy": { "trains_on_customer_data": true, "policy_url": "https://www.intuit.com/privacy/statement/" },
+    "evidence": [
+      { "claim": "Intuit's privacy statement says it trains AI models on how its products are used and on some customer content", "url": "https://www.intuit.com/privacy/statement/", "grade": 3, "quote": "by training our artificial intelligence models" }, { "claim": "Connects to more than 800 business apps", "url": "https://quickbooks.intuit.com/online/integrations/", "grade": 3 } ],
     "last_checked": "2026-11-05", "verified": false },
 
   { "id": "qbd", "name": "QuickBooks Desktop", "vendor_url": "https://quickbooks.intuit.com/desktop/", "kind": "base_system", "blocks": ["accounting"], "archetypes": "all", "ai_capabilities": [], "owns_entities": ["customers", "items", "invoices"],
@@ -270,8 +271,9 @@
     "slots": ["accounting"],
     "tiers": [ { "name": "Your current plan", "monthly_usd": null, "includes": ["Already paid for"] } ], "free_tier": false,
     "setup": { "hours_estimate": 4, "no_code": true, "steps": ["Install on your office computer"], "data_needed": [] },
-    "how_to_start": { "type": "signup", "url": "https://quickbooks.intuit.com/desktop/" }, "privacy": { "trains_on_customer_data": null },
-    "evidence": [ { "claim": "Desktop Plus not sold to new US subscribers since Sep 30, 2024", "url": "https://quickbooks.intuit.com/learn-support/en-us/help-article/new-subscriptions/us-quickbooks-desktop-sold-july-2024/L5lkQNq7L_US_en_US", "grade": 3 } ],
+    "how_to_start": { "type": "signup", "url": "https://quickbooks.intuit.com/desktop/" }, "privacy": { "trains_on_customer_data": true, "policy_url": "https://www.intuit.com/privacy/statement/" },
+    "evidence": [
+      { "claim": "Intuit's privacy statement says it trains AI models on how its products are used and on some customer content", "url": "https://www.intuit.com/privacy/statement/", "grade": 3, "quote": "by training our artificial intelligence models" }, { "claim": "Desktop Plus not sold to new US subscribers since Sep 30, 2024", "url": "https://quickbooks.intuit.com/learn-support/en-us/help-article/new-subscriptions/us-quickbooks-desktop-sold-july-2024/L5lkQNq7L_US_en_US", "grade": 3 } ],
     "last_checked": "2026-11-05", "verified": false },
 
   { "id": "xero", "name": "Xero", "vendor_url": "https://www.xero.com/", "kind": "base_system", "blocks": ["accounting"], "archetypes": "all", "ai_capabilities": [], "owns_entities": ["customers", "items", "invoices"], "slots": ["accounting"],

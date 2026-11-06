@@ -83,13 +83,19 @@ export function toolCost(
     },
   ];
 
-  if (verdict.extra_monthly_usd > 0) {
-    const reason = verdict.adapter
-      ? `${catalog.byId.get(verdict.adapter)?.name ?? "Adapter"} connector`
-      : verdict.required_tier
-        ? `Upgrade to ${verdict.required_tier}`
-        : "Extra fees";
-    lines.push({ label: reason, monthly_usd: verdict.extra_monthly_usd });
+  if (verdict.adapter) {
+    const adapter = catalog.byId.get(verdict.adapter);
+    const free = adapter?.tiers.some((t) => t.monthly_usd === 0);
+    lines.push({
+      label: `${adapter?.name ?? "Connector"} to link them`,
+      monthly_usd: verdict.extra_monthly_usd,
+      note: free ? "free plan, slower updates" : undefined,
+    });
+  } else if (verdict.extra_monthly_usd > 0) {
+    lines.push({
+      label: verdict.required_tier ? `Upgrade to ${verdict.required_tier}` : "Extra fees",
+      monthly_usd: verdict.extra_monthly_usd,
+    });
   }
 
   const known = lines.every((l) => l.monthly_usd !== null);

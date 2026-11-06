@@ -128,8 +128,9 @@
     "standalone_ok": { "message": "Not linked to your main system: you'd add contacts to Mailchimp yourself." },
     "tiers": [ { "name": "Free", "monthly_usd": 0, "includes": ["250 contacts", "500 sends a month", "No automation"] }, { "name": "Essentials", "monthly_usd": 13, "includes": ["From $13 at 500 contacts"] }, { "name": "Standard", "monthly_usd": 20, "includes": ["From $20"] } ], "free_tier": true,
     "setup": { "hours_estimate": 1, "no_code": true, "steps": ["Create an account", "Connect your POS or import contacts", "Send a welcome email"], "data_needed": ["Customer email list (export from your main system)"] },
-    "how_to_start": { "type": "signup", "url": "https://mailchimp.com/pricing/marketing/" }, "privacy": { "trains_on_customer_data": null },
-    "evidence": [ { "claim": "Mailchimp will not sign a business associate agreement", "url": "https://www.paubox.com/blog/is-mailchimp-hipaa-compliant", "grade": 6, "rule": "R8", "quote": "No, Mailchimp will not sign a business associate agreement (BAA)" }, { "claim": "Free plan: 250 contacts and 500 sends, no automation", "url": "https://www.retainful.com/blog/mailchimp-pricing", "grade": 6 } ],
+    "how_to_start": { "type": "signup", "url": "https://mailchimp.com/pricing/marketing/" }, "privacy": { "trains_on_customer_data": true, "policy_url": "https://www.intuit.com/privacy/statement/" },
+    "evidence": [
+      { "claim": "Intuit's privacy statement says it trains AI models on how its products are used and on some customer content", "url": "https://www.intuit.com/privacy/statement/", "grade": 3, "quote": "by training our artificial intelligence models" }, { "claim": "Mailchimp will not sign a business associate agreement", "url": "https://www.paubox.com/blog/is-mailchimp-hipaa-compliant", "grade": 6, "rule": "R8", "quote": "No, Mailchimp will not sign a business associate agreement (BAA)" }, { "claim": "Free plan: 250 contacts and 500 sends, no automation", "url": "https://www.retainful.com/blog/mailchimp-pricing", "grade": 6 } ],
     "last_checked": "2026-11-06", "verified": true },
 
   { "id": "klaviyo", "name": "Klaviyo", "vendor_url": "https://www.klaviyo.com/", "kind": "ai_tool", "blocks": ["marketing"], "archetypes": ["retail", "ecommerce", "food_bev", "appointments"],

@@ -593,10 +593,7 @@ function pairRules(
     (n) => counterpartFor(n, profile, catalog)?.id === tool.id,
   );
   const implicitNeed: Need | undefined =
-    tool.kind === "ai_tool" &&
-    !tool.needs &&
-    !tool.standalone_ok &&
-    other.id === anchor?.id
+    tool.kind === "ai_tool" && !tool.needs && other.id === anchor?.id
       ? { with: "anchor", entities: ["customers"], why: "It has to reach your main system" }
       : undefined;
   if (needOfOther && !needOfTool) {
@@ -849,10 +846,13 @@ export function evaluateSeam(
   catalog: Catalog,
 ): Seam {
   const hits = pairRules(a, b, profile, catalog);
+  // A tool's own compliance problem belongs on its link to the anchor. It must not
+  // spread to every neighbor, or a compliant tool would read as "not allowed".
   const anchorId = resolveAnchor(profile, catalog)?.id;
-  const compliance = [a, b]
-    .filter((t) => t.id !== anchorId && t.kind !== "base_system")
-    .flatMap((t) => complianceRules(t, profile));
+  const compliance =
+    a.id === anchorId || b.id === anchorId
+      ? [a, b].filter((t) => t.id !== anchorId).flatMap((t) => complianceRules(t, profile))
+      : [];
   const ordered = [
     ...hits.filter((h) => h.blocking && h.state !== "was_compatible"),
     ...compliance,

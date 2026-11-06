@@ -1,0 +1,15 @@
+{
+  "xero": {
+    "name": "Xero App Store (US)",
+    "why": "Public listings, robots.txt only blocks /api/, Xero recertifies apps every year.",
+    "listing_urls": [
+      "https://apps.xero.com/us/collection/ai-apps-for-bills-expenses",
+      "https://apps.xero.com/us/collection/new-and-noteworthy",
+      "https://apps.xero.com/us"
+    ],
+    "app_link_pattern": "href=\"(/us/app/[a-z0-9-]+)\"",
+    "base_url": "https://apps.xero.com",
+    "evidence_grade": 1,
+    "edge_to": "xero"
+  }
+}
