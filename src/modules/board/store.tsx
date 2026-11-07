@@ -28,6 +28,10 @@ const SavedSchema = z.object({
   pieces: z.record(z.string(), z.string()),
   demoId: z.string().optional(),
   suggested: z.array(z.string()).optional(),
+  /** Jobs the owner said they're fine on, so the kit counts them as handled. */
+  skipped: z.array(z.string()).optional(),
+  /** Questions the owner answered "not sure" to, so we stop asking. */
+  asked: z.array(z.string()).optional(),
 });
 
 export type AppState = z.infer<typeof SavedSchema>;
@@ -63,6 +67,12 @@ export function decodeState(encoded: string): AppState | null {
   }
 }
 
+/** Validates state from anywhere outside this browser, such as the user's saved kit. */
+export function parseState(value: unknown): AppState | null {
+  const result = SavedSchema.safeParse(value);
+  return result.success ? result.data : null;
+}
+
 /** Storage can throw in private windows or when site data is blocked. */
 function readStorage(): AppState | null {
   try {
@@ -95,6 +105,8 @@ type Store = {
   setProfile: (update: (p: BusinessProfile) => BusinessProfile) => void;
   setPiece: (blockId: string, toolId: string | null) => void;
   setSuggested: (ids: string[]) => void;
+  toggleSkipped: (blockId: string) => void;
+  markAsked: (questionId: string) => void;
   load: (next: AppState) => void;
   reset: () => void;
 };
@@ -141,6 +153,20 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setState((s) => ({ ...s, suggested: ids }));
   }, []);
 
+  const toggleSkipped = useCallback((blockId: string) => {
+    setState((s) => {
+      const list = s.skipped ?? [];
+      return {
+        ...s,
+        skipped: list.includes(blockId) ? list.filter((id) => id !== blockId) : [...list, blockId],
+      };
+    });
+  }, []);
+
+  const markAsked = useCallback((questionId: string) => {
+    setState((s) => ({ ...s, asked: [...new Set([...(s.asked ?? []), questionId])] }));
+  }, []);
+
   const load = useCallback((next: AppState) => setState(next), []);
 
   const reset = useCallback(() => {
@@ -153,8 +179,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ ready, state, setProfile, setPiece, setSuggested, load, reset }),
-    [ready, state, setProfile, setPiece, setSuggested, load, reset],
+    () => ({
+      ready,
+      state,
+      setProfile,
+      setPiece,
+      setSuggested,
+      toggleSkipped,
+      markAsked,
+      load,
+      reset,
+    }),
+    [ready, state, setProfile, setPiece, setSuggested, toggleSkipped, markAsked, load, reset],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

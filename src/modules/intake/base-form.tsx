@@ -116,7 +116,7 @@ export function BaseForm() {
       className="space-y-6"
       onSubmit={(e) => {
         e.preventDefault();
-        router.push("/board");
+        router.push("/matches");
       }}
     >
       <Card className="grid gap-5 md:grid-cols-2">
@@ -277,14 +277,14 @@ export function BaseForm() {
         ) : (
           <p className="flex gap-2 text-ink-2">
             <Info aria-hidden className="mt-1 size-5 shrink-0" />
-            No main system yet? That&apos;s fine. It becomes the first piece on your puzzle, and
+            No main system yet? That&apos;s fine. It sits at the center of your kit, and
             we&apos;ll suggest options that suit your kind of business.
           </p>
         )}
       </Card>
 
       <Button type="submit" size="lg">
-        Next: see my puzzle
+        Next: see my picks
       </Button>
     </form>
   );

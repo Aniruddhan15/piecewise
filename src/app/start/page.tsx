@@ -1,14 +1,6 @@
-import { PageTitle } from "@/components/ui";
-import { StartForm } from "@/modules/profiler/start-form";
+import { redirect } from "next/navigation";
 
+/** The old long form: the two-tap finder on the home page replaces it. */
 export default function StartPage() {
-  return (
-    <>
-      <PageTitle
-        title="Tell us about your business"
-        intro="This shapes every suggestion you'll see. You don't need an account."
-      />
-      <StartForm />
-    </>
-  );
+  redirect("/");
 }

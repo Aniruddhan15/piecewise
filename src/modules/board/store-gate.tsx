@@ -17,12 +17,9 @@ export function RequireProfile({ children }: { children: ReactNode }) {
   if (!hasProfile(state)) {
     return (
       <EmptyState title="Tell us about your business first">
-        <p className="mb-4">It takes about a minute, or you can look at a demo business.</p>
+        <p className="mb-4">It takes two taps, or you can open an example business.</p>
         <div className="flex flex-wrap justify-center gap-2">
-          <ButtonLink href="/start">Describe my business</ButtonLink>
-          <ButtonLink href="/" variant="secondary">
-            See demo businesses
-          </ButtonLink>
+          <ButtonLink href="/">Pick my business</ButtonLink>
         </div>
       </EmptyState>
     );

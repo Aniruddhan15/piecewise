@@ -72,6 +72,11 @@ function toMatch(
   return { tool, verdict, cost, fit: fitScore(tool, verdict, profile, cost.monthly_usd) };
 }
 
+/** Verdict, cost and score for one tool, for pages that show a single tool. */
+export function matchTool(tool: Tool, profile: BusinessProfile, chosen: Tool[], catalog: Catalog): Match {
+  return toMatch(tool, profile, chosen, catalog);
+}
+
 const byScore = (a: Match, b: Match) => (b.fit?.total ?? 0) - (a.fit?.total ?? 0);
 
 export function matchBlock(

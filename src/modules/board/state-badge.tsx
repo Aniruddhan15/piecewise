@@ -18,10 +18,10 @@ export const STATE_INFO: Record<
   VisibleState,
   { label: string; icon: LucideIcon; meaning: string }
 > = {
-  fits: { label: "Fits", icon: Check, meaning: "Connects with what you already run." },
-  catch: { label: "Fits with a catch", icon: TriangleAlert, meaning: "Works, but there's something to watch or pay for." },
-  no_fit: { label: "Doesn't fit", icon: Ban, meaning: "Can't connect the way you'd need." },
-  not_allowed: { label: "Not allowed", icon: ShieldAlert, meaning: "May connect, but rules say you can't use it this way." },
+  fits: { label: "Works with your setup", icon: Check, meaning: "Connects with what you already run." },
+  catch: { label: "Works, with a catch", icon: TriangleAlert, meaning: "Works, but there's something to watch or pay for." },
+  no_fit: { label: "Won't work for you", icon: Ban, meaning: "Can't connect the way you'd need." },
+  not_allowed: { label: "Not allowed for you", icon: ShieldAlert, meaning: "May connect, but rules say you can't use it this way." },
 };
 
 export const REASON_ICON: Record<ReasonIcon, LucideIcon> = {

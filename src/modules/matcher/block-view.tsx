@@ -1,9 +1,10 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
+import { ArrowLeft, CheckCircle2, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Button, ButtonLink, Card, EmptyState } from "@/components/ui";
+import { Reveal } from "@/components/reveal";
+import { Button, ButtonLink, Card, cn, EmptyState } from "@/components/ui";
 import { chosenTools, useStore } from "@/modules/board/store";
 import { ReasonList } from "@/modules/board/seam-dialog";
 import { StateBadge } from "@/modules/board/state-badge";
@@ -11,9 +12,9 @@ import { resolveAnchor } from "@/modules/compat-engine/engine";
 import { SbaHint } from "@/modules/sba/sba-panel";
 import { catalog } from "@/modules/taxonomy/catalog";
 import type { AccountingEdition } from "@/modules/taxonomy/types";
-import { ToolCard } from "@/modules/tool-card/tool-card";
+import { OptionCard } from "@/modules/tool-start/option-card";
 import { formatUsd } from "@/modules/plan/cost";
-import { matchBlock, type Filters, type Match } from "./match";
+import { matchBlock, type Filters } from "./match";
 
 const FILTERS: { key: keyof Filters; label: string; help?: string }[] = [
   { key: "startFree", label: "Start free" },
@@ -22,13 +23,10 @@ const FILTERS: { key: keyof Filters; label: string; help?: string }[] = [
   { key: "noTraining", label: "Doesn't train AI on my data", help: "Only shows tools whose policy we confirmed." },
 ];
 
-const MAX_COMPARE = 3;
-
 export function BlockView({ blockId }: { blockId: string }) {
   const { state, setPiece, setProfile } = useStore();
   const { profile, pieces } = state;
   const [filters, setFilters] = useState<Filters>({});
-  const [compare, setCompare] = useState<string[]>([]);
   const block = catalog.blockById.get(blockId);
   const anchor = resolveAnchor(profile, catalog);
 
@@ -41,36 +39,16 @@ export function BlockView({ blockId }: { blockId: string }) {
   if (!block || !results) {
     return (
       <EmptyState title="We don't have that piece">
-        <ButtonLink href="/board" variant="secondary">
-          Back to my puzzle
+        <ButtonLink href="/matches" variant="secondary">
+          Back to my picks
         </ButtonLink>
       </EmptyState>
     );
   }
 
   const current = pieces[block.id];
-  const toggleCompare = (id: string) =>
-    setCompare((list) =>
-      list.includes(id)
-        ? list.filter((x) => x !== id)
-        : list.length < MAX_COMPARE
-          ? [...list, id]
-          : list,
-    );
-
-  const card = (m: Match, explain: boolean) => (
-    <li key={m.tool.id}>
-      <ToolCard
-        match={m}
-        profile={profile}
-        chosen={current === m.tool.id}
-        comparing={compare.includes(m.tool.id)}
-        explain={explain}
-        onToggle={() => setPiece(block.id, current === m.tool.id ? null : m.tool.id)}
-        onCompare={() => toggleCompare(m.tool.id)}
-      />
-    </li>
-  );
+  const options = [...results.fits, ...results.catches];
+  const notForYou = [...results.notAllowed, ...results.noFit];
 
   const nothingFits =
     results.fits.length === 0 && results.catches.length === 0 && results.included.length === 0;
@@ -100,15 +78,19 @@ export function BlockView({ blockId }: { blockId: string }) {
   }
 
   return (
-    <div className="space-y-6 pb-24">
-      <Link href="/board" className="inline-flex min-h-11 items-center gap-1">
+    <div className="space-y-8 pb-16">
+      <Link href="/matches" className="inline-flex min-h-11 items-center gap-1 font-semibold">
         <ArrowLeft aria-hidden className="size-4" />
-        Back to my puzzle
+        Back to my picks
       </Link>
-      <header className="space-y-1">
-        <h1 className="text-3xl font-bold sm:text-4xl">{block.plain_name}</h1>
-        <p className="text-sm font-medium text-ink-2">{block.name}</p>
-        <p className="max-w-2xl text-lg text-ink-2">{block.description}</p>
+      <header className="mx-auto max-w-2xl space-y-3 text-center">
+        <p className="text-sm font-bold tracking-wide text-ink-2 uppercase">{block.name}</p>
+        <h1 className="text-4xl font-extrabold sm:text-5xl">{block.plain_name}</h1>
+        <p className="text-lg text-ink-2">
+          {options.length > 0
+            ? `${options.length} ${options.length === 1 ? "tool works" : "tools work"} for you${anchor ? ` with ${anchor.name}` : ""}. Pick one to see how to start.`
+            : block.description}
+        </p>
       </header>
 
       {block.sba_resource ? <SbaHint id={block.sba_resource} /> : null}
@@ -146,7 +128,7 @@ export function BlockView({ blockId }: { blockId: string }) {
                         <ExternalLink aria-hidden className="size-3" />
                       </a>
                     ) : null}
-                    {i.verified ? null : <span className="text-sm text-ink-2"> Unverified.</span>}
+                    {i.verified ? null : <span className="text-sm text-ink-2"> Not double-checked yet.</span>}
                   </span>
                   {i.toolId ? (
                     <Button
@@ -154,7 +136,7 @@ export function BlockView({ blockId }: { blockId: string }) {
                       variant={current === i.toolId ? "secondary" : "primary"}
                       onClick={() => setPiece(block.id, current === i.toolId ? null : (i.toolId as string))}
                     >
-                      {current === i.toolId ? "Remove from my puzzle" : "Use this"}
+                      {current === i.toolId ? "Remove from my kit" : "Use this"}
                     </Button>
                   ) : null}
                 </li>
@@ -164,23 +146,31 @@ export function BlockView({ blockId }: { blockId: string }) {
         </section>
       ) : null}
 
-      <fieldset className="no-print space-y-2">
-        <legend className="font-semibold">Show only</legend>
-        <div className="flex flex-wrap gap-x-5">
-          {FILTERS.map((f) => (
-            <label key={f.key} className="flex min-h-11 items-center gap-2" title={f.help}>
-              <input
-                type="checkbox"
-                className="size-5"
-                checked={Boolean(filters[f.key])}
-                onChange={(e) => setFilters((v) => ({ ...v, [f.key]: e.target.checked }))}
-              />
-              {f.label}
-            </label>
-          ))}
-        </div>
+      <fieldset className="no-print flex flex-wrap items-center justify-center gap-2">
+        <legend className="sr-only">Show only</legend>
+        <span aria-hidden className="text-sm font-semibold text-ink-2">
+          Show only:
+        </span>
+        {FILTERS.map((f) => (
+          <label
+            key={f.key}
+            title={f.help}
+            className={cn(
+              "flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 text-sm font-semibold transition-colors",
+              filters[f.key] ? "border-ink bg-ink text-bg" : "border-line bg-surface hover:border-ink-3",
+            )}
+          >
+            <input
+              type="checkbox"
+              className="size-4 accent-current"
+              checked={Boolean(filters[f.key])}
+              onChange={(e) => setFilters((v) => ({ ...v, [f.key]: e.target.checked }))}
+            />
+            {f.label}
+          </label>
+        ))}
         {results.filteredCount > 0 ? (
-          <p role="status" className="text-sm text-ink-2">
+          <p role="status" className="w-full text-center text-sm text-ink-2">
             {results.filteredCount} hidden by your filters.
           </p>
         ) : null}
@@ -194,36 +184,51 @@ export function BlockView({ blockId }: { blockId: string }) {
         </p>
       ) : null}
 
-      {results.fits.length > 0 ? (
-        <section className="space-y-3" aria-label="Tools that fit">
-          <h2 className="text-2xl font-bold">These fit</h2>
-          <ul className="grid gap-4 lg:grid-cols-2">{results.fits.map((m, i) => card(m, i < 2))}</ul>
-        </section>
-      ) : null}
-
-      {results.catches.length > 0 ? (
-        <section className="space-y-3" aria-label="Tools that fit with a catch">
-          <h2 className="text-2xl font-bold">These fit, with a catch</h2>
-          <ul className="grid gap-4 lg:grid-cols-2">
-            {results.catches.map((m, i) => card(m, results.fits.length === 0 && i < 2))}
+      {options.length > 0 ? (
+        <section aria-label="Tools that work for you">
+          <ul
+            className={cn(
+              "grid gap-x-4 gap-y-2",
+              options.length === 1 ? "mx-auto max-w-sm" : options.length === 2 ? "mx-auto max-w-3xl sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3",
+              options.length >= 4 && "xl:grid-cols-4",
+            )}
+          >
+            {options.map((m, i) => (
+              <OptionCard
+                key={m.tool.id}
+                match={m}
+                blockId={block.id}
+                anchorName={anchor?.name}
+                best={i === 0 && options.length > 1}
+                inKit={current === m.tool.id}
+                index={i}
+              />
+            ))}
           </ul>
         </section>
       ) : null}
 
-      {results.notAllowed.length > 0 ? (
-        <section className="space-y-3" aria-label="Tools that aren't allowed">
-          <h2 className="text-2xl font-bold">Not allowed for your business</h2>
-          <ul className="grid gap-4 lg:grid-cols-2">{results.notAllowed.map((m) => card(m, false))}</ul>
-        </section>
-      ) : null}
-
-      {results.noFit.length > 0 ? (
-        <details className="space-y-3">
-          <summary className="min-h-11 cursor-pointer text-xl font-bold">
-            Doesn&apos;t fit ({results.noFit.length})
-          </summary>
-          <ul className="mt-3 grid gap-4 lg:grid-cols-2">{results.noFit.map((m) => card(m, false))}</ul>
-        </details>
+      {notForYou.length > 0 ? (
+        <Reveal>
+          <details className="rounded-2xl border border-line bg-surface p-4">
+            <summary className="min-h-11 cursor-pointer font-bold">
+              Not a fit for you ({notForYou.length})
+            </summary>
+            <ul className="mt-2 divide-y divide-line">
+              {notForYou.map((m) => (
+                <li key={m.tool.id} className="space-y-1 py-3">
+                  <p className="flex flex-wrap items-center gap-2 font-semibold">
+                    {m.tool.name}
+                    <StateBadge state={m.verdict.visible} />
+                  </p>
+                  <p className="text-ink-2">
+                    {m.verdict.reasons.find((r) => r.rule !== "OK" && r.rule !== "NOTE")?.message ?? m.verdict.reasons[0]?.message}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </details>
+        </Reveal>
       ) : null}
 
       {baseChoices.length > 0 ? (
@@ -269,17 +274,15 @@ export function BlockView({ blockId }: { blockId: string }) {
         </p>
       ) : null}
 
-      {compare.length > 0 ? (
-        <div className="no-print fixed inset-x-3 bottom-3 z-20 mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-surface p-3 shadow-lg">
-          <p className="font-medium">
-            Comparing {compare.length} of {MAX_COMPARE}:{" "}
-            {compare.map((id) => catalog.byId.get(id)?.name).join(", ")}
-          </p>
-          <ButtonLink href={`/compare?block=${block.id}&tools=${compare.join(",")}`}>
-            Compare
-            <ArrowRight aria-hidden className="size-4" />
-          </ButtonLink>
-        </div>
+      {options.length >= 2 ? (
+        <p className="text-center">
+          <Link
+            href={`/compare?block=${block.id}&tools=${options.slice(0, 3).map((m) => m.tool.id).join(",")}`}
+            className="inline-flex min-h-11 items-center font-semibold"
+          >
+            Compare the top {Math.min(3, options.length)} side by side
+          </Link>
+        </p>
       ) : null}
     </div>
   );

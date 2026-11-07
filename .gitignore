@@ -5,10 +5,11 @@ coverage/
 *.tsbuildinfo
 next-env.d.ts
 
-# Secrets: never commit
+# Secrets: never commit any env file.
 .env
 .env.local
-.env.*.local
+.env.example
+.env.*
 
 # Vercel
 .vercel/
@@ -20,3 +21,11 @@ playwright-report/
 
 .DS_Store
 Thumbs.db
+
+# Firebase CLI cache and logs
+.firebase/
+firebase-debug.log*
+*.log
+
+# Local documents (the hackathon brief stays on your machine)
+*.docx

@@ -1,16 +1,20 @@
 "use client";
 
-import { Check, Copy, ExternalLink, Printer } from "lucide-react";
+import { Check, ExternalLink, Printer, Share2 } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Button, ButtonLink, Card, EmptyState, ExternalButton, PageTitle } from "@/components/ui";
+import { Reveal } from "@/components/reveal";
+import { Button, ButtonLink, Card, EmptyState, ExternalButton } from "@/components/ui";
 import { encodeState, useStore } from "@/modules/board/store";
-import { PieceShape } from "@/modules/board/piece-shape";
+import { useAuth } from "@/modules/auth/auth-provider";
+import { ARCHETYPE_ICON } from "@/modules/finder/icons";
+import { HexShape, shapeFromKit } from "@/modules/kit/hex-kit";
+import { kitState } from "@/modules/kit/kit";
 import { ReasonList } from "@/modules/board/seam-dialog";
 import { STATE_INFO, StateBadge } from "@/modules/board/state-badge";
 import { baseSystems, resolveAnchor } from "@/modules/compat-engine/engine";
-import { callTask } from "@/modules/llm/client-api";
-import { personalizePayload } from "@/modules/llm/payloads";
 import { SbaPanel } from "@/modules/sba/sba-panel";
+import { usePersonalizedSteps } from "@/modules/tool-start/use-steps";
 import { catalog } from "@/modules/taxonomy/catalog";
 import type { Tool } from "@/modules/taxonomy/types";
 import { buildPlan } from "./build-plan";
@@ -25,24 +29,6 @@ function readChecks(): Record<string, boolean> {
   } catch {
     return {};
   }
-}
-
-function usePersonalizedSteps(tool: Tool, description: string): string[] {
-  const [steps, setSteps] = useState<string[]>(tool.setup.steps);
-  useEffect(() => {
-    let live = true;
-    void callTask<{ steps: string[] }>(
-      "personalize_steps",
-      personalizePayload(tool, description),
-    ).then((r) => {
-      // Same number of steps, or it isn't a rewording.
-      if (live && r?.steps?.length === tool.setup.steps.length) setSteps(r.steps);
-    });
-    return () => {
-      live = false;
-    };
-  }, [tool, description]);
-  return steps;
 }
 
 function SetupChecklist({
@@ -96,6 +82,23 @@ function SetupChecklist({
   );
 }
 
+/** Offers an account only once there's something worth keeping. */
+function SaveNudge() {
+  const { enabled, ready, user } = useAuth();
+  if (!enabled || !ready) return null;
+  if (user) {
+    return <p className="no-print text-sm font-semibold text-brand">Saved to your account. Open it from any device.</p>;
+  }
+  return (
+    <p className="no-print text-sm text-ink-2">
+      Want it on your phone too?{" "}
+      <Link href="/signup?next=/plan" className="font-semibold">
+        Save it to a free account
+      </Link>
+    </p>
+  );
+}
+
 export function PlanView() {
   const { state } = useStore();
   const { profile, pieces } = state;
@@ -104,6 +107,14 @@ export function PlanView() {
   const [copied, setCopied] = useState(false);
   const anchor = resolveAnchor(profile, catalog);
   const base = baseSystems(profile, catalog);
+  const kit = useMemo(
+    () =>
+      kitState(
+        { profile, pieces, pains: state.suggested ?? [], skipped: state.skipped ?? [] },
+        catalog,
+      ),
+    [profile, pieces, state.suggested, state.skipped],
+  );
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- browser-only saved checklist
@@ -122,8 +133,16 @@ export function PlanView() {
     });
   }
 
-  async function copyLink() {
+  async function share() {
     const url = `${window.location.origin}/plan?s=${encodeState(state)}`;
+    if (typeof navigator.share === "function" && window.matchMedia("(pointer: coarse)").matches) {
+      try {
+        await navigator.share({ title: "My AI tool plan", url });
+        return;
+      } catch {
+        // Cancelled: fall back to copying.
+      }
+    }
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
@@ -135,9 +154,9 @@ export function PlanView() {
 
   if (plan.tools.length === 0) {
     return (
-      <EmptyState title="Your plan starts with one piece">
-        <p className="mb-4">Add a tool to any piece of your puzzle and it will show up here.</p>
-        <ButtonLink href="/board">Back to my puzzle</ButtonLink>
+      <EmptyState title="Your kit starts with one tool">
+        <p className="mb-4">Add a tool from your picks and your plan shows up here.</p>
+        <ButtonLink href="/matches">Back to my picks</ButtonLink>
       </EmptyState>
     );
   }
@@ -152,91 +171,67 @@ export function PlanView() {
 
   return (
     <div className="space-y-6">
-      <PageTitle
-        title="Your adoption plan"
-        intro={`${profile.description || "Your business"}${anchor ? `, built around ${anchor.name}` : ""}.`}
-      />
-
-      <div className="no-print flex flex-wrap gap-2">
-        <Button onClick={() => void copyLink()} variant="secondary">
-          {copied ? (
-            <Check aria-hidden className="size-4" />
-          ) : (
-            <Copy aria-hidden className="size-4" />
-          )}
-          {copied ? "Link copied" : "Copy a link to this plan"}
-        </Button>
-        <Button onClick={() => window.print()} variant="secondary">
-          <Printer aria-hidden className="size-4" />
-          Print or save as PDF
-        </Button>
-        <ButtonLink href="/board" variant="ghost">
-          Change my puzzle
-        </ButtonLink>
-      </div>
-
-      <section aria-labelledby="stack">
-        <Card className="space-y-4">
-          <h2 id="stack" className="text-2xl font-bold">
-            Your stack
-          </h2>
-          <ul
-            aria-hidden
-            className="grid grid-cols-3 pr-[3%] pb-[3%] sm:grid-cols-5 lg:grid-cols-7"
-          >
-            {[
-              ...base.map((t) => ({ id: t.id, name: t.name, state: "base" as const })),
-              ...plan.tools.map((t) => ({
-                id: t.tool.id,
-                name: t.tool.name,
-                state: t.verdict.visible,
-              })),
-            ].map((p) => (
-              <li
-                key={p.id}
-                className={`state-${p.state} relative flex min-h-20 items-center justify-center p-3 text-center text-xs font-semibold`}
-              >
-                <PieceShape mismatch={p.state === "no_fit"} heavy={p.state === "not_allowed"} />
-                <span className="relative">{p.name}</span>
-              </li>
-            ))}
-          </ul>
-          <ul className="divide-y divide-line">
+      <section className="grid items-center gap-6 rounded-3xl border border-line bg-surface p-5 sm:p-8 lg:grid-cols-[1fr_22rem]">
+        <div className="space-y-4">
+          <p className="text-sm font-bold tracking-wide text-ink-2 uppercase">
+            {profile.description || "Your business"}
+            {anchor ? ` · on ${anchor.name}` : ""}
+          </p>
+          <h1 className="text-4xl font-extrabold sm:text-5xl">
+            {kit.complete ? "Your kit is complete" : "Your kit"}
+          </h1>
+          <p className="max-w-xl text-lg text-ink-2">
+            {plan.usable.length} new {plan.usable.length === 1 ? "tool" : "tools"}, about{" "}
+            {formatUsd(plan.total)}
+            {plan.hasUnknownPrice ? "+" : ""} a month, and about {hours} {hours === 1 ? "hour" : "hours"} to set up.
+            {kit.complete ? "" : ` ${kit.wedges.length - kit.covered} more ${kit.wedges.length - kit.covered === 1 ? "job" : "jobs"} to cover.`}
+          </p>
+          <ul className="space-y-1.5">
             {base.map((t) => (
-              <li key={t.id} className="flex flex-wrap items-center justify-between gap-2 py-2">
-                <span>
-                  <strong>{t.name}</strong>
-                  <span className="text-ink-2">
-                    {" "}
-                    ({t.id === anchor?.id ? "your main system" : "already in place"})
-                  </span>
-                  {t.contract_term ? (
-                    <span className="block text-sm text-ink-2">
-                      Hard to swap later: {t.contract_term}
-                    </span>
-                  ) : null}
-                </span>
+              <li key={t.id} className="text-ink-2">
+                <strong className="text-ink">{t.name}</strong>{" "}
+                {t.id === anchor?.id ? "runs the center of your kit" : "is already in place"}
+                {t.contract_term ? `. Hard to swap later: ${t.contract_term}` : ""}
               </li>
             ))}
             {plan.tools.map((t) => (
-              <li
-                key={t.blockId}
-                className="flex flex-wrap items-center justify-between gap-2 py-2"
-              >
-                <span>
-                  <strong>{t.tool.name}</strong>
-                  <span className="text-ink-2"> · {t.blockName}</span>
-                </span>
+              <li key={t.blockId} className="flex flex-wrap items-center gap-2">
+                <strong>{t.tool.name}</strong>
+                <span className="text-ink-2">for {t.blockName.toLowerCase()}</span>
                 <StateBadge state={t.verdict.visible} />
               </li>
             ))}
           </ul>
-        </Card>
+          <div className="no-print flex flex-wrap gap-2 pt-2">
+            <Button onClick={() => void share()}>
+              {copied ? <Check aria-hidden className="size-4" /> : <Share2 aria-hidden className="size-4" />}
+              {copied ? "Link copied" : "Send this plan"}
+            </Button>
+            <Button onClick={() => window.print()} variant="secondary">
+              <Printer aria-hidden className="size-4" />
+              Print or save as PDF
+            </Button>
+            <ButtonLink href="/matches" variant="ghost">
+              Change my kit
+            </ButtonLink>
+          </div>
+          <p className="no-print text-sm text-ink-2">
+            Send it to whoever helps with your tech, or to yourself. The link holds the whole plan.
+          </p>
+          <SaveNudge />
+        </div>
+        <HexShape
+          wedges={shapeFromKit(kit)}
+          hubTitle={anchor?.name ?? catalog.archetypeById.get(profile.archetypes[0])?.examples[0] ?? "You"}
+          hubIcon={ARCHETYPE_ICON[profile.archetypes[0]]}
+          complete={kit.complete}
+          className="mx-auto max-w-[22rem]"
+        />
       </section>
 
-      <section aria-labelledby="cost">
+      <Reveal as="section" aria-labelledby="cost">
         <Card className="space-y-3">
-          <h2 id="cost" className="text-2xl font-bold">
+          <h2 id="cost" className="text-2xl font-extrabold">
             What it costs each month
           </h2>
           <table className="w-full text-left">
@@ -286,11 +281,11 @@ export function PlanView() {
             aren&apos;t allowed. Usage fees (per call or per message) can add to this.
           </p>
         </Card>
-      </section>
+      </Reveal>
 
-      <section aria-labelledby="order">
+      <Reveal as="section" aria-labelledby="order">
         <Card className="space-y-3">
-          <h2 id="order" className="text-2xl font-bold">
+          <h2 id="order" className="text-2xl font-extrabold">
             What to do, in order
           </h2>
           <p className="text-ink-2">About {hours} hours in total (our estimate).</p>
@@ -316,12 +311,12 @@ export function PlanView() {
             ))}
           </ol>
         </Card>
-      </section>
+      </Reveal>
 
       {plan.issues.length > 0 ? (
-        <section aria-labelledby="issues">
+        <Reveal as="section" aria-labelledby="issues">
           <Card className="space-y-4">
-            <h2 id="issues" className="text-2xl font-bold">
+            <h2 id="issues" className="text-2xl font-extrabold">
               Things to watch ({plan.issues.length})
             </h2>
             <ul className="space-y-4">
@@ -343,13 +338,13 @@ export function PlanView() {
               ))}
             </ul>
           </Card>
-        </section>
+        </Reveal>
       ) : null}
 
       {plan.usable.length > 0 ? (
-        <section aria-labelledby="setup">
+        <Reveal as="section" aria-labelledby="setup">
           <Card className="space-y-5">
-            <h2 id="setup" className="text-2xl font-bold">
+            <h2 id="setup" className="text-2xl font-extrabold">
               Setup checklists
             </h2>
             <p className="text-ink-2">Your checkmarks are saved in this browser.</p>
@@ -365,12 +360,12 @@ export function PlanView() {
               ))}
             </div>
           </Card>
-        </section>
+        </Reveal>
       ) : null}
 
-      <section aria-label="Free help">
+      <Reveal as="section" aria-label="Free help">
         <SbaPanel urgent={urgent} />
-      </section>
+      </Reveal>
     </div>
   );
 }

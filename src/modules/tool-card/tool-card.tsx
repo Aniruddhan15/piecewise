@@ -71,7 +71,7 @@ export function explainTemplate(tool: Tool, verdict: Verdict): string {
   return main?.message ?? `${tool.name} has no known conflicts with what you run.`;
 }
 
-function useExplanation(
+export function useExplanation(
   tool: Tool,
   verdict: Verdict,
   profile: BusinessProfile,
@@ -167,14 +167,14 @@ export function ToolCard({
     <Card className={cn("space-y-4", `state-${verdict.visible}`)} style={{ borderColor: "var(--state-line)" }}>
       <div className="space-y-2">
         <div className="flex flex-wrap items-start justify-between gap-2">
-          <h3 className="text-xl font-bold">{tool.name}</h3>
+          <h3 className="text-2xl font-extrabold">{tool.name}</h3>
           <StateBadge state={verdict.visible} />
         </div>
         <p className="text-lg">{sentence}</p>
         <div className="flex flex-wrap gap-1.5">
           {verdict.badges.includes("hard_to_swap") ? <Chip>Hard to swap later</Chip> : null}
           {verdict.badges.includes("unverified") ? (
-            <Chip title="We couldn't confirm every fact here on a source page.">Unverified</Chip>
+            <Chip title="We couldn't confirm every fact here on a source page.">Not double-checked yet</Chip>
           ) : null}
         </div>
       </div>
@@ -208,41 +208,42 @@ export function ToolCard({
         </p>
       ) : null}
 
-      {fit ? <FitBar fit={fit} /> : null}
-
-      {details.length > 0 ? (
-        <details>
-          <summary className="min-h-8 cursor-pointer font-semibold">Why we say this</summary>
-          <div className="mt-2">
-            <ReasonList reasons={verdict.reasons} />
-          </div>
-        </details>
-      ) : null}
-
       <details>
-        <summary className="min-h-8 cursor-pointer font-semibold">Sources</summary>
-        <ul className="mt-2 space-y-2 text-sm">
-          {tool.evidence.map((e) => (
-            <li key={e.claim}>
-              <a href={e.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1">
-                {e.claim}
-                <ExternalLink aria-hidden className="size-3 shrink-0" />
-              </a>
-              {e.quote ? <span className="block text-ink-2">&ldquo;{e.quote}&rdquo;</span> : null}
-            </li>
-          ))}
-          <li className="text-ink-2">
-            {tool.verified ? `Verified ${formatDate(tool.last_checked)}` : `Unverified. Last looked at ${formatDate(tool.last_checked)}`}
-          </li>
-          {tool.caution ? <li className="font-medium">{tool.caution}</li> : null}
-        </ul>
+        <summary className="min-h-9 cursor-pointer font-semibold text-ink-2">More details</summary>
+        <div className="mt-3 space-y-4">
+          {fit ? <FitBar fit={fit} /> : null}
+          {details.length > 0 ? (
+            <div className="space-y-2">
+              <h4 className="font-semibold">Why we say this</h4>
+              <ReasonList reasons={verdict.reasons} />
+            </div>
+          ) : null}
+          <div className="space-y-2">
+            <h4 className="font-semibold">Sources</h4>
+            <ul className="space-y-2 text-sm">
+              {tool.evidence.map((e) => (
+                <li key={e.claim}>
+                  <a href={e.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1">
+                    {e.claim}
+                    <ExternalLink aria-hidden className="size-3 shrink-0" />
+                  </a>
+                  {e.quote ? <span className="block text-ink-2">&ldquo;{e.quote}&rdquo;</span> : null}
+                </li>
+              ))}
+              <li className="text-ink-2">
+                {tool.verified ? `Checked ${formatDate(tool.last_checked)}` : `Not double-checked yet. Last looked at ${formatDate(tool.last_checked)}`}
+              </li>
+              {tool.caution ? <li className="font-medium">{tool.caution}</li> : null}
+            </ul>
+          </div>
+        </div>
       </details>
 
       <div className="no-print flex flex-wrap gap-2">
         {canAdd ? (
           <Button onClick={onToggle} variant={chosen ? "secondary" : "primary"}>
             {chosen ? <X aria-hidden className="size-4" /> : <Plus aria-hidden className="size-4" />}
-            {chosen ? "Remove from my puzzle" : "Add to my puzzle"}
+            {chosen ? "Remove from my kit" : "Add to my kit"}
           </Button>
         ) : null}
         <ExternalButton href={tool.how_to_start.url} variant="secondary">

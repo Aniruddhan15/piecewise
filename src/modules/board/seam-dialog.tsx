@@ -26,7 +26,7 @@ export function ReasonList({ reasons }: { reasons: Reason[] }) {
                     <span className="sr-only">(opens in a new tab)</span>
                   </a>
                 ) : null}
-                {r.unverified ? <span>Unverified</span> : null}
+                {r.unverified ? <span>Not double-checked yet</span> : null}
                 {r.rule !== "OK" && r.rule !== "NOTE" ? (
                   <span title="The compatibility rule that fired">Rule {r.rule}</span>
                 ) : null}
@@ -93,7 +93,7 @@ function SourceOfTruth({
       <div className="flex flex-wrap gap-2">
         {removable.map(([blockId, id]) => (
           <Button key={blockId} size="sm" variant="secondary" onClick={() => onRemovePiece(blockId)}>
-            Remove {catalog.byId.get(id)?.name} from my puzzle
+            Remove {catalog.byId.get(id)?.name} from my kit
           </Button>
         ))}
       </div>

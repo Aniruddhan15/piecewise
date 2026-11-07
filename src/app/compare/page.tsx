@@ -34,8 +34,8 @@ function CompareTable() {
   if (rows.length === 0) {
     return (
       <EmptyState title="Pick tools to compare">
-        <ButtonLink href="/board" variant="secondary">
-          Back to my puzzle
+        <ButtonLink href="/matches" variant="secondary">
+          Back to my picks
         </ButtonLink>
       </EmptyState>
     );
@@ -56,7 +56,7 @@ function CompareTable() {
 
   return (
     <>
-      <Link href={blockId ? `/block/${blockId}` : "/board"} className="mb-3 inline-flex min-h-11 items-center gap-1">
+      <Link href={blockId ? `/block/${blockId}` : "/matches"} className="mb-3 inline-flex min-h-11 items-center gap-1">
         <ArrowLeft aria-hidden className="size-4" />
         Back
       </Link>
@@ -89,7 +89,7 @@ function CompareTable() {
             {row("Setup (our estimate)", (r) => `About ${r.tool.setup.hours_estimate} hours${r.tool.setup.no_code ? ", no coding" : ""}`)}
             {row("Contract", (r) => r.tool.contract_term ?? "None we know of")}
             {row("Fit score", (r) => (r.fit ? `${r.fit.total} out of 100` : "Not scored"))}
-            {row("Facts checked?", (r) => (r.tool.verified ? "Verified against sources" : "Unverified"))}
+            {row("Facts checked?", (r) => (r.tool.verified ? "Verified against sources" : "Not double-checked yet"))}
             {row("Sources", (r) => (
               <ul className="space-y-1 text-sm">
                 {r.tool.evidence.map((e) => (
@@ -106,7 +106,7 @@ function CompareTable() {
               <div className="flex flex-col gap-2">
                 {(r.verdict.visible === "fits" || r.verdict.visible === "catch") && blockId ? (
                   <Button size="sm" onClick={() => setPiece(blockId, r.tool.id)} disabled={pieces[blockId] === r.tool.id}>
-                    {pieces[blockId] === r.tool.id ? "On your puzzle" : "Add to my puzzle"}
+                    {pieces[blockId] === r.tool.id ? "In my kit" : "Add to my kit"}
                   </Button>
                 ) : null}
                 <ExternalButton href={r.tool.how_to_start.url} variant="secondary" size="sm">

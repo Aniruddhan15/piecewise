@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Figtree } from "next/font/google";
 import { Suspense, type ReactNode } from "react";
 import { AppShell } from "@/components/app-shell";
+import { AuthProvider } from "@/modules/auth/auth-provider";
+import { CloudSync } from "@/modules/auth/cloud-sync";
 import { StoreProvider } from "@/modules/board/store";
 import { UrlStateLoader } from "@/modules/board/url-state";
 import "./globals.css";
@@ -21,12 +23,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${heading.variable} ${body.variable}`}>
       <body>
-        <StoreProvider>
-          <Suspense fallback={null}>
-            <UrlStateLoader />
-          </Suspense>
-          <AppShell>{children}</AppShell>
-        </StoreProvider>
+        <AuthProvider>
+          <StoreProvider>
+            <CloudSync>
+              <Suspense fallback={null}>
+                <UrlStateLoader />
+              </Suspense>
+              <AppShell>{children}</AppShell>
+            </CloudSync>
+          </StoreProvider>
+        </AuthProvider>
       </body>
     </html>
   );

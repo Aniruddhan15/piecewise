@@ -1,0 +1,49 @@
+# Firebase App Hosting settings. Safe to commit: there are no secrets in this file.
+# The OpenRouter key lives in Cloud Secret Manager (see the "secret:" line below).
+
+runConfig:
+  minInstances: 0  # scale to zero when nobody is testing, so it costs nothing
+  maxInstances: 2  # a team test never needs more; caps any surprise bill
+
+env:
+  # Firebase web config: public identifiers, needed when the site is built and when it runs.
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: "AIzaSyDCMCd_ZrgEfoUWl4cdaigC7lQTYFwZwtk"
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: "piecewise-26102003.firebaseapp.com"
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: "piecewise-26102003"
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: "piecewise-26102003.firebasestorage.app"
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "868167316734"
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: "1:868167316734:web:5cd99e885dd236ddf5e1af"
+    availability: [BUILD, RUNTIME]
+
+  # AI settings (not secret).
+  - variable: LLM_ENABLED
+    value: "true"
+    availability: [RUNTIME]
+  - variable: LLM_MODEL_FAST
+    value: "openai/gpt-4o-mini"
+    availability: [RUNTIME]
+  - variable: LLM_MODEL_SMART
+    value: "anthropic/claude-sonnet-4.6"
+    availability: [RUNTIME]
+  - variable: LLM_MODEL_FALLBACK
+    value: "google/gemini-2.5-flash-lite"
+    availability: [RUNTIME]
+  - variable: LLM_DAILY_CALL_CAP
+    value: "500"
+    availability: [RUNTIME]
+
+  # Secret: created with `firebase apphosting:secrets:set openrouter-api-key`.
+  - variable: OPENROUTER_API_KEY
+    secret: openrouter-api-key
+    availability: [RUNTIME]
