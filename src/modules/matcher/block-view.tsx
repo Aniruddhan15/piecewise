@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowLeft, CheckCircle2, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Reveal } from "@/components/reveal";
 import { Button, ButtonLink, Card, cn, EmptyState } from "@/components/ui";
@@ -26,7 +27,9 @@ const FILTERS: { key: keyof Filters; label: string; help?: string }[] = [
 export function BlockView({ blockId }: { blockId: string }) {
   const { state, setPiece, setProfile } = useStore();
   const { profile, pieces } = state;
+  const router = useRouter();
   const [filters, setFilters] = useState<Filters>({});
+  const [added, setAdded] = useState<string | null>(null);
   const block = catalog.blockById.get(blockId);
   const anchor = resolveAnchor(profile, catalog);
 
@@ -202,11 +205,32 @@ export function BlockView({ blockId }: { blockId: string }) {
                 best={i === 0 && options.length > 1}
                 inKit={current === m.tool.id}
                 index={i}
+                onToggle={() => {
+                  if (current === m.tool.id) {
+                    setPiece(block.id, null);
+                    setAdded(null);
+                    return;
+                  }
+                  setPiece(block.id, m.tool.id);
+                  setAdded(m.tool.name);
+                  // Picking a tool moves the owner on to their next job.
+                  window.setTimeout(() => router.push("/matches"), 1100);
+                }}
               />
             ))}
           </ul>
         </section>
       ) : null}
+
+      <p role="status" className="min-h-6 text-center font-semibold text-brand">
+        {added ? `Added ${added} to your kit. Taking you to your next job…` : ""}
+      </p>
+      <div className="no-print flex justify-center">
+        <ButtonLink href="/matches" size="lg" variant="secondary">
+          Next job
+          <ArrowRight aria-hidden className="size-5" />
+        </ButtonLink>
+      </div>
 
       {notForYou.length > 0 ? (
         <Reveal>

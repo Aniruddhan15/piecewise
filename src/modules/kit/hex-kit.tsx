@@ -19,6 +19,8 @@ export type ShapeWedge = {
   status: WedgeStatus;
   label?: string;
   visible?: VisibleState;
+  /** The job the owner is looking at right now. */
+  focused?: boolean;
 };
 
 const COLORS = ["#0f7a5c", "#2463b0", "#a8550f", "#a83d62", "#5a4bb8", "#1d7c8c"];
@@ -149,6 +151,9 @@ export function HexShape({
               strokeLinejoin="round"
               className="kit-tile"
             />
+            {w.focused && covered(w.status) ? (
+              <polygon points={fmt(pts)} fill="none" stroke="var(--honey)" strokeWidth={3.5} strokeLinejoin="round" />
+            ) : null}
             {covered(w.status) ? (
               <line
                 x1={hx}
@@ -246,12 +251,18 @@ export function HexShape({
   );
 }
 
-export function shapeFromKit(kit: KitState): ShapeWedge[] {
-  return kit.wedges.map((w) => ({
-    id: w.block.id,
-    title: w.block.plain_name,
-    status: w.status,
-    label: w.label,
-    visible: w.visible,
-  }));
+/** Shape data for a kit. With `focusId`, the job being looked at is the one that glows. */
+export function shapeFromKit(kit: KitState, focusId?: string): ShapeWedge[] {
+  return kit.wedges.map((w) => {
+    const open = w.status === "next" || w.status === "locked";
+    const status = open && focusId ? (w.block.id === focusId ? "next" : "locked") : w.status;
+    return {
+      id: w.block.id,
+      title: w.block.plain_name,
+      status,
+      label: w.label,
+      visible: w.visible,
+      focused: w.block.id === focusId,
+    };
+  });
 }

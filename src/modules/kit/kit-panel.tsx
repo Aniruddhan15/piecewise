@@ -1,8 +1,6 @@
 "use client";
 
 import { ArrowRight, Check, Lock, Undo2 } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { ButtonLink, cn } from "@/components/ui";
 import { useStore } from "@/modules/board/store";
 import { ARCHETYPE_ICON } from "@/modules/finder/icons";
@@ -25,68 +23,77 @@ function statusText(w: Wedge): string {
     case "next":
       return "Up next";
     default:
-      return "Unlocks after the one above";
+      return "Not started yet";
   }
 }
 
-function LegendRow({ w, index }: { w: Wedge; index: number }) {
+function LegendRow({
+  w,
+  index,
+  current,
+  onSelect,
+}: {
+  w: Wedge;
+  index: number;
+  current: boolean;
+  onSelect: (id: string) => void;
+}) {
   const { setPiece, toggleSkipped } = useStore();
   const open = w.status === "next" || w.status === "locked";
   return (
-    <li className={cn("flex items-start gap-3 py-2.5", w.status === "locked" && "opacity-75")}>
-      <span
-        aria-hidden
-        className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white"
-        style={{ background: open ? "var(--ink-3)" : DOTS[index % DOTS.length] }}
+    <li className={cn("flex items-center gap-2 rounded-xl", current && "bg-honey-tint ring-2 ring-honey")}>
+      <button
+        type="button"
+        onClick={() => onSelect(w.block.id)}
+        aria-current={current ? "step" : undefined}
+        className="flex min-h-14 flex-1 items-center gap-3 rounded-xl px-2 py-2 text-left hover:bg-surface-2"
       >
-        {w.status === "locked" ? <Lock className="size-3.5" /> : open ? index + 1 : <Check className="size-4" />}
-      </span>
-      <div className="min-w-0 flex-1">
-        <p className="leading-tight font-semibold">
-          <Link href={`/block/${w.block.id}`} className="text-ink">
-            {w.block.plain_name}
-          </Link>
-        </p>
-        <p className="text-sm text-ink-2">{statusText(w)}</p>
-        {open ? (
-          <div className="mt-1 flex flex-wrap gap-x-3">
-            <Link href={`/block/${w.block.id}`} className="inline-flex min-h-9 items-center text-sm font-semibold">
-              See options
-            </Link>
-            <button
-              type="button"
-              onClick={() => toggleSkipped(w.block.id)}
-              className="inline-flex min-h-9 items-center text-sm font-semibold text-ink-2 underline underline-offset-4"
-            >
-              I&apos;m fine here
-            </button>
-          </div>
-        ) : w.status === "skipped" ? (
-          <button
-            type="button"
-            onClick={() => toggleSkipped(w.block.id)}
-            className="mt-1 inline-flex min-h-9 items-center gap-1 text-sm font-semibold text-ink-2"
-          >
-            <Undo2 aria-hidden className="size-3.5" />
-            Undo
-          </button>
-        ) : w.status === "added" ? (
-          <button
-            type="button"
-            onClick={() => setPiece(w.block.id, null)}
-            className="mt-1 inline-flex min-h-9 items-center text-sm font-semibold text-ink-2 underline underline-offset-4"
-          >
-            Remove
-          </button>
-        ) : null}
-      </div>
+        <span
+          aria-hidden
+          className="flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white"
+          style={{ background: open ? (current ? "var(--honey)" : "var(--ink-3)") : DOTS[index % DOTS.length] }}
+        >
+          {open ? current ? index + 1 : <Lock className="size-3.5" /> : <Check className="size-4" />}
+        </span>
+        <span className="min-w-0">
+          <span className="block leading-tight font-semibold">{w.block.plain_name}</span>
+          <span className="block text-sm text-ink-2">{current && open ? "You're here" : statusText(w)}</span>
+        </span>
+      </button>
+      {w.status === "skipped" ? (
+        <button
+          type="button"
+          onClick={() => toggleSkipped(w.block.id)}
+          aria-label={`Undo: ${w.block.plain_name}`}
+          className="mr-1 flex min-h-11 items-center gap-1 rounded-lg px-2 text-sm font-semibold text-ink-2 hover:bg-surface-2"
+        >
+          <Undo2 aria-hidden className="size-3.5" />
+          Undo
+        </button>
+      ) : w.status === "added" ? (
+        <button
+          type="button"
+          onClick={() => setPiece(w.block.id, null)}
+          aria-label={`Remove ${w.label} from my kit`}
+          className="mr-1 min-h-11 rounded-lg px-2 text-sm font-semibold text-ink-2 hover:bg-surface-2"
+        >
+          Remove
+        </button>
+      ) : null}
     </li>
   );
 }
 
-/** The kit as a shape plus the same facts as a list. */
-export function KitPanel({ kit, showCta = true }: { kit: KitState; showCta?: boolean }) {
-  const router = useRouter();
+/** The kit as a shape plus the same facts as a list. Tapping a job jumps to it. */
+export function KitPanel({
+  kit,
+  focusId,
+  onSelect,
+}: {
+  kit: KitState;
+  focusId?: string;
+  onSelect: (id: string) => void;
+}) {
   const { state } = useStore();
   const archetype = state.profile.archetypes[0];
   const HubIcon = archetype ? ARCHETYPE_ICON[archetype] : undefined;
@@ -105,27 +112,27 @@ export function KitPanel({ kit, showCta = true }: { kit: KitState; showCta?: boo
         </p>
       </div>
       <HexShape
-        wedges={shapeFromKit(kit)}
+        wedges={shapeFromKit(kit, focusId)}
         hubTitle={hubTitle}
         hubIcon={HubIcon}
         complete={kit.complete}
-        onSelect={(id) => router.push(`/block/${id}`)}
+        onSelect={onSelect}
         className="mx-auto max-w-[19rem]"
       />
-      <p role="status" className="text-center font-semibold">
+      <p className="text-center font-semibold">
         {kit.complete
           ? "Complete! Every job has an answer."
           : n - kit.covered === 1
             ? "One more piece closes the shape."
-            : `${n - kit.covered} pieces to go. Each one unlocks the next.`}
+            : `${n - kit.covered} pieces to go.`}
       </p>
-      <ol className="divide-y divide-line">
+      <ol className="space-y-1">
         {kit.wedges.map((w, i) => (
-          <LegendRow key={w.block.id} w={w} index={i} />
+          <LegendRow key={w.block.id} w={w} index={i} current={w.block.id === focusId} onSelect={onSelect} />
         ))}
       </ol>
-      {showCta && added > 0 ? (
-        <ButtonLink href="/plan" className="w-full">
+      {added > 0 ? (
+        <ButtonLink href="/plan" variant={kit.complete ? "primary" : "secondary"} className="w-full">
           See my plan
           <ArrowRight aria-hidden className="size-4" />
         </ButtonLink>

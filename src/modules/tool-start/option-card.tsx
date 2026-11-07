@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Check, TriangleAlert } from "lucide-react";
+import { ArrowRight, Check, Plus, TriangleAlert } from "lucide-react";
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/components/ui";
@@ -10,7 +10,7 @@ import { summarize } from "./summary";
 const TONES = ["var(--tone-1)", "var(--tone-2)", "var(--tone-3)"];
 
 /**
- * One tool as a tall, simple card: name, one line, price, one button, then a short
+ * One tool as a tall, simple card: name, one line, price, two buttons, then a short
  * checklist. Every card has the same shape, so options are easy to compare at a glance.
  */
 export function OptionCard({
@@ -20,6 +20,7 @@ export function OptionCard({
   best,
   inKit,
   index,
+  onToggle,
 }: {
   match: Match;
   blockId: string;
@@ -27,6 +28,8 @@ export function OptionCard({
   best: boolean;
   inKit: boolean;
   index: number;
+  /** Adds the tool to the kit, or takes it out again. */
+  onToggle: () => void;
 }) {
   const s = summarize(match, anchorName);
   const href = `/tool/${match.tool.id}?block=${blockId}`;
@@ -67,17 +70,38 @@ export function OptionCard({
               {s.fitLine}
             </p>
           </div>
-          <Link
-            href={href}
-            className={cn(
-              "flex min-h-12 items-center justify-center gap-2 rounded-full px-5 font-semibold no-underline transition-transform hover:scale-[1.02]",
-              best ? "bg-white text-[#10241d]" : "bg-ink text-bg",
-            )}
-          >
-            See how to start
-            <span className="sr-only"> with {match.tool.name}</span>
-            <ArrowRight aria-hidden className="size-4" />
-          </Link>
+          <div className="space-y-2">
+            <button
+              type="button"
+              onClick={onToggle}
+              aria-pressed={inKit}
+              className={cn(
+                "flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-5 font-semibold transition-transform hover:scale-[1.02]",
+                inKit
+                  ? best
+                    ? "bg-white/15 text-white ring-2 ring-white/60"
+                    : "bg-surface text-ink ring-2 ring-ink"
+                  : best
+                    ? "bg-honey text-[#10241d]"
+                    : "bg-ink text-bg",
+              )}
+            >
+              {inKit ? <Check aria-hidden className="size-5" /> : <Plus aria-hidden className="size-5" />}
+              {inKit ? "In my kit" : "Add to my kit"}
+              <span className="sr-only">: {match.tool.name}</span>
+            </button>
+            <Link
+              href={href}
+              className={cn(
+                "flex min-h-12 items-center justify-center gap-2 rounded-full border-2 px-5 font-semibold no-underline transition-colors",
+                best ? "border-white/70 text-white hover:bg-white/10" : "border-ink/25 text-ink hover:border-ink",
+              )}
+            >
+              See how it works
+              <span className="sr-only"> for {match.tool.name}</span>
+              <ArrowRight aria-hidden className="size-4" />
+            </Link>
+          </div>
         </div>
         <div className="flex-1 space-y-3 bg-surface p-6">
           <p className="font-bold">What you get</p>

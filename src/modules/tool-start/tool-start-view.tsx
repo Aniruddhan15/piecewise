@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, Check, Clock, ExternalLink, Plus, TriangleAlert } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Clock, ExternalLink, Plus, TriangleAlert } from "lucide-react";
 import Link from "next/link";
 import { useMemo, type ReactNode } from "react";
 import { Reveal } from "@/components/reveal";
@@ -217,14 +217,18 @@ export function ToolStartView({ toolId, blockId }: { toolId: string; blockId?: s
         </details>
       </Reveal>
 
-      {canAdd && !inKit ? (
-        <p className="text-center">
+      <div className="no-print flex flex-wrap items-center justify-center gap-2">
+        {canAdd && !inKit ? (
           <Button size="lg" onClick={() => setPiece(block.id, tool.id)}>
             <Plus aria-hidden className="size-5" />
             Add {tool.name} to my kit
           </Button>
-        </p>
-      ) : null}
+        ) : null}
+        <ButtonLink href="/matches" size="lg" variant={inKit ? "primary" : "secondary"}>
+          Next job
+          <ArrowRight aria-hidden className="size-5" />
+        </ButtonLink>
+      </div>
     </div>
   );
 }
