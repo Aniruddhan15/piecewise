@@ -32,6 +32,10 @@ const SavedSchema = z.object({
   skipped: z.array(z.string()).optional(),
   /** Questions the owner answered "not sure" to, so we stop asking. */
   asked: z.array(z.string()).optional(),
+  /** Setup checkmarks, keyed "toolId:acct:0" or "toolId:0". Synced with the account. */
+  checks: z.record(z.string(), z.boolean()).optional(),
+  /** When the owner pressed "Save my plan" (ISO date). */
+  savedAt: z.string().optional(),
 });
 
 export type AppState = z.infer<typeof SavedSchema>;
@@ -107,6 +111,8 @@ type Store = {
   setSuggested: (ids: string[]) => void;
   toggleSkipped: (blockId: string) => void;
   markAsked: (questionId: string) => void;
+  setCheck: (key: string, done: boolean) => void;
+  savePlan: () => void;
   load: (next: AppState) => void;
   reset: () => void;
 };
@@ -167,6 +173,19 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setState((s) => ({ ...s, asked: [...new Set([...(s.asked ?? []), questionId])] }));
   }, []);
 
+  const setCheck = useCallback((key: string, done: boolean) => {
+    setState((s) => {
+      const checks = { ...(s.checks ?? {}) };
+      if (done) checks[key] = true;
+      else delete checks[key];
+      return { ...s, checks };
+    });
+  }, []);
+
+  const savePlan = useCallback(() => {
+    setState((s) => ({ ...s, savedAt: new Date().toISOString() }));
+  }, []);
+
   const load = useCallback((next: AppState) => setState(next), []);
 
   const reset = useCallback(() => {
@@ -187,10 +206,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       setSuggested,
       toggleSkipped,
       markAsked,
+      setCheck,
+      savePlan,
       load,
       reset,
     }),
-    [ready, state, setProfile, setPiece, setSuggested, toggleSkipped, markAsked, load, reset],
+    [ready, state, setProfile, setPiece, setSuggested, toggleSkipped, markAsked, setCheck, savePlan, load, reset],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

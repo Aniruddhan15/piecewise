@@ -21,7 +21,7 @@ for (const demo of DEMOS) {
     await noSideScroll(page);
 
     await page.getByRole("link", { name: "See my plan" }).first().click();
-    await expect(page.getByRole("heading", { name: /Your kit/, level: 1 })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Your (kit|plan)/, level: 1 })).toBeVisible();
     await expect(page.getByRole("heading", { name: "What it costs each month" })).toBeVisible();
     await expect(page.getByRole("heading", { name: /free advisor/ })).toBeVisible();
     await noSideScroll(page);
@@ -79,7 +79,7 @@ test("two taps get a new business to picks, with no LLM", async ({ page }) => {
   await expect(page.getByText("Job 2 of")).toBeVisible();
   await page.getByRole("link", { name: "See my plan" }).first().click();
   await page.waitForURL("**/plan");
-  await expect(page.getByRole("heading", { name: /Your kit/, level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Your (kit|plan)/, level: 1 })).toBeVisible();
 });
 
 test("a share link rebuilds the plan in a fresh browser", async ({ page, browser, context }) => {
@@ -91,7 +91,7 @@ test("a share link rebuilds the plan in a fresh browser", async ({ page, browser
   const fresh = await browser.newContext();
   const other = await fresh.newPage();
   await other.goto(url);
-  await expect(other.getByRole("heading", { name: /Your kit/, level: 1 })).toBeVisible();
+  await expect(other.getByRole("heading", { name: /Your (kit|plan)/, level: 1 })).toBeVisible();
   await expect(other.getByText("Smith.ai").first()).toBeVisible();
   await fresh.close();
 });
@@ -124,6 +124,34 @@ test("next job and previous move between jobs by hand", async ({ page }) => {
   await expect(title).not.toHaveText(first);
   await page.getByRole("button", { name: "Previous" }).click();
   await expect(title).toHaveText(first);
+});
+
+test("plan ends with save, then a dashboard and step-by-step setup", async ({ page }) => {
+  await page.goto("/plan?demo=coffee");
+  await expect(page.getByRole("heading", { name: "That's your plan" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /free advisor/ })).toBeVisible();
+  await page.getByRole("button", { name: "Save my plan" }).click();
+  await page.waitForURL("**/dashboard");
+  await expect(page.getByText(/Plan saved/)).toBeVisible();
+  await expect(page.getByRole("link", { name: "Dashboard" })).toBeVisible();
+
+  await page.getByRole("link", { name: "Start setup" }).click();
+  await page.waitForURL(/\/setup/);
+  await expect(page.getByRole("heading", { name: "Create your account" })).toBeVisible();
+  const boxes = page.locator('input[type="checkbox"]');
+  const n = await boxes.count();
+  for (let i = 0; i < n; i++) {
+    const id = await boxes.nth(i).getAttribute("id");
+    await page.locator(`label[for="${id}"]`).click();
+  }
+  await expect(page.getByText(/is set up\. Nice work!/)).toBeVisible();
+  await page.getByRole("button", { name: /Next tool/ }).click();
+  await expect(page.getByText("Tool 2 of")).toBeVisible();
+
+  // Ticks are saved: the dashboard shows the progress, and it survives a reload.
+  await page.goto("/dashboard");
+  await page.reload();
+  await expect(page.getByText(new RegExp(`^${n} of [0-9]+ steps$`)).first()).toBeVisible();
 });
 
 test("see everything lists only jobs with an answer", async ({ page }) => {

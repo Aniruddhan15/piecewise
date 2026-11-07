@@ -135,6 +135,15 @@ export function AppShell({ children }: { children: ReactNode }) {
                     {count}
                   </span>
                 </Link>
+                {state.savedAt ? (
+                  <Link
+                    href="/dashboard"
+                    aria-current={pathname === "/dashboard" ? "page" : undefined}
+                    className="flex min-h-11 items-center rounded-xl px-3 text-sm font-semibold text-ink no-underline hover:bg-surface-2"
+                  >
+                    Dashboard
+                  </Link>
+                ) : null}
                 <button
                   type="button"
                   onClick={() => {

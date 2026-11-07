@@ -167,7 +167,11 @@ export function buildPlan(
   const placed = [...usable].sort((a, b) => order(a.blockId) - order(b.blockId));
   const anchorFirst = (t: PlanTool) => (t.tool.kind === "base_system" ? 0 : 1);
   placed.sort((a, b) => anchorFirst(a) - anchorFirst(b) || order(a.blockId) - order(b.blockId));
+  // A tool can fill two pieces (Breezeway does cleaning and guest messages): set it up once.
+  const queued = new Set<string>();
   for (const pt of placed) {
+    if (queued.has(pt.tool.id)) continue;
+    queued.add(pt.tool.id);
     rollout.push({
       title: `Set up ${pt.tool.name}`,
       hours: pt.tool.setup.hours_estimate,
