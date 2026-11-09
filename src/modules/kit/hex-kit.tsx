@@ -42,21 +42,27 @@ function shrink(points: [number, number][], by: number): [number, number][] {
 
 const fmt = (pts: [number, number][]) => pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
 
-/** Splits a label into at most two short lines. */
-function lines(text: string, max = 10): string[] {
+const LINE_HEIGHT = 10.5;
+
+/**
+ * Wraps a label into up to three short lines that fit inside a piece. Nothing is cut off
+ * unless the label is very long; then the last line ends with an ellipsis.
+ */
+function lines(text: string, max = 12, maxLines = 3): string[] {
   const words = text.split(" ");
   const out: string[] = [""];
   for (const w of words) {
     const cur = out[out.length - 1];
     if (!cur) out[out.length - 1] = w;
     else if ((cur + " " + w).length <= max) out[out.length - 1] = `${cur} ${w}`;
-    else if (out.length < 2) out.push(w);
+    else if (out.length < maxLines) out.push(w);
     else {
-      out[1] = `${out[1]}…`;
-      break;
+      out[out.length - 1] = `${cur} ${w}`;
     }
   }
-  return out.map((l) => (l.length > max + 2 ? `${l.slice(0, max)}…` : l));
+  const last = out.length - 1;
+  if (out[last].length > max + 2) out[last] = `${out[last].slice(0, max)}…`;
+  return out;
 }
 
 const covered = (s: WedgeStatus) => s !== "next" && s !== "locked";
@@ -82,6 +88,8 @@ export function HexShape({
   const step = 360 / n;
   const start = -90 - step / 2;
   const outline = Array.from({ length: n }, (_, k) => point(R_OUT + 6, start + k * step));
+  // The hub is a small circle: wrap its name to two short lines instead of cutting it off.
+  const hubLines = lines(hubTitle, 10, 2);
 
   return (
     <svg
@@ -107,7 +115,12 @@ export function HexShape({
         const a0 = start + k * step;
         const a1 = a0 + step;
         const pts = shrink([point(R_IN, a0), point(R_OUT, a0), point(R_OUT, a1), point(R_IN, a1)], 0.93);
-        const [lx, ly] = point((R_IN + R_OUT) / 2 + 4, a0 + step / 2);
+        // The label's centre is the piece's own centre (leaning a little outward, where it is wider).
+        const meanX = pts.reduce((sum, p) => sum + p[0], 0) / pts.length;
+        const meanY = pts.reduce((sum, p) => sum + p[1], 0) / pts.length;
+        const mid = ((a0 + step / 2) * Math.PI) / 180;
+        const lx = Math.round((meanX + 3 * Math.cos(mid)) * 10) / 10;
+        const ly = Math.round((meanY + 3 * Math.sin(mid)) * 10) / 10;
         const color = COLORS[k % COLORS.length];
         const isNew = w.status === "added";
         const fill =
@@ -123,6 +136,13 @@ export function HexShape({
         const textColor = isNew ? "#ffffff" : w.status === "locked" ? "var(--ink-3)" : "var(--ink)";
         const title = lines(w.status === "added" || w.status === "have" ? (w.label ?? w.title) : w.title);
         const sub = w.status === "next" ? "up next" : "";
+        // Stack the lock or check, the name and the tag, and centre the whole stack in the piece.
+        const hasIcon = w.status === "locked" || (covered(w.status) && w.status !== "skipped");
+        const iconH = hasIcon ? 15 : 0;
+        const stackH = iconH + title.length * LINE_HEIGHT + (sub ? 11 : 0);
+        const stackTop = ly - stackH / 2;
+        const firstLine = stackTop + iconH + 8;
+        const lastLine = firstLine + (title.length - 1) * LINE_HEIGHT;
         const [ix, iy] = point(R_IN - 2, a0 + step / 2);
         const [hx, hy] = point(30, a0 + step / 2);
         return (
@@ -168,19 +188,13 @@ export function HexShape({
               />
             ) : null}
             {w.status === "locked" ? (
-              <Lock x={lx - 6} y={ly - 20} width={12} height={12} color="var(--ink-3)" strokeWidth={2.2} />
+              <Lock x={lx - 6} y={stackTop} width={12} height={12} color="var(--ink-3)" strokeWidth={2.2} />
             ) : covered(w.status) && w.status !== "skipped" ? (
-              <Check x={lx - 6} y={ly - 21} width={12} height={12} color={isNew ? "#ffffff" : color} strokeWidth={3} />
+              <Check x={lx - 6} y={stackTop} width={12} height={12} color={isNew ? "#ffffff" : color} strokeWidth={3} />
             ) : null}
-            <text
-              x={lx}
-              y={ly - (title.length > 1 ? 6 : 0) + (w.status === "locked" || (covered(w.status) && w.status !== "skipped") ? 4 : 0)}
-              textAnchor="middle"
-              fill={textColor}
-              className="kit-label"
-            >
+            <text x={lx} y={firstLine} textAnchor="middle" fill={textColor} className="kit-label">
               {title.map((t, i) => (
-                <tspan key={i} x={lx} dy={i === 0 ? 0 : 10.5}>
+                <tspan key={i} x={lx} dy={i === 0 ? 0 : LINE_HEIGHT}>
                   {t}
                 </tspan>
               ))}
@@ -188,7 +202,7 @@ export function HexShape({
             {sub ? (
               <text
                 x={lx}
-                y={ly + (title.length > 1 ? 16 : 11)}
+                y={lastLine + 10}
                 textAnchor="middle"
                 fill={isNew ? "rgba(255,255,255,0.85)" : "var(--ink-2)"}
                 className="kit-sub"
@@ -239,12 +253,16 @@ export function HexShape({
         <circle r="31" fill={complete ? "#0b5c47" : "var(--hub)"} />
         <circle r="31" fill="none" stroke="var(--honey)" strokeWidth={complete ? 3 : 0} />
         {complete ? (
-          <Check x={-11} y={-19} width={22} height={22} color="var(--honey)" strokeWidth={3} />
+          <Check x={-10} y={-25} width={20} height={20} color="var(--honey)" strokeWidth={3} />
         ) : HubIcon ? (
-          <HubIcon x={-10} y={-19} width={20} height={20} color="var(--honey)" strokeWidth={2} />
+          <HubIcon x={-9} y={-25} width={18} height={18} color="var(--honey)" strokeWidth={2} />
         ) : null}
-        <text y="13" textAnchor="middle" fill="#ffffff" className="kit-hub-label">
-          {hubTitle.length > 12 ? `${hubTitle.slice(0, 11)}…` : hubTitle}
+        <text y="4" textAnchor="middle" fill="#ffffff" className="kit-hub-label">
+          {hubLines.map((t, i) => (
+            <tspan key={i} x="0" dy={i === 0 ? 0 : 10}>
+              {t}
+            </tspan>
+          ))}
         </text>
       </g>
     </svg>
@@ -258,7 +276,7 @@ export function shapeFromKit(kit: KitState, focusId?: string): ShapeWedge[] {
     const status = open && focusId ? (w.block.id === focusId ? "next" : "locked") : w.status;
     return {
       id: w.block.id,
-      title: w.block.plain_name,
+      title: w.block.name,
       status,
       label: w.label,
       visible: w.visible,

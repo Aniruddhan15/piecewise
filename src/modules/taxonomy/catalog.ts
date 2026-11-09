@@ -5,6 +5,8 @@ import blocksJson from "@data/blocks.json";
 import demoProfilesJson from "@data/demo_profiles.json";
 import edgesJson from "@data/edges.json";
 import naicsJson from "@data/naics_map.json";
+import impactJson from "@data/impact.json";
+import outcomesJson from "@data/outcomes.json";
 import sbaJson from "@data/sba_resources.json";
 import toolsJson from "@data/tools.json";
 import {
@@ -12,7 +14,9 @@ import {
   BlockSchema,
   DemoProfileSchema,
   EdgeSchema,
+  ImpactSchema,
   NaicsMapSchema,
+  OutcomeSchema,
   SbaResourceSchema,
   ToolSchema,
 } from "./schemas";
@@ -58,6 +62,8 @@ export const rawData = {
   sba: z.array(SbaResourceSchema).parse(sbaJson),
   demos: z.array(DemoProfileSchema).parse(demoProfilesJson) as DemoProfile[],
   naics: NaicsMapSchema.parse(naicsJson),
+  outcomes: z.array(OutcomeSchema).parse(outcomesJson),
+  impact: z.array(ImpactSchema).parse(impactJson),
 };
 
 export const catalog: Catalog = buildCatalog(rawData);

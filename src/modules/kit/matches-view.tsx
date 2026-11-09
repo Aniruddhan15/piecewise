@@ -1,16 +1,18 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, Check, PartyPopper } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, PartyPopper, Plus } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button, cn } from "@/components/ui";
 import { chosenTools, useStore } from "@/modules/board/store";
 import { resolveAnchor } from "@/modules/compat-engine/engine";
-import { painsFor } from "@/modules/finder/pains";
 import { matchBlock } from "@/modules/matcher/match";
 import { formatUsd } from "@/modules/plan/cost";
 import { catalog } from "@/modules/taxonomy/catalog";
 import { OptionCard } from "@/modules/tool-start/option-card";
+import { hiddenSpecLabels, summarize } from "@/modules/tool-start/summary";
+import { OutcomeCard } from "@/modules/outcomes/outcome-card";
+import { outcomeFor } from "@/modules/outcomes/outcomes";
 import { KitPanel } from "./kit-panel";
 import {
   applyAnswer,
@@ -45,6 +47,43 @@ function nextOpenAfter(kit: KitState, id: string): string | null {
     if (isOpen(kit, candidate)) return candidate;
   }
   return null;
+}
+
+/** Two steps, drawn like the real buttons, so nobody has to guess what to click. */
+function HowTo() {
+  return (
+    <ol
+      aria-label="How to pick a tool"
+      className="flex flex-wrap items-center gap-x-3 gap-y-3 rounded-2xl border-2 border-dashed border-honey bg-honey-tint p-4 font-semibold"
+    >
+      <li className="flex flex-wrap items-center gap-2">
+        <span aria-hidden className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink text-sm font-bold text-bg">
+          1
+        </span>
+        Click
+        <span aria-hidden className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1 text-bg">
+          <Plus className="size-4" />
+          Add to my kit
+        </span>
+        <span className="sr-only">“Add to my kit”</span>
+        on the tool you like
+      </li>
+      <li aria-hidden className="text-ink-2">
+        <ArrowRight className="size-5" />
+      </li>
+      <li className="flex flex-wrap items-center gap-2">
+        <span aria-hidden className="flex size-7 shrink-0 items-center justify-center rounded-full bg-ink text-sm font-bold text-bg">
+          2
+        </span>
+        Then click
+        <span aria-hidden className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1">
+          Next job
+          <ArrowRight className="size-4" />
+        </span>
+        <span className="sr-only">“Next job”</span>
+      </li>
+    </ol>
+  );
 }
 
 function QuestionCard({ question, onAnswer }: { question: Question; onAnswer: (value: string) => void }) {
@@ -121,11 +160,11 @@ export function MatchesView() {
     [block, profile, pieces],
   );
   const options = results ? [...results.fits, ...results.catches] : [];
+  const hiddenSpecs = hiddenSpecLabels(options.slice(0, MAX_CARDS).map((m) => summarize(m, anchor?.name).specs));
   const included = results?.included.find((i) => !i.toolId);
-  const pain = block
-    ? painsFor(profile.archetypes).find((p) => p.block === block.id && state.suggested?.includes(p.block))
-    : undefined;
   const open = wedge ? wedge.status === "next" || wedge.status === "locked" : false;
+  const outcome = block ? outcomeFor(block.id, profile.archetypes) : null;
+  const placedTool = block && pieces[block.id] ? catalog.byId.get(pieces[block.id]) : undefined;
 
   function go(id: string | null) {
     window.clearTimeout(timer.current);
@@ -147,21 +186,16 @@ export function MatchesView() {
       setMessage(`Took ${name} out of your kit.`);
       return;
     }
+    // Stay on this job until the owner clicks "Next job": the screen follows the open job otherwise.
+    setFocus(block.id);
     setPiece(block.id, toolId);
-    const filled: KitState = {
-      ...kit,
-      wedges: kit.wedges.map((w) => (w.block.id === block.id ? { ...w, status: "added" } : w)),
-    };
-    const after = nextOpenAfter(filled, block.id);
-    const nextName = after ? catalog.blockById.get(after)?.plain_name : null;
-    setMessage(nextName ? `Added ${name}. Next: ${nextName}.` : `Added ${name}. That closes your kit!`);
-    advanceFrom(block.id);
+    setMessage(`Added ${name} to your kit. Now click “Next job”.`);
   }
 
   function skip() {
     if (!block) return;
     if (open) toggleSkipped(block.id);
-    setMessage(`Okay, you're fine on “${block.plain_name}”.`);
+    setMessage(`Okay, you're fine on “${block.name}”.`);
     advanceFrom(block.id);
   }
 
@@ -179,7 +213,7 @@ export function MatchesView() {
   }
 
   return (
-    <div ref={top} className="grid scroll-mt-24 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_21rem]">
+    <div ref={top} className="grid scroll-mt-24 grid-cols-[minmax(0,1fr)] items-start gap-8 lg:grid-cols-[minmax(0,1fr)_21rem]">
       <div className="min-w-0 space-y-5 overflow-x-clip">
         <p className="text-sm font-bold tracking-wide text-ink-2 uppercase">
           {archetype?.name}
@@ -196,7 +230,10 @@ export function MatchesView() {
           {message}
         </p>
 
-        {showDone || !block ? (
+        {/* Nothing moves on until the question above is answered: the picks depend on it. */}
+        {question ? (
+          <p className="text-lg text-ink-2">Answer the question above and we&apos;ll show your first job.</p>
+        ) : showDone || !block ? (
           <section className="step-in space-y-4 rounded-3xl p-8 text-center text-white" style={{ background: "var(--best-bg)" }}>
             <PartyPopper aria-hidden className="mx-auto size-10 text-honey" />
             <h1 className="text-4xl font-extrabold sm:text-5xl">Your kit is complete</h1>
@@ -245,13 +282,20 @@ export function MatchesView() {
                 </div>
               </div>
               <h1 id="job-title" className="text-4xl font-extrabold sm:text-5xl">
-                {block.plain_name}
+                {block.name}
               </h1>
-              <p className="text-lg text-ink-2">
-                {pain ? `Because you said “${pain.label}”. ` : `${block.description} `}
-                {options.length > 0 && open ? "Pick one and we'll take you to the next job." : ""}
-              </p>
+              <p className="text-lg text-ink-2">{block.description}</p>
             </div>
+
+            {outcome ? (
+              <OutcomeCard
+                key={block.id}
+                outcome={outcome}
+                jobName={block.name}
+                toolName={placedTool?.name}
+                setupHours={placedTool?.setup.hours_estimate}
+              />
+            ) : null}
 
             {included ? (
               <div className="space-y-2 rounded-3xl border-2 border-brand bg-brand-soft p-6">
@@ -270,6 +314,8 @@ export function MatchesView() {
               </div>
             ) : null}
 
+            {options.length > 0 && open ? <HowTo /> : null}
+
             {options.length > 0 ? (
               <>
                 {included ? <h2 className="text-xl font-extrabold">Or choose a separate tool</h2> : null}
@@ -287,6 +333,7 @@ export function MatchesView() {
                       anchorName={anchor?.name}
                       best={i === 0 && options.length > 1}
                       inKit={pieces[block.id] === m.tool.id}
+                      hiddenSpecs={hiddenSpecs}
                       index={i}
                       onToggle={() => toggleTool(m.tool.id, m.tool.name)}
                     />
@@ -316,7 +363,7 @@ export function MatchesView() {
                     I&apos;m fine here
                   </Button>
                 ) : null}
-                <Button onClick={next}>
+                <Button onClick={next} className={pieces[block.id] ? "ring-4 ring-honey" : undefined}>
                   Next job
                   <ArrowRight aria-hidden className="size-4" />
                 </Button>
@@ -325,15 +372,23 @@ export function MatchesView() {
           </section>
         )}
 
-        <p>
-          <Link href="/board" className="font-semibold">
-            See every job and every tool
-          </Link>
-        </p>
+        {question ? null : (
+          <p>
+            <Link href="/board" className="font-semibold">
+              See every job and every tool
+            </Link>
+          </p>
+        )}
       </div>
 
       <div className="lg:sticky lg:top-20">
-        <KitPanel kit={kit} focusId={current ?? undefined} onSelect={(id) => go(id)} />
+        <KitPanel
+          kit={kit}
+          focusId={question ? undefined : (current ?? undefined)}
+          onSelect={(id) => {
+            if (!question) go(id);
+          }}
+        />
       </div>
     </div>
   );

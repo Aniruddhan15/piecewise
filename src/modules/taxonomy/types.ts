@@ -9,7 +9,9 @@ import type {
   DeviceSchema,
   EdgeSchema,
   EntitySchema,
+  ImpactSchema,
   NeedSchema,
+  OutcomeSchema,
   SbaResourceSchema,
   ToolSchema,
 } from "./schemas";
@@ -26,6 +28,8 @@ export type Edge = z.infer<typeof EdgeSchema>;
 export type BusinessProfile = z.infer<typeof BusinessProfileSchema>;
 export type SbaResource = z.infer<typeof SbaResourceSchema>;
 export type DemoProfile = z.infer<typeof DemoProfileSchema>;
+export type OutcomeEntry = z.infer<typeof OutcomeSchema>;
+export type ImpactEntry = z.infer<typeof ImpactSchema>;
 
 export type InternalState =
   | "snaps"

@@ -1,0 +1,855 @@
+[
+  {
+    "block": "payments_pos",
+    "icon": "credit-card",
+    "hours": [
+      1,
+      2
+    ],
+    "before": "You count up cash and card sales by hand at night.",
+    "after": "Every sale is added up for you.",
+    "assumption": "About 15 minutes a day matching up the day's sales."
+  },
+  {
+    "block": "accounting",
+    "icon": "landmark",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "Receipts pile up and you do the books in one long weekend.",
+    "after": "Your sales and bills are sorted as they come in.",
+    "assumption": "About 30 to 60 minutes a day of sorting and typing, spread across a month."
+  },
+  {
+    "block": "customer_records",
+    "icon": "users",
+    "hours": [
+      1,
+      2
+    ],
+    "before": "Customer names are on sticky notes and in your head.",
+    "after": "Every customer is in one list you can search.",
+    "assumption": "About 20 minutes a day looking things up or asking around."
+  },
+  {
+    "block": "channels",
+    "icon": "message-square",
+    "hours": [
+      1,
+      2
+    ],
+    "before": "Calls, texts and emails come in to five different places.",
+    "after": "All your messages show up in one place.",
+    "assumption": "About 15 minutes a day checking each place."
+  },
+  {
+    "block": "marketing",
+    "icon": "mail",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "You mean to email customers, but never get to it.",
+    "after": "A short message goes to past customers every week.",
+    "assumption": "About 1 hour to write one message, done once or twice a month, plus the planning."
+  },
+  {
+    "block": "reviews",
+    "icon": "star",
+    "hours": [
+      1,
+      2
+    ],
+    "before": "Happy customers leave and never post a review.",
+    "after": "Every customer gets a quick, polite ask for a review.",
+    "assumption": "About 15 minutes a day asking and replying, done by hand."
+  },
+  {
+    "block": "customer_comm",
+    "icon": "phone",
+    "hours": [
+      3,
+      6
+    ],
+    "before": "Calls go unanswered while your hands are full.",
+    "after": "Every call and message gets an answer.",
+    "assumption": "About 10 missed or late-returned calls a week, each costing 15 to 30 minutes of chasing."
+  },
+  {
+    "block": "invoicing",
+    "icon": "receipt",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "Bills go out late and you chase people to pay.",
+    "after": "Bills go out the same day and reminders are sent for you.",
+    "assumption": "About 30 minutes a day writing, sending and chasing bills."
+  },
+  {
+    "block": "legal",
+    "icon": "shield-check",
+    "hours": [
+      1,
+      2
+    ],
+    "before": "You're not sure which rules apply to you.",
+    "after": "A simple checklist tells you what to do.",
+    "assumption": "About 2 hours a month reading rules and answering questions."
+  },
+  {
+    "block": "reporting",
+    "icon": "trending-up",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "You guess which days and items make money.",
+    "after": "A weekly summary shows what is selling.",
+    "assumption": "About 1 hour a week gathering numbers from different places."
+  },
+  {
+    "block": "scheduling_payroll",
+    "icon": "calendar",
+    "hours": [
+      1.5,
+      3
+    ],
+    "before": "You rebuild the schedule every week and work out pay by hand.",
+    "after": "Shifts are filled in and pay is worked out for you.",
+    "assumption": "About 2.6 hours a week building the schedule (a restaurant survey), cut by a quarter to a half by software, plus an hour or so a pay period on payroll."
+  },
+  {
+    "block": "hiring_training",
+    "icon": "user-plus",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "You post jobs on many sites and teach each new hire from scratch.",
+    "after": "One post reaches many sites, and new hires follow the same steps.",
+    "assumption": "About 3 hours per hire in posting and repeating the same instructions."
+  },
+  {
+    "block": "multi_location",
+    "icon": "building",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "Each shop does things its own way.",
+    "after": "All your shops are on one screen.",
+    "assumption": "About 1 hour a week per extra site chasing numbers."
+  },
+  {
+    "block": "recipe_costing",
+    "icon": "utensils",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "Food prices go up and you don't know which dishes still make money.",
+    "after": "You see what each dish costs and earns.",
+    "assumption": "About 2 hours a month redoing costs in a spreadsheet."
+  },
+  {
+    "block": "online_ordering",
+    "icon": "shopping-bag",
+    "hours": [
+      3,
+      6
+    ],
+    "before": "Orders come by phone and apps, and you type each one in.",
+    "after": "Online orders go straight to the kitchen.",
+    "assumption": "About 15 phone or app orders a day at 2 to 3 minutes each to re-enter."
+  },
+  {
+    "block": "reservations",
+    "icon": "calendar",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "Bookings go in a notebook and the phone rings during service.",
+    "after": "Guests book online and the waitlist runs itself.",
+    "assumption": "About 20 booking calls a week at 3 to 5 minutes each."
+  },
+  {
+    "block": "food_inventory",
+    "icon": "package",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "You count stock by eye and food gets thrown out.",
+    "after": "You see what to order and what is going to waste.",
+    "assumption": "About 1 hour counting and ordering twice a week."
+  },
+  {
+    "block": "food_safety",
+    "icon": "thermometer",
+    "hours": [
+      1,
+      2
+    ],
+    "before": "Temperature checks are on paper and often late.",
+    "after": "Checks are done on a phone, and records are ready for the inspector.",
+    "assumption": "About 15 minutes a day on paper logs, plus a scramble before an inspection."
+  },
+  {
+    "block": "dispatch",
+    "icon": "truck",
+    "hours": [
+      3,
+      6
+    ],
+    "before": "You text each tech their jobs and change plans all day.",
+    "after": "Jobs and routes show up on each tech's phone.",
+    "assumption": "About 1 hour a day planning and re-planning, and fewer wasted drives."
+  },
+  {
+    "block": "estimates",
+    "icon": "file-text",
+    "hours": [
+      3,
+      6
+    ],
+    "before": "You write quotes at night and forget to follow up.",
+    "after": "Quotes go out from the job site, and a reminder is sent if no one replies.",
+    "assumption": "About 20 to 30 minutes per quote on 8 to 10 quotes a week."
+  },
+  {
+    "block": "maintenance_plans",
+    "icon": "repeat",
+    "hours": [
+      1,
+      2
+    ],
+    "before": "Yearly service customers are on a list and some get missed.",
+    "after": "Reminders go out and visits are booked for you.",
+    "assumption": "About 20 minutes a day tracking and calling."
+  },
+  {
+    "block": "truck_inventory",
+    "icon": "package",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "A tech drives back to the shop for a missing part.",
+    "after": "You see which parts are on which truck.",
+    "assumption": "About 2 extra trips a week at 30 to 60 minutes each."
+  },
+  {
+    "block": "bids_takeoffs",
+    "icon": "ruler",
+    "hours": [
+      3,
+      8
+    ],
+    "before": "You measure materials from the plans by hand.",
+    "after": "Software reads the plans and gives you the amounts.",
+    "assumption": "About 4 to 8 hours per bid by hand, cut by a half to a third."
+  },
+  {
+    "block": "project_scheduling",
+    "icon": "calendar",
+    "hours": [
+      2,
+      5
+    ],
+    "before": "Crews and jobs live on a whiteboard and in group texts.",
+    "after": "One schedule shows who is where, and everyone sees changes.",
+    "assumption": "About 1 hour a day answering where crews should be."
+  },
+  {
+    "block": "subcontractors",
+    "icon": "users",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "You chase your subs for paperwork before you pay them.",
+    "after": "Paperwork from your subs is collected in one place.",
+    "assumption": "About 30 minutes per sub payment on 4 to 6 payments a month."
+  },
+  {
+    "block": "permits",
+    "icon": "clipboard-list",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "Permit deadlines are in your head and in a folder.",
+    "after": "Each permit has a due date and a reminder.",
+    "assumption": "About 1 hour a week tracking down status."
+  },
+  {
+    "block": "inventory_reorder",
+    "icon": "package",
+    "hours": [
+      3,
+      6
+    ],
+    "before": "You find out an item is sold out when a customer asks.",
+    "after": "You get a list of what to reorder before you run out.",
+    "assumption": "About 1 hour a day checking shelves and notes."
+  },
+  {
+    "block": "catalog_store",
+    "icon": "globe",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "You keep one stock list for the shop and one for online.",
+    "after": "One stock list covers both, so you never oversell.",
+    "assumption": "About 30 minutes a day updating two lists."
+  },
+  {
+    "block": "demand_forecast",
+    "icon": "trending-up",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "You order by gut feeling and get stuck with extra.",
+    "after": "Past sales suggest what to buy next.",
+    "assumption": "About 1 to 2 hours a week deciding orders."
+  },
+  {
+    "block": "suppliers",
+    "icon": "truck",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "You order from suppliers by phone and email, with prices in a notebook.",
+    "after": "Orders, prices and delivery dates are in one place.",
+    "assumption": "About 30 minutes per order on 3 to 5 orders a week."
+  },
+  {
+    "block": "listings",
+    "icon": "globe",
+    "hours": [
+      3,
+      6
+    ],
+    "before": "You update each product on every site by hand.",
+    "after": "One change updates every place you sell.",
+    "assumption": "About 30 to 60 minutes a day across two or three sites."
+  },
+  {
+    "block": "payout_recon",
+    "icon": "landmark",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "Deposits don't match your sales after fees and refunds.",
+    "after": "Each deposit is matched to the orders in it.",
+    "assumption": "About 2 to 4 hours a month, but spread out over many payouts."
+  },
+  {
+    "block": "sales_tax",
+    "icon": "percent",
+    "hours": [
+      1,
+      2
+    ],
+    "before": "You're not sure which states you owe tax in.",
+    "after": "You see where you owe tax and what to file.",
+    "assumption": "About 2 hours a month researching and filing."
+  },
+  {
+    "block": "fulfillment",
+    "icon": "package",
+    "hours": [
+      3,
+      6
+    ],
+    "before": "You copy addresses into shipping sites and compare prices by hand.",
+    "after": "Shipping labels print in one click at the best price.",
+    "assumption": "About 2 minutes saved per order on 100 orders a week."
+  },
+  {
+    "block": "returns",
+    "icon": "rotate-ccw",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "Every return is a long back-and-forth of emails.",
+    "after": "Customers start returns themselves and you just approve.",
+    "assumption": "About 10 minutes per return on 10 to 15 returns a week."
+  },
+  {
+    "block": "ads",
+    "icon": "megaphone",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "You change ads on each site and can't tell which ones pay off.",
+    "after": "One screen shows what each ad earns.",
+    "assumption": "About 1 hour a week checking each platform."
+  },
+  {
+    "block": "booking",
+    "icon": "calendar",
+    "hours": [
+      3,
+      6
+    ],
+    "before": "People book by phone, and some don't show up.",
+    "after": "Clients book online and get reminders, so fewer miss visits.",
+    "assumption": "About 20 booking calls and 3 no-shows a week."
+  },
+  {
+    "block": "memberships",
+    "icon": "repeat",
+    "hours": [
+      1,
+      2
+    ],
+    "before": "Packages and punch cards are tracked on paper.",
+    "after": "Packages and plans renew on their own.",
+    "assumption": "About 20 minutes a day tracking visits and renewals."
+  },
+  {
+    "block": "client_history",
+    "icon": "clipboard-list",
+    "hours": [
+      1,
+      2
+    ],
+    "before": "You try to remember each client's last visit.",
+    "after": "Notes and past visits show up when they book.",
+    "assumption": "About 10 minutes a day looking things up or asking."
+  },
+  {
+    "block": "commissions",
+    "icon": "dollar-sign",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "You work out each person's pay from a stack of receipts.",
+    "after": "Commissions are totaled for you each pay period.",
+    "assumption": "About 1 to 3 hours each pay period."
+  },
+  {
+    "block": "patient_scheduling",
+    "icon": "calendar",
+    "hours": [
+      3,
+      6
+    ],
+    "before": "Front-desk staff spend the day on reminder calls, and some patients still miss visits.",
+    "after": "Reminders go out on their own and empty slots get filled.",
+    "assumption": "About 30 confirmation and recall calls a day at 2 minutes each."
+  },
+  {
+    "block": "insurance_billing",
+    "icon": "file-text",
+    "hours": [
+      3,
+      8
+    ],
+    "before": "Checking coverage and fixing rejected claims takes hours.",
+    "after": "Coverage is checked before the visit and mistakes are caught before sending.",
+    "assumption": "About 10 minutes per claim problem on 20 to 30 problems a week."
+  },
+  {
+    "block": "patient_records",
+    "icon": "clipboard-list",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "Visit notes get typed after hours.",
+    "after": "Visit notes are drafted for you to check.",
+    "assumption": "About 5 to 10 minutes of note-writing saved per patient."
+  },
+  {
+    "block": "hipaa",
+    "icon": "shield-check",
+    "hours": [
+      1,
+      2
+    ],
+    "before": "You're not sure which tools are safe to use with patient information.",
+    "after": "A checklist shows which tools will sign a promise to protect patient data.",
+    "assumption": "About 2 hours a month researching vendors."
+  },
+  {
+    "block": "channel_mgmt",
+    "icon": "globe",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "You update the calendar on every booking site and risk double bookings.",
+    "after": "All your booking sites show the same open dates.",
+    "assumption": "About 30 minutes a day updating calendars."
+  },
+  {
+    "block": "dynamic_pricing",
+    "icon": "trending-up",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "You change nightly rates by guessing.",
+    "after": "Prices rise and fall with demand on their own.",
+    "assumption": "About 1 to 2 hours a week checking local events and rates."
+  },
+  {
+    "block": "guest_messaging",
+    "icon": "message-square",
+    "hours": [
+      3,
+      6
+    ],
+    "before": "You answer the same guest questions on every app, at all hours.",
+    "after": "Common questions get a quick, friendly reply.",
+    "assumption": "About 10 messages a day at 3 to 5 minutes each."
+  },
+  {
+    "block": "housekeeping",
+    "icon": "bed-double",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "You text cleaners after each booking and hope rooms are ready.",
+    "after": "Cleaning jobs are scheduled around check-outs.",
+    "assumption": "About 20 minutes per turnover on 6 to 12 turnovers a week."
+  },
+  {
+    "block": "client_intake",
+    "icon": "user-plus",
+    "hours": [
+      2,
+      4
+    ],
+    "before": "You sort new clients through long emails and calls.",
+    "after": "One form collects what you need.",
+    "assumption": "About 20 minutes per inquiry on 6 to 12 inquiries a week."
+  },
+  {
+    "block": "proposals_esign",
+    "icon": "pen-line",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "You write each proposal from scratch and get it signed on paper.",
+    "after": "You fill in a template and clients sign online.",
+    "assumption": "About 30 to 60 minutes saved per proposal."
+  },
+  {
+    "block": "time_billing",
+    "icon": "clock",
+    "hours": [
+      2,
+      5
+    ],
+    "before": "You rebuild your week from memory to bill clients.",
+    "after": "Your time is tracked as you work and turns into bills.",
+    "assumption": "About 1 hour a week of reconstructing time, plus missed hours."
+  },
+  {
+    "block": "documents",
+    "icon": "file-text",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "Client files are in email and shared drives, and you chase missing papers.",
+    "after": "Files are in one safe place and requests go out with a link.",
+    "assumption": "About 20 minutes a day searching and chasing."
+  },
+  {
+    "block": "project_tracking",
+    "icon": "clipboard-list",
+    "hours": [
+      1,
+      3
+    ],
+    "before": "You keep track of who owes what in your head and in email.",
+    "after": "One list shows what is due and who is doing it.",
+    "assumption": "About 30 minutes a day on status questions."
+  },
+  {
+    "block": "customer_comm",
+    "archetype": "food_bev",
+    "before": "The phone rings during the lunch rush and nobody can answer.",
+    "after": "Calls about hours, menus and orders are answered for you."
+  },
+  {
+    "block": "customer_comm",
+    "archetype": "field_services",
+    "before": "You're on a roof or under a sink and miss a new customer's call.",
+    "after": "Every call is answered and the job is booked while you work."
+  },
+  {
+    "block": "customer_comm",
+    "archetype": "construction",
+    "before": "Calls from clients and subs go to voicemail while you're on site.",
+    "after": "Every call is answered, and urgent ones reach you."
+  },
+  {
+    "block": "customer_comm",
+    "archetype": "retail",
+    "before": "Shoppers call to ask if an item is in stock while you're at the register.",
+    "after": "Stock and hours questions get answered for you."
+  },
+  {
+    "block": "customer_comm",
+    "archetype": "ecommerce",
+    "before": "Customers ask the same questions about orders and shipping all day.",
+    "after": "Common questions get an instant, correct reply."
+  },
+  {
+    "block": "customer_comm",
+    "archetype": "appointments",
+    "before": "You can't answer the phone with a client in your chair.",
+    "after": "Calls are answered and bookings are made for you."
+  },
+  {
+    "block": "customer_comm",
+    "archetype": "clinics",
+    "before": "The front desk is busy and patients wait on hold.",
+    "after": "Routine calls are handled, so staff can focus on patients."
+  },
+  {
+    "block": "customer_comm",
+    "archetype": "lodging",
+    "before": "Guests call or message at all hours with the same questions.",
+    "after": "Guests get a quick reply at any hour."
+  },
+  {
+    "block": "customer_comm",
+    "archetype": "professional",
+    "before": "New clients call while you're in a meeting and some never call back.",
+    "after": "Every caller is answered and their details are taken."
+  },
+  {
+    "block": "reviews",
+    "archetype": "food_bev",
+    "before": "Happy diners leave without a word.",
+    "after": "Guests get a quick ask after the meal, and replies are drafted for you."
+  },
+  {
+    "block": "reviews",
+    "archetype": "field_services",
+    "before": "A great job ends with a handshake, not a review.",
+    "after": "Each finished job gets a text asking for a review."
+  },
+  {
+    "block": "reviews",
+    "archetype": "construction",
+    "before": "Finished projects get praise in person, not online.",
+    "after": "Each finished job gets a polite ask for a review."
+  },
+  {
+    "block": "reviews",
+    "archetype": "retail",
+    "before": "Shoppers love the shop but nobody posts about it.",
+    "after": "Customers get a simple ask after they buy."
+  },
+  {
+    "block": "reviews",
+    "archetype": "ecommerce",
+    "before": "Few buyers leave reviews, so new visitors hesitate.",
+    "after": "Buyers get an ask at the right time, and reviews build trust."
+  },
+  {
+    "block": "reviews",
+    "archetype": "appointments",
+    "before": "Clients rave in the chair but don't post.",
+    "after": "Each client gets a quick ask after their visit."
+  },
+  {
+    "block": "reviews",
+    "archetype": "clinics",
+    "before": "Patients are happy, but few post reviews.",
+    "after": "Patients get a polite ask after a visit. No health details are shared."
+  },
+  {
+    "block": "reviews",
+    "archetype": "lodging",
+    "before": "Guests enjoy their stay but rarely leave a review.",
+    "after": "Each guest gets a friendly ask at check-out."
+  },
+  {
+    "block": "reviews",
+    "archetype": "professional",
+    "before": "Happy clients refer you but don't review you.",
+    "after": "Each client gets a short, polite ask."
+  },
+  {
+    "block": "marketing",
+    "archetype": "food_bev",
+    "before": "Regulars drift away and slow days stay slow.",
+    "after": "A weekly message about specials brings people back."
+  },
+  {
+    "block": "marketing",
+    "archetype": "field_services",
+    "before": "Past customers forget you until something breaks.",
+    "after": "Seasonal reminders bring repeat jobs."
+  },
+  {
+    "block": "marketing",
+    "archetype": "construction",
+    "before": "You never follow up with past clients.",
+    "after": "A short note keeps you in mind for the next job."
+  },
+  {
+    "block": "marketing",
+    "archetype": "retail",
+    "before": "Customers shop once and you never reach them again.",
+    "after": "You tell past customers about sales and new items."
+  },
+  {
+    "block": "marketing",
+    "archetype": "ecommerce",
+    "before": "Shoppers leave things in their cart and never come back.",
+    "after": "A friendly reminder brings them back."
+  },
+  {
+    "block": "marketing",
+    "archetype": "appointments",
+    "before": "Clients forget to book their next visit.",
+    "after": "A reminder goes out when it is time to rebook."
+  },
+  {
+    "block": "marketing",
+    "archetype": "clinics",
+    "before": "Patients skip their regular checkups.",
+    "after": "Checkup reminders go out on their own."
+  },
+  {
+    "block": "marketing",
+    "archetype": "lodging",
+    "before": "Past guests don't think of you for their next trip.",
+    "after": "A note about open dates reaches past guests."
+  },
+  {
+    "block": "marketing",
+    "archetype": "professional",
+    "before": "Past clients forget you offer more than one service.",
+    "after": "A short update reminds them how you can help."
+  },
+  {
+    "block": "invoicing",
+    "archetype": "food_bev",
+    "before": "Catering and supplier bills get lost in the shuffle.",
+    "after": "Bills go out on time and you see who owes you."
+  },
+  {
+    "block": "invoicing",
+    "archetype": "field_services",
+    "before": "You write invoices back at the shop days after the job.",
+    "after": "The invoice goes out from the job site the same day."
+  },
+  {
+    "block": "invoicing",
+    "archetype": "construction",
+    "before": "Progress bills go out late and money comes in slowly.",
+    "after": "Bills go out on schedule and reminders are sent for you."
+  },
+  {
+    "block": "invoicing",
+    "archetype": "retail",
+    "before": "You chase business customers for payment by phone.",
+    "after": "Reminders go out on their own."
+  },
+  {
+    "block": "invoicing",
+    "archetype": "ecommerce",
+    "before": "You bill wholesale and custom orders by hand.",
+    "after": "Invoices are made and sent for you."
+  },
+  {
+    "block": "invoicing",
+    "archetype": "appointments",
+    "before": "Deposits and packages are tracked on paper.",
+    "after": "Payments are collected when clients book."
+  },
+  {
+    "block": "invoicing",
+    "archetype": "clinics",
+    "before": "Patient balances sit unpaid.",
+    "after": "Statements go out and reminders follow."
+  },
+  {
+    "block": "invoicing",
+    "archetype": "lodging",
+    "before": "You collect deposits and balances by hand.",
+    "after": "Payments are requested automatically."
+  },
+  {
+    "block": "invoicing",
+    "archetype": "professional",
+    "before": "Invoices go out at the end of the month and clients pay late.",
+    "after": "Invoices go out right away, with reminders."
+  },
+  {
+    "block": "scheduling_payroll",
+    "archetype": "food_bev",
+    "before": "You build the weekly schedule from texts and swap requests.",
+    "after": "Shifts, swaps and pay are handled in one place."
+  },
+  {
+    "block": "scheduling_payroll",
+    "archetype": "field_services",
+    "before": "Hours from the field come in on scraps of paper.",
+    "after": "Techs clock in on a phone and pay uses those hours."
+  },
+  {
+    "block": "scheduling_payroll",
+    "archetype": "construction",
+    "before": "You collect crew hours by hand and work out pay at the end of the week.",
+    "after": "Crews clock in on site and pay is ready."
+  },
+  {
+    "block": "scheduling_payroll",
+    "archetype": "retail",
+    "before": "You rebuild the shifts every week around who is off.",
+    "after": "The schedule is made from everyone's availability."
+  },
+  {
+    "block": "scheduling_payroll",
+    "archetype": "ecommerce",
+    "before": "You track pay for part-time and contract help in a spreadsheet.",
+    "after": "Hours and pay are tracked together."
+  },
+  {
+    "block": "scheduling_payroll",
+    "archetype": "appointments",
+    "before": "You juggle chair time and staff hours each week.",
+    "after": "The schedule follows the bookings, and pay follows the hours."
+  },
+  {
+    "block": "scheduling_payroll",
+    "archetype": "clinics",
+    "before": "You piece together staff cover around the patient schedule.",
+    "after": "Shifts line up with appointments and payroll is automatic."
+  },
+  {
+    "block": "scheduling_payroll",
+    "archetype": "lodging",
+    "before": "You manage housekeeping and front-desk shifts by text.",
+    "after": "Shifts and pay are in one place."
+  },
+  {
+    "block": "scheduling_payroll",
+    "archetype": "professional",
+    "before": "You track staff hours and time off by hand.",
+    "after": "Hours, time off and pay are in one place."
+  }
+]

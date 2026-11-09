@@ -292,6 +292,16 @@
   animation: rise 0.45s ease-out both;
 }
 
+/* The "hours back" bar fills from the left once. */
+@keyframes bar-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.outcome-bar {
+  transform-origin: left center;
+  animation: bar-grow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s both;
+}
+
 dialog {
   margin: auto;
   background: var(--surface);

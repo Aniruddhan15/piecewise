@@ -1,0 +1,1394 @@
+[
+  {
+    "block": "payments_pos",
+    "money": {
+      "kind": "saved",
+      "low": 30,
+      "high": 80,
+      "assumption": "Fewer till, tip and split-bill mistakes: about $1 to $3 a day.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Time to close out the day",
+      "unit": " min",
+      "before": 45,
+      "after": 10,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "accounting",
+    "money": {
+      "kind": "saved",
+      "low": 50,
+      "high": 150,
+      "assumption": "About 1 hour a month less of paid bookkeeper cleanup, at $50 to $150 an hour.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Days to close the month",
+      "unit": " days",
+      "before": 10,
+      "after": 2,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  },
+  {
+    "block": "customer_records",
+    "money": {
+      "kind": "revenue",
+      "low": 50,
+      "high": 200,
+      "assumption": "1 or 2 repeat visits a month you would otherwise have missed, at $50 to $100 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Customers you can look up in seconds",
+      "unit": "%",
+      "before": 20,
+      "after": 100,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "channels",
+    "money": {
+      "kind": "revenue",
+      "low": 100,
+      "high": 300,
+      "assumption": "1 or 2 messages a month that used to get lost, each worth $100 to $150.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Messages answered the same day",
+      "unit": "%",
+      "before": 60,
+      "after": 95,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "marketing",
+    "money": {
+      "kind": "revenue",
+      "low": 150,
+      "high": 800,
+      "assumption": "2 to 5 extra repeat orders or visits a month at $75 to $160 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Past customers you reach each month",
+      "unit": "%",
+      "before": 5,
+      "after": 60,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "by_archetype": {
+      "food_bev": {
+        "money": {
+          "kind": "revenue",
+          "low": 150,
+          "high": 600,
+          "assumption": "10 to 25 extra visits a month from a weekly message, at $15 to $25.",
+          "confidence": "guess"
+        }
+      },
+      "field_services": {
+        "money": {
+          "kind": "revenue",
+          "low": 300,
+          "high": 1000,
+          "assumption": "2 to 4 repeat jobs a month from seasonal reminders, at $150 to $250.",
+          "confidence": "guess"
+        }
+      },
+      "construction": {
+        "money": {
+          "kind": "revenue",
+          "low": 200,
+          "high": 1000,
+          "assumption": "An occasional small repeat job from past clients.",
+          "confidence": "guess"
+        }
+      },
+      "retail": {
+        "money": {
+          "kind": "revenue",
+          "low": 150,
+          "high": 700,
+          "assumption": "5 to 15 extra purchases a month at $30 to $50.",
+          "confidence": "guess"
+        }
+      },
+      "ecommerce": {
+        "money": {
+          "kind": "revenue",
+          "low": 150,
+          "high": 700,
+          "assumption": "4 to 12 orders a month won back from abandoned carts, at $40 to $60.",
+          "confidence": "guess"
+        }
+      },
+      "appointments": {
+        "money": {
+          "kind": "revenue",
+          "low": 250,
+          "high": 800,
+          "assumption": "4 to 8 clients a month who rebook after a reminder, at $60 to $100.",
+          "confidence": "guess"
+        }
+      },
+      "clinics": {
+        "money": {
+          "kind": "revenue",
+          "low": 350,
+          "high": 1200,
+          "assumption": "3 to 6 patients a month who come back for a checkup, at $120 to $200.",
+          "confidence": "guess"
+        }
+      },
+      "lodging": {
+        "money": {
+          "kind": "revenue",
+          "low": 200,
+          "high": 800,
+          "assumption": "1 to 3 direct bookings a month from past guests, at $200 to $270.",
+          "confidence": "guess"
+        }
+      },
+      "professional": {
+        "money": {
+          "kind": "revenue",
+          "low": 200,
+          "high": 1000,
+          "assumption": "A repeat engagement every month or two from past clients.",
+          "confidence": "guess"
+        }
+      }
+    },
+    "headline": "money"
+  },
+  {
+    "block": "reviews",
+    "money": {
+      "kind": "revenue",
+      "low": 200,
+      "high": 600,
+      "assumption": "1 to 3 extra customers a month who found you through better reviews, at $100 to $200 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Customers who leave a review",
+      "unit": "%",
+      "before": 2,
+      "after": 10,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "by_archetype": {
+      "food_bev": {
+        "money": {
+          "kind": "revenue",
+          "low": 150,
+          "high": 500,
+          "assumption": "A rating gain of about 0.1 star is linked to roughly 0.5 to 0.9% more revenue for independent restaurants. On $30,000 to $60,000 of monthly sales that is about $150 to $500.",
+          "confidence": "sourced",
+          "source": {
+            "label": "Luca 2011, Harvard Business School: a one-star Yelp gain meant 5 to 9% more revenue for independent restaurants",
+            "url": "https://www.hbs.edu/faculty/Pages/item.aspx?num=41233"
+          }
+        }
+      },
+      "field_services": {
+        "money": {
+          "kind": "revenue",
+          "low": 300,
+          "high": 700,
+          "assumption": "1 or 2 extra jobs a month from better reviews, at $300 to $350.",
+          "confidence": "guess"
+        }
+      },
+      "construction": {
+        "money": {
+          "kind": "revenue",
+          "low": 200,
+          "high": 800,
+          "assumption": "An occasional extra project lead from better reviews.",
+          "confidence": "guess"
+        }
+      },
+      "retail": {
+        "money": {
+          "kind": "revenue",
+          "low": 150,
+          "high": 450,
+          "assumption": "4 to 8 extra shoppers a month at $35 to $55.",
+          "confidence": "guess"
+        }
+      },
+      "ecommerce": {
+        "money": {
+          "kind": "revenue",
+          "low": 120,
+          "high": 400,
+          "assumption": "3 to 8 extra orders a month from buyers who trust your reviews, at $40 to $50.",
+          "confidence": "guess"
+        }
+      },
+      "appointments": {
+        "money": {
+          "kind": "revenue",
+          "low": 150,
+          "high": 500,
+          "assumption": "2 to 5 new clients a month at $70 to $100.",
+          "confidence": "guess"
+        }
+      },
+      "clinics": {
+        "money": {
+          "kind": "revenue",
+          "low": 150,
+          "high": 750,
+          "assumption": "1 to 3 new patients a month at $150 to $250 for the first visit.",
+          "confidence": "guess"
+        }
+      },
+      "lodging": {
+        "money": {
+          "kind": "revenue",
+          "low": 200,
+          "high": 500,
+          "assumption": "1 or 2 extra bookings a month from a higher rating, at $200 to $250.",
+          "confidence": "guess"
+        }
+      },
+      "professional": {
+        "money": {
+          "kind": "revenue",
+          "low": 300,
+          "high": 900,
+          "assumption": "A referral or two a month from happy clients, at $300 to $450 in first work.",
+          "confidence": "guess"
+        }
+      }
+    },
+    "headline": "money"
+  },
+  {
+    "block": "customer_comm",
+    "money": {
+      "kind": "revenue",
+      "low": 300,
+      "high": 1200,
+      "assumption": "2 to 6 calls a month that used to go unanswered and now become a job or booking, at $150 to $200 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Calls answered",
+      "unit": "%",
+      "before": 72,
+      "after": 95,
+      "better": "higher",
+      "confidence": "vendor",
+      "source": {
+        "label": "CallRail and Invoca missed-call benchmarks (vendor data), summarized by Ainora",
+        "url": "https://ainora.lt/blog/missed-call-statistics-small-business-2026"
+      }
+    },
+    "by_archetype": {
+      "food_bev": {
+        "money": {
+          "kind": "revenue",
+          "low": 100,
+          "high": 400,
+          "assumption": "5 to 15 phone orders or catering questions a month that used to go unanswered, at about $25 each.",
+          "confidence": "guess"
+        }
+      },
+      "field_services": {
+        "money": {
+          "kind": "revenue",
+          "low": 300,
+          "high": 1200,
+          "assumption": "2 to 6 calls a month that become a job, at $150 to $200 each.",
+          "confidence": "guess"
+        }
+      },
+      "construction": {
+        "money": {
+          "kind": "revenue",
+          "low": 500,
+          "high": 1500,
+          "assumption": "1 or 2 more inquiries a month, winning about 1 in 5 on jobs worth $8,000 or more.",
+          "confidence": "guess"
+        }
+      },
+      "retail": {
+        "money": {
+          "kind": "revenue",
+          "low": 100,
+          "high": 400,
+          "assumption": "3 to 8 shoppers a month who ask about stock or hours and then come in, at $30 to $60.",
+          "confidence": "guess"
+        }
+      },
+      "ecommerce": {
+        "money": {
+          "kind": "revenue",
+          "low": 200,
+          "high": 600,
+          "assumption": "5 to 15 shoppers a month whose question is answered before they leave, at $40 to $45.",
+          "confidence": "guess"
+        }
+      },
+      "appointments": {
+        "money": {
+          "kind": "revenue",
+          "low": 250,
+          "high": 700,
+          "assumption": "4 to 8 calls a month that become a booking, at $60 to $90.",
+          "confidence": "guess"
+        }
+      },
+      "clinics": {
+        "money": {
+          "kind": "revenue",
+          "low": 400,
+          "high": 1400,
+          "assumption": "3 to 6 calls a month that become an appointment, at $120 to $250 each.",
+          "confidence": "guess"
+        }
+      },
+      "lodging": {
+        "money": {
+          "kind": "revenue",
+          "low": 200,
+          "high": 800,
+          "assumption": "1 to 3 more bookings a month from fast replies, at $150 to $300 a stay.",
+          "confidence": "guess"
+        }
+      },
+      "professional": {
+        "money": {
+          "kind": "revenue",
+          "low": 300,
+          "high": 1200,
+          "assumption": "1 more client every month or two from calls that used to go unanswered, at $500 or more.",
+          "confidence": "guess"
+        }
+      }
+    },
+    "headline": "money"
+  },
+  {
+    "block": "invoicing",
+    "money": {
+      "kind": "revenue",
+      "low": 100,
+      "high": 300,
+      "assumption": "About 1 invoice a month that no longer slips through, at $100 to $300.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Days to get paid",
+      "unit": " days",
+      "before": 30,
+      "after": 20,
+      "better": "lower",
+      "confidence": "vendor",
+      "source": {
+        "label": "Xero, QuickBooks and PYMNTS late-payment data (automating receivables cut days outstanding by 32%), via Yonovo",
+        "url": "https://www.yonovo.com/accounts-receivable-statistics"
+      }
+    },
+    "by_archetype": {
+      "food_bev": {
+        "money": {
+          "kind": "revenue",
+          "low": 50,
+          "high": 200,
+          "assumption": "About 1 catering or supplier-credit bill a month that no longer slips, at $50 to $200.",
+          "confidence": "guess"
+        }
+      },
+      "field_services": {
+        "money": {
+          "kind": "revenue",
+          "low": 100,
+          "high": 400,
+          "assumption": "About 1 invoice a month that no longer slips through, at $100 to $400.",
+          "confidence": "guess"
+        }
+      },
+      "construction": {
+        "money": {
+          "kind": "revenue",
+          "low": 200,
+          "high": 800,
+          "assumption": "Progress bills that go out and get chased on time, about $200 to $800 a month in slipped money.",
+          "confidence": "guess"
+        }
+      },
+      "retail": {
+        "money": {
+          "kind": "revenue",
+          "low": 50,
+          "high": 200,
+          "assumption": "About 1 business-account bill a month that no longer slips, at $50 to $200.",
+          "confidence": "guess"
+        }
+      },
+      "ecommerce": {
+        "money": {
+          "kind": "revenue",
+          "low": 50,
+          "high": 200,
+          "assumption": "About 1 wholesale or custom bill a month that no longer slips, at $50 to $200.",
+          "confidence": "guess"
+        }
+      },
+      "appointments": {
+        "money": {
+          "kind": "revenue",
+          "low": 50,
+          "high": 200,
+          "assumption": "Deposits and package payments that are collected on time.",
+          "confidence": "guess"
+        }
+      },
+      "clinics": {
+        "money": {
+          "kind": "revenue",
+          "low": 150,
+          "high": 600,
+          "assumption": "3 to 6 patient balances a month that get paid after a reminder, at $50 to $100.",
+          "confidence": "guess"
+        }
+      },
+      "lodging": {
+        "money": {
+          "kind": "revenue",
+          "low": 100,
+          "high": 300,
+          "assumption": "Balances and deposits collected on time.",
+          "confidence": "guess"
+        }
+      },
+      "professional": {
+        "money": {
+          "kind": "revenue",
+          "low": 200,
+          "high": 800,
+          "assumption": "1 or 2 invoices a month that go out sooner and get paid, at $200 to $800.",
+          "confidence": "guess"
+        }
+      }
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "legal",
+    "money": null,
+    "measure": {
+      "label": "Rules you have checked",
+      "unit": "%",
+      "before": 30,
+      "after": 90,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  },
+  {
+    "block": "reporting",
+    "money": {
+      "kind": "revenue",
+      "low": 100,
+      "high": 400,
+      "assumption": "Dropping a slow item or a quiet shift is worth about 1% of $10,000 to $40,000 in monthly sales.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Time to get your weekly numbers",
+      "unit": " min",
+      "before": 60,
+      "after": 5,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  },
+  {
+    "block": "scheduling_payroll",
+    "money": {
+      "kind": "saved",
+      "low": 50,
+      "high": 200,
+      "assumption": "Fewer payroll mistakes and overtime surprises: $50 to $200 a month.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Time to build the weekly schedule",
+      "unit": " min",
+      "before": 160,
+      "after": 90,
+      "better": "lower",
+      "confidence": "vendor",
+      "source": {
+        "label": "TimeForge survey: restaurant managers spend 2.6 hours a week building schedules (vendor survey)",
+        "url": "https://timeforge.com/blog/restaurant-scheduling-statistics-1/"
+      }
+    },
+    "by_archetype": {
+      "food_bev": {
+        "money": {
+          "kind": "saved",
+          "low": 100,
+          "high": 300,
+          "assumption": "Fewer payroll mistakes and overtime surprises across a busy team.",
+          "confidence": "guess"
+        }
+      },
+      "field_services": {
+        "money": {
+          "kind": "saved",
+          "low": 50,
+          "high": 200,
+          "assumption": "Fewer payroll mistakes and overtime surprises.",
+          "confidence": "guess"
+        }
+      },
+      "construction": {
+        "money": {
+          "kind": "saved",
+          "low": 100,
+          "high": 400,
+          "assumption": "Fewer crew-hour and overtime mistakes.",
+          "confidence": "guess"
+        }
+      },
+      "retail": {
+        "money": {
+          "kind": "saved",
+          "low": 50,
+          "high": 250,
+          "assumption": "Fewer payroll mistakes and extra hours on thin days.",
+          "confidence": "guess"
+        }
+      },
+      "ecommerce": {
+        "money": {
+          "kind": "saved",
+          "low": 25,
+          "high": 100,
+          "assumption": "Fewer mistakes paying part-time and contract help.",
+          "confidence": "guess"
+        }
+      },
+      "appointments": {
+        "money": {
+          "kind": "saved",
+          "low": 50,
+          "high": 150,
+          "assumption": "Fewer payroll mistakes and idle paid hours.",
+          "confidence": "guess"
+        }
+      },
+      "clinics": {
+        "money": {
+          "kind": "saved",
+          "low": 100,
+          "high": 300,
+          "assumption": "Fewer coverage gaps and overtime surprises.",
+          "confidence": "guess"
+        }
+      },
+      "lodging": {
+        "money": {
+          "kind": "saved",
+          "low": 50,
+          "high": 200,
+          "assumption": "Fewer idle paid hours and payroll mistakes.",
+          "confidence": "guess"
+        }
+      },
+      "professional": {
+        "money": {
+          "kind": "saved",
+          "low": 25,
+          "high": 100,
+          "assumption": "Fewer hour-tracking and payroll mistakes.",
+          "confidence": "guess"
+        }
+      }
+    },
+    "headline": "time"
+  },
+  {
+    "block": "hiring_training",
+    "money": null,
+    "measure": {
+      "label": "Days until a new hire works on their own",
+      "unit": " days",
+      "before": 14,
+      "after": 7,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  },
+  {
+    "block": "multi_location",
+    "money": null,
+    "measure": {
+      "label": "Sites you can compare in one place",
+      "unit": "%",
+      "before": 25,
+      "after": 100,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  },
+  {
+    "block": "recipe_costing",
+    "money": {
+      "kind": "revenue",
+      "low": 150,
+      "high": 600,
+      "assumption": "Repricing a few dishes by 25 to 50 cents across 600 sales a month.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Dishes with a known profit",
+      "unit": "%",
+      "before": 10,
+      "after": 100,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "online_ordering",
+    "money": {
+      "kind": "revenue",
+      "low": 200,
+      "high": 1000,
+      "assumption": "10 to 20 extra online orders a month at $20 to $50 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Orders typed in by hand",
+      "unit": "%",
+      "before": 100,
+      "after": 10,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "money"
+  },
+  {
+    "block": "reservations",
+    "money": {
+      "kind": "revenue",
+      "low": 250,
+      "high": 600,
+      "assumption": "2 to 4 more guests a week who would have gone elsewhere, at about $35 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Bookings that need a phone call",
+      "unit": "%",
+      "before": 100,
+      "after": 30,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "money"
+  },
+  {
+    "block": "food_inventory",
+    "money": {
+      "kind": "saved",
+      "low": 150,
+      "high": 800,
+      "assumption": "Cutting waste by 2 to 4 points on $5,000 to $20,000 of monthly food purchases.",
+      "confidence": "vendor",
+      "source": {
+        "label": "EPA presentation by Leanpath: pre-consumer food waste is 4 to 10% of purchases (vendor)",
+        "url": "https://www.epa.gov/sites/default/files/2016-01/documents/2_leanpath_shakman.pdf"
+      }
+    },
+    "measure": {
+      "label": "Food thrown away, as a share of purchases",
+      "unit": "%",
+      "before": 8,
+      "after": 4,
+      "better": "lower",
+      "confidence": "vendor",
+      "source": {
+        "label": "EPA presentation by Leanpath: pre-consumer food waste is 4 to 10% of purchases (vendor)",
+        "url": "https://www.epa.gov/sites/default/files/2016-01/documents/2_leanpath_shakman.pdf"
+      }
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "food_safety",
+    "money": null,
+    "measure": {
+      "label": "Records ready for an inspector",
+      "unit": "%",
+      "before": 40,
+      "after": 100,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "dispatch",
+    "money": {
+      "kind": "saved",
+      "low": 100,
+      "high": 400,
+      "assumption": "20 to 30 fewer minutes of driving a day, worth $5 to $20 in fuel and time.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Driving time per tech each day",
+      "unit": " min",
+      "before": 120,
+      "after": 90,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "estimates",
+    "money": {
+      "kind": "revenue",
+      "low": 400,
+      "high": 1500,
+      "assumption": "1 or 2 more jobs a month won through follow-ups, at $400 to $800 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "New leads answered within 5 minutes",
+      "unit": "%",
+      "before": 12,
+      "after": 90,
+      "better": "higher",
+      "confidence": "vendor",
+      "source": {
+        "label": "Hatch: 88% of HVAC contractors take over 5 minutes to respond (vendor data)",
+        "url": "https://pipelineon.com/blog/responding-to-leads-faster-home-service/"
+      }
+    },
+    "headline": "money"
+  },
+  {
+    "block": "maintenance_plans",
+    "money": {
+      "kind": "revenue",
+      "low": 200,
+      "high": 800,
+      "assumption": "2 to 5 more yearly-plan customers at $40 to $160 a month in steady work.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Customers on a yearly plan",
+      "unit": "%",
+      "before": 5,
+      "after": 25,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "money"
+  },
+  {
+    "block": "truck_inventory",
+    "money": {
+      "kind": "saved",
+      "low": 100,
+      "high": 300,
+      "assumption": "About 4 fewer trips a month for a missing part, at $25 to $75 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Jobs that need a second trip",
+      "unit": "%",
+      "before": 15,
+      "after": 5,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  },
+  {
+    "block": "bids_takeoffs",
+    "money": {
+      "kind": "revenue",
+      "low": 300,
+      "high": 900,
+      "assumption": "Time freed to bid on 2 to 4 more jobs a month, winning about 1 in 5 at $500 to $1,500 profit.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Hours to price one bid",
+      "unit": " hours",
+      "before": 6,
+      "after": 2,
+      "better": "lower",
+      "confidence": "vendor",
+      "source": {
+        "label": "STACK takeoff software claims 75% less takeoff time (vendor claim)",
+        "url": "https://getninja.us/best-construction-estimating-softwares/"
+      }
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "project_scheduling",
+    "money": {
+      "kind": "saved",
+      "low": 200,
+      "high": 800,
+      "assumption": "2 to 8 fewer idle crew hours a month, at $25 to $100 an hour.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Jobs finished on schedule",
+      "unit": "%",
+      "before": 55,
+      "after": 80,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "subcontractors",
+    "money": null,
+    "measure": {
+      "label": "Subs with paperwork on file",
+      "unit": "%",
+      "before": 50,
+      "after": 100,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  },
+  {
+    "block": "permits",
+    "money": null,
+    "measure": {
+      "label": "Permits with a deadline reminder",
+      "unit": "%",
+      "before": 30,
+      "after": 100,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  },
+  {
+    "block": "inventory_reorder",
+    "money": {
+      "kind": "revenue",
+      "low": 200,
+      "high": 1000,
+      "assumption": "4 to 10 sales a month that used to be lost to an empty shelf, at $40 to $120 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Items out of stock",
+      "unit": "%",
+      "before": 8,
+      "after": 2,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "money"
+  },
+  {
+    "block": "catalog_store",
+    "money": {
+      "kind": "revenue",
+      "low": 200,
+      "high": 800,
+      "assumption": "5 to 15 online orders a month at $40 to $55 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Oversold orders a month",
+      "unit": "",
+      "before": 4,
+      "after": 0,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "demand_forecast",
+    "money": {
+      "kind": "saved",
+      "low": 200,
+      "high": 800,
+      "assumption": "Buying about 8 points less stock that sits unsold, on $2,500 to $10,000 of monthly purchases.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Stock that sits unsold",
+      "unit": "%",
+      "before": 20,
+      "after": 12,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "suppliers",
+    "money": {
+      "kind": "saved",
+      "low": 80,
+      "high": 400,
+      "assumption": "2 to 5% better prices on $3,000 to $8,000 of monthly orders.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Orders placed at a known best price",
+      "unit": "%",
+      "before": 20,
+      "after": 80,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "listings",
+    "money": {
+      "kind": "revenue",
+      "low": 200,
+      "high": 900,
+      "assumption": "Selling on one more site: 5 to 15 extra orders a month at $40 to $60.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Time to update one product everywhere",
+      "unit": " min",
+      "before": 20,
+      "after": 2,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "payout_recon",
+    "money": {
+      "kind": "saved",
+      "low": 100,
+      "high": 400,
+      "assumption": "Catching missed fees or refunds: about 1% of $10,000 to $40,000 in monthly sales.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Payouts matched to orders",
+      "unit": "%",
+      "before": 40,
+      "after": 98,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "sales_tax",
+    "money": {
+      "kind": "saved",
+      "low": 100,
+      "high": 500,
+      "assumption": "Avoiding penalties and interest on a missed or late filing.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "States where tax is handled",
+      "unit": "%",
+      "before": 50,
+      "after": 100,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "fulfillment",
+    "money": {
+      "kind": "saved",
+      "low": 100,
+      "high": 400,
+      "assumption": "50 cents to $2 cheaper shipping on 100 to 200 packages a month.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Time to ship one order",
+      "unit": " min",
+      "before": 6,
+      "after": 3,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "returns",
+    "money": {
+      "kind": "revenue",
+      "low": 100,
+      "high": 400,
+      "assumption": "3 to 8 sales a month kept as exchanges instead of refunds, at $40 to $50 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Returns that need email back-and-forth",
+      "unit": "%",
+      "before": 90,
+      "after": 20,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "ads",
+    "money": {
+      "kind": "saved",
+      "low": 200,
+      "high": 900,
+      "assumption": "Moving 10 to 20% of $1,000 to $4,500 in monthly ad spend away from ads that don't pay.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Ad spend that earns more than it costs",
+      "unit": "%",
+      "before": 50,
+      "after": 70,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "booking",
+    "money": {
+      "kind": "revenue",
+      "low": 300,
+      "high": 900,
+      "assumption": "5 to 8 fewer no-shows a month, at $50 to $110 a visit.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Appointments missed (no-shows)",
+      "unit": "%",
+      "before": 15,
+      "after": 10,
+      "better": "lower",
+      "confidence": "sourced",
+      "source": {
+        "label": "Hasvold & Wootton 2011: 29 studies of appointment reminders (about 34% fewer no-shows)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3188816/"
+      }
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "memberships",
+    "money": {
+      "kind": "revenue",
+      "low": 300,
+      "high": 1000,
+      "assumption": "5 to 10 more clients on a monthly plan at $60 to $100.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Clients on a package or plan",
+      "unit": "%",
+      "before": 10,
+      "after": 30,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "money"
+  },
+  {
+    "block": "client_history",
+    "money": {
+      "kind": "revenue",
+      "low": 100,
+      "high": 400,
+      "assumption": "2 to 4 add-ons a month that you remembered to offer, at $25 to $100.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Visits where you know their history",
+      "unit": "%",
+      "before": 40,
+      "after": 100,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "commissions",
+    "money": null,
+    "measure": {
+      "label": "Time to total commissions",
+      "unit": " min",
+      "before": 120,
+      "after": 10,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  },
+  {
+    "block": "patient_scheduling",
+    "money": {
+      "kind": "revenue",
+      "low": 500,
+      "high": 2000,
+      "assumption": "4 to 8 more filled appointment slots a month at $120 to $250 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Appointments missed (no-shows)",
+      "unit": "%",
+      "before": 12,
+      "after": 8,
+      "better": "lower",
+      "confidence": "sourced",
+      "source": {
+        "label": "Hasvold & Wootton 2011: 29 studies of appointment reminders (about 34% fewer no-shows)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3188816/"
+      }
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "insurance_billing",
+    "money": {
+      "kind": "revenue",
+      "low": 150,
+      "high": 600,
+      "assumption": "1 to 4 denied claims a month that get paid after all (60% of denied claims are never resubmitted), at $100 to $190 each.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Claims paid the first time",
+      "unit": "%",
+      "before": 92,
+      "after": 95,
+      "better": "higher",
+      "confidence": "sourced",
+      "source": {
+        "label": "MGMA 2023 DataDive: 8% of claims are denied on first submission",
+        "url": "https://www.mgma.com/mgma-stat/strategic-improvements-in-your-rcm-to-reduce-your-practices-claim-denials"
+      }
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "patient_records",
+    "money": null,
+    "measure": {
+      "label": "Notes finished the same day",
+      "unit": "%",
+      "before": 60,
+      "after": 95,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  },
+  {
+    "block": "hipaa",
+    "money": null,
+    "measure": {
+      "label": "Tools with a signed BAA on file",
+      "unit": "%",
+      "before": 30,
+      "after": 100,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  },
+  {
+    "block": "channel_mgmt",
+    "money": null,
+    "measure": {
+      "label": "Double bookings a year",
+      "unit": "",
+      "before": 3,
+      "after": 0,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "dynamic_pricing",
+    "money": {
+      "kind": "revenue",
+      "low": 150,
+      "high": 700,
+      "assumption": "5 to 10% more on $3,000 to $7,000 in monthly bookings.",
+      "confidence": "vendor",
+      "source": {
+        "label": "Beyond Pricing claims 10 to 40% more revenue (vendor claim; no independent study found)",
+        "url": "https://beyondpricing.com/blog/dynamic-pricing-airbnb-complete-guide"
+      }
+    },
+    "measure": {
+      "label": "Nights booked at a good rate",
+      "unit": "%",
+      "before": 40,
+      "after": 70,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "money"
+  },
+  {
+    "block": "guest_messaging",
+    "money": {
+      "kind": "revenue",
+      "low": 100,
+      "high": 500,
+      "assumption": "1 to 3 more bookings a month from faster answers and better reviews.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Guest messages answered within an hour",
+      "unit": "%",
+      "before": 60,
+      "after": 95,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "housekeeping",
+    "money": null,
+    "measure": {
+      "label": "Rooms ready by check-in",
+      "unit": "%",
+      "before": 90,
+      "after": 99,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "client_intake",
+    "money": {
+      "kind": "revenue",
+      "low": 400,
+      "high": 1500,
+      "assumption": "1 more client a month from faster replies, at $400 to $1,500.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Inquiries answered within a day",
+      "unit": "%",
+      "before": 50,
+      "after": 95,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "money"
+  },
+  {
+    "block": "proposals_esign",
+    "money": {
+      "kind": "revenue",
+      "low": 300,
+      "high": 1000,
+      "assumption": "1 more signed engagement every 1 to 2 months, at $500 to $1,500.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Days to get a proposal signed",
+      "unit": " days",
+      "before": 7,
+      "after": 2,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "measure"
+  },
+  {
+    "block": "time_billing",
+    "money": {
+      "kind": "revenue",
+      "low": 450,
+      "high": 1800,
+      "assumption": "3 to 6 hours a month that used to go unbilled, at $150 to $300 an hour.",
+      "confidence": "guess"
+    },
+    "measure": {
+      "label": "Worked hours that get billed",
+      "unit": "%",
+      "before": 80,
+      "after": 95,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "money"
+  },
+  {
+    "block": "documents",
+    "money": null,
+    "measure": {
+      "label": "Time to find one client file",
+      "unit": " min",
+      "before": 10,
+      "after": 1,
+      "better": "lower",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  },
+  {
+    "block": "project_tracking",
+    "money": null,
+    "measure": {
+      "label": "Deadlines met",
+      "unit": "%",
+      "before": 80,
+      "after": 95,
+      "better": "higher",
+      "confidence": "guess"
+    },
+    "headline": "time"
+  }
+]

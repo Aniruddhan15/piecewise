@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Check, Plus, TriangleAlert } from "lucide-react";
+import { ArrowRight, Check, Minus, Plus, TriangleAlert } from "lucide-react";
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 import { cn } from "@/components/ui";
@@ -21,6 +21,7 @@ export function OptionCard({
   inKit,
   index,
   onToggle,
+  hiddenSpecs,
 }: {
   match: Match;
   blockId: string;
@@ -28,6 +29,8 @@ export function OptionCard({
   best: boolean;
   inKit: boolean;
   index: number;
+  /** Rows no card in this comparison has anything for, left out of every card so they stay level. */
+  hiddenSpecs?: ReadonlySet<string>;
   /** Adds the tool to the kit, or takes it out again. */
   onToggle: () => void;
 }) {
@@ -50,25 +53,33 @@ export function OptionCard({
           className={cn("space-y-5 p-6", best ? "text-white" : "text-ink")}
           style={{ background: best ? "var(--best-bg)" : TONES[index % TONES.length] }}
         >
-          <div className="space-y-2">
-            <div className="flex items-start justify-between gap-2">
-              <h3 className="text-3xl font-extrabold">{match.tool.name}</h3>
-              {inKit ? (
-                <span className={cn("mt-1.5 inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-xs font-bold", best ? "bg-white/20" : "bg-surface")}>
-                  <Check aria-hidden className="size-3.5" />
-                  In your kit
-                </span>
-              ) : null}
-            </div>
-            <p className={cn("line-clamp-3 min-h-[4.7em]", best ? "text-white/85" : "text-ink-2")}>{s.oneLiner}</p>
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="text-3xl font-extrabold">{match.tool.name}</h3>
+            {inKit ? (
+              <span className={cn("mt-1.5 inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-xs font-bold", best ? "bg-white/20" : "bg-surface")}>
+                <Check aria-hidden className="size-3.5" />
+                In your kit
+              </span>
+            ) : null}
           </div>
-          <div>
-            <p className="font-display text-3xl font-extrabold">{s.price}</p>
-            <p className={cn("text-sm", best ? "text-white/85" : "text-ink-2")}>{s.priceNote}</p>
-            <p className="mt-1 flex min-h-[2.6em] items-start gap-1 text-sm font-bold">
-              {s.fitKind === "catch" ? <TriangleAlert aria-hidden className="mt-0.5 size-4 shrink-0" /> : s.fitKind === "fits" ? <Check aria-hidden className="mt-0.5 size-4 shrink-0" /> : null}
-              {s.fitLine}
+          {/* The price leads: it is the first thing an owner compares. */}
+          <div className={cn("rounded-2xl p-4", best ? "bg-white/10" : "bg-surface/70")}>
+            <p
+              className={cn(
+                "font-display leading-none font-extrabold break-words",
+                // Short prices ($49, Free) are shown huge; a phrase ("Ask for a price") has to fit the card.
+                s.price.length > 9 ? "text-3xl" : "text-5xl",
+              )}
+            >
+              {s.price}
             </p>
+            <p className={cn("mt-2 text-base font-semibold", best ? "text-white/90" : "text-ink-2")}>{s.priceNote}</p>
+            {s.fitKind !== "unknown" ? (
+              <p className="mt-2 flex min-h-[2.6em] items-start gap-1 text-sm font-bold">
+                {s.fitKind === "catch" ? <TriangleAlert aria-hidden className="mt-0.5 size-4 shrink-0" /> : <Check aria-hidden className="mt-0.5 size-4 shrink-0" />}
+                {s.fitLine}
+              </p>
+            ) : null}
           </div>
           <div className="space-y-2">
             <button
@@ -105,16 +116,25 @@ export function OptionCard({
         </div>
         <div className="flex-1 space-y-3 bg-surface p-6">
           <p className="font-bold">What you get</p>
-          <ul className="space-y-2.5">
-            {s.points.map((p) => (
-              <li key={p} className="flex gap-2.5">
-                <span aria-hidden className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-ink text-bg">
-                  <Check className="size-3" strokeWidth={3} />
-                </span>
-                <span className="text-ink-2">{p}</span>
-              </li>
+          <dl className="space-y-2">
+            {s.specs.filter((row) => !hiddenSpecs?.has(row.label)).map((row) => (
+              <div key={row.label} className="min-h-[4.25rem]">
+                <dt className="flex items-center gap-2.5 text-xs font-bold tracking-wide text-ink-2 uppercase">
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "flex size-5 shrink-0 items-center justify-center rounded-full",
+                      row.known ? "bg-ink text-bg" : "border border-line text-ink-2",
+                    )}
+                  >
+                    {row.known ? <Check className="size-3" strokeWidth={3} /> : <Minus className="size-3" strokeWidth={3} />}
+                  </span>
+                  {row.label}
+                </dt>
+                <dd className={cn("line-clamp-2 pl-[1.875rem]", row.known ? "text-ink" : "text-ink-2 italic")}>{row.value}</dd>
+              </div>
             ))}
-          </ul>
+          </dl>
         </div>
       </article>
     </Reveal>

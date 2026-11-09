@@ -289,6 +289,63 @@ export const DemoProfileSchema = z.object({
   stories: z.array(z.string()),
 });
 
+/**
+ * Before/after story for a job. The default entry (no archetype) is complete; an entry for one
+ * type of business only needs new wording and inherits the rest. Hours are our estimate of
+ * time back per week, as a low-high range, never a vendor claim.
+ */
+export const OutcomeSchema = z.object({
+  block: z.string(),
+  archetype: ArchetypeIdSchema.optional(),
+  before: z.string().min(1),
+  after: z.string().min(1),
+  icon: z.string().optional(),
+  hours: z.tuple([z.number().nonnegative(), z.number().nonnegative()]).optional(),
+  assumption: z.string().optional(),
+});
+
+/**
+ * Money and efficiency for a job, for a typical small business. "revenue" is extra sales or
+ * money you would have lost; "saved" is something that costs you less. Dollars are per month
+ * and always carry the assumption behind them. The measure is a before/after pair we can chart.
+ */
+/**
+ * How much to trust a number. "sourced": backed by published research or official benchmarks.
+ * "vendor": the best figure we found comes from a company that sells this kind of tool.
+ * "guess": our own estimate, with the assumption stated.
+ */
+export const ConfidenceSchema = z.enum(["sourced", "vendor", "guess"]);
+export const SourceSchema = z.object({ label: z.string().min(1), url: z.string().url() });
+
+const MoneySchema = z.object({
+  kind: z.enum(["revenue", "saved"]),
+  low: z.number().nonnegative(),
+  high: z.number().nonnegative(),
+  assumption: z.string().min(1),
+  confidence: ConfidenceSchema.default("guess"),
+  source: SourceSchema.optional(),
+});
+
+export const ImpactSchema = z.object({
+  block: z.string(),
+  /** Which number leads this job's card: hours saved, money, or the before/after measure. */
+  headline: z.enum(["time", "money", "measure"]).default("time"),
+  /** Null when the value is avoiding problems and we will not put a dollar figure on it. */
+  money: MoneySchema.nullable(),
+  /** Different dollars for a type of business, when a typical sale is very different. */
+  by_archetype: z.partialRecord(ArchetypeIdSchema, z.object({ money: MoneySchema })).optional(),
+  measure: z.object({
+    label: z.string().min(1),
+    /** Text after the number: "%", " min", " days" or "". */
+    unit: z.string(),
+    before: z.number().nonnegative(),
+    after: z.number().nonnegative(),
+    better: z.enum(["higher", "lower"]),
+    confidence: ConfidenceSchema.default("guess"),
+    source: SourceSchema.optional(),
+  }),
+});
+
 export const NaicsMapSchema = z.record(
   ArchetypeIdSchema,
   z.array(z.object({ code: z.string(), title: z.string() })),

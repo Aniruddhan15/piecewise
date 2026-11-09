@@ -3,7 +3,7 @@
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useMemo } from "react";
+import { Fragment, Suspense, useMemo } from "react";
 import { Button, ButtonLink, EmptyState, ExternalButton, PageTitle } from "@/components/ui";
 import { chosenTools, useStore } from "@/modules/board/store";
 import { RequireProfile } from "@/modules/board/store-gate";
@@ -13,6 +13,7 @@ import { fitScore } from "@/modules/fit-score/score";
 import { formatUsd, toolCost } from "@/modules/plan/cost";
 import { catalog } from "@/modules/taxonomy/catalog";
 import type { Tool } from "@/modules/taxonomy/types";
+import { hiddenSpecLabels, specRows } from "@/modules/tool-start/summary";
 
 function CompareTable() {
   const params = useSearchParams();
@@ -40,6 +41,10 @@ function CompareTable() {
       </EmptyState>
     );
   }
+
+  // The same rows for every tool; rows nobody has anything for are left out.
+  const specs = rows.map((r) => specRows(r.tool, r.cost.tier));
+  const hiddenSpecs = hiddenSpecLabels(specs);
 
   const row = (label: string, render: (r: (typeof rows)[number]) => React.ReactNode) => (
     <tr className="border-t border-line align-top">
@@ -83,10 +88,18 @@ function CompareTable() {
                 <span className="block text-sm text-ink-2">{r.cost.lines.map((l) => l.label).join(" + ")}</span>
               </>
             ))}
-            {row("Free plan or trial", (r) =>
-              [r.tool.free_tier ? "Free plan" : null, r.tool.trial_days ? `${r.tool.trial_days}-day trial` : null].filter(Boolean).join(", ") || "None we could confirm",
-            )}
-            {row("Setup (our estimate)", (r) => `About ${r.tool.setup.hours_estimate} hours${r.tool.setup.no_code ? ", no coding" : ""}`)}
+            {/* The same four rows the option cards show, so every comparison lines up. */}
+            {specs[0]
+              .map((spec, i) => ({ label: spec.label, i }))
+              .filter(({ label }) => !hiddenSpecs.has(label))
+              .map(({ label, i }) => (
+                <Fragment key={label}>
+                  {row(label, (r) => {
+                    const spec = specRows(r.tool, r.cost.tier)[i];
+                    return spec.known ? spec.value : <em className="text-ink-2">{spec.value}</em>;
+                  })}
+                </Fragment>
+              ))}
             {row("Contract", (r) => r.tool.contract_term ?? "None we know of")}
             {row("Fit score", (r) => (r.fit ? `${r.fit.total} out of 100` : "Not scored"))}
             {row("Facts checked?", (r) => (r.tool.verified ? "Verified against sources" : "Not double-checked yet"))}

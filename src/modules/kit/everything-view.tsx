@@ -81,7 +81,7 @@ export function EverythingView() {
                     {r.done ? <Check className="size-4" /> : null}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-lg font-bold">{r.block.plain_name}</span>
+                    <span className="block text-lg font-bold">{r.block.name}</span>
                     <span className="block text-ink-2">{r.status}</span>
                   </span>
                   <ChevronRight aria-hidden className="size-5 shrink-0 text-ink-2" />

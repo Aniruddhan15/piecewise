@@ -5,6 +5,7 @@ import { ButtonLink, cn } from "@/components/ui";
 import { useStore } from "@/modules/board/store";
 import { ARCHETYPE_ICON } from "@/modules/finder/icons";
 import { catalog } from "@/modules/taxonomy/catalog";
+import { HoursBadge } from "@/modules/outcomes/week-summary";
 import { HexShape, shapeFromKit } from "./hex-kit";
 import type { KitState, Wedge } from "./kit";
 
@@ -56,7 +57,7 @@ function LegendRow({
           {open ? current ? index + 1 : <Lock className="size-3.5" /> : <Check className="size-4" />}
         </span>
         <span className="min-w-0">
-          <span className="block leading-tight font-semibold">{w.block.plain_name}</span>
+          <span className="block leading-tight font-semibold">{w.block.name}</span>
           <span className="block text-sm text-ink-2">{current && open ? "You're here" : statusText(w)}</span>
         </span>
       </button>
@@ -64,7 +65,7 @@ function LegendRow({
         <button
           type="button"
           onClick={() => toggleSkipped(w.block.id)}
-          aria-label={`Undo: ${w.block.plain_name}`}
+          aria-label={`Undo: ${w.block.name}`}
           className="mr-1 flex min-h-11 items-center gap-1 rounded-lg px-2 text-sm font-semibold text-ink-2 hover:bg-surface-2"
         >
           <Undo2 aria-hidden className="size-3.5" />
@@ -104,8 +105,8 @@ export function KitPanel({
   return (
     <section aria-labelledby="kit-title" className="space-y-4 rounded-3xl border border-line bg-surface p-5">
       <div className="flex items-baseline justify-between gap-2">
-        <h2 id="kit-title" className="text-xl font-extrabold">
-          Your kit
+        <h2 id="kit-title" className="text-xl leading-tight font-extrabold">
+          Components added to your kit
         </h2>
         <p className="text-sm font-semibold text-ink-2">
           {kit.covered} of {n} covered
@@ -126,6 +127,7 @@ export function KitPanel({
             ? "One more piece closes the shape."
             : `${n - kit.covered} pieces to go.`}
       </p>
+      <HoursBadge kit={kit} archetypes={state.profile.archetypes} />
       <ol className="space-y-1">
         {kit.wedges.map((w, i) => (
           <LegendRow key={w.block.id} w={w} index={i} current={w.block.id === focusId} onSelect={onSelect} />

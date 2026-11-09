@@ -12,6 +12,7 @@ import { STATE_INFO, StateBadge } from "@/modules/board/state-badge";
 import { encodeState, useStore } from "@/modules/board/store";
 import { ARCHETYPE_ICON } from "@/modules/finder/icons";
 import { HexShape, shapeFromKit } from "@/modules/kit/hex-kit";
+import { ReturnPanel } from "@/modules/outcomes/week-summary";
 import { SbaPanel } from "@/modules/sba/sba-panel";
 import { usePlanData } from "@/modules/setup/use-plan";
 import { catalog } from "@/modules/taxonomy/catalog";
@@ -122,6 +123,16 @@ export function PlanView() {
           className="mx-auto max-w-[22rem]"
         />
       </section>
+
+      <Reveal>
+        <ReturnPanel
+          kit={kit}
+          archetypes={profile.archetypes}
+          monthlyCost={plan.total}
+          hasUnknownPrice={plan.hasUnknownPrice}
+          setupHours={hours}
+        />
+      </Reveal>
 
       <div className="grid items-start gap-6 lg:grid-cols-2">
         <Reveal as="section" aria-labelledby="cost">

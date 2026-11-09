@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Check, Mic, Store } from "lucide-react";
+import { ArrowRight, Check, Store } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -16,7 +16,6 @@ import { catalog, demos } from "@/modules/taxonomy/catalog";
 import type { ArchetypeId } from "@/modules/taxonomy/types";
 import { ARCHETYPE_ICON } from "./icons";
 import { painsFor } from "./pains";
-import { useSpeech } from "./speech";
 
 const TILE_COLORS = ["#0f7a5c", "#2463b0", "#a8550f", "#a83d62", "#5a4bb8", "#1d7c8c", "#0f7a5c", "#2463b0", "#a8550f"];
 
@@ -59,7 +58,6 @@ export function Finder() {
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
   const stepTwo = useRef<HTMLElement>(null);
-  const speech = useSpeech((words) => setText((t) => (t ? `${t} ${words}` : words)));
 
   useEffect(() => {
     // Coming back to change answers: keep what they picked before.
@@ -135,8 +133,8 @@ export function Finder() {
             The AI tools worth it for <span className="text-brand">your</span> business.
           </h1>
           <p className="max-w-xl text-lg text-ink-2 sm:text-xl">
-            Two taps. We&apos;ll show the tools that work with what you already use, what they really
-            cost, and how to start.
+            We split any business into 6 components that can be optimized, so the same simple kit works
+            for every type of business.
           </p>
           <div className="space-y-3">
             <h2 className="text-lg font-bold">
@@ -217,10 +215,10 @@ export function Finder() {
             <label htmlFor="own-words" className="sr-only">
               Or describe it in your own words
             </label>
-            <div className="relative flex-1">
+            <div className="flex-1">
               <input
                 id="own-words"
-                className={cn(inputClass, speech.supported && "pr-14")}
+                className={inputClass}
                 placeholder="Or type it: “I spend Sundays doing payroll”"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
@@ -228,25 +226,8 @@ export function Finder() {
                   if (e.key === "Enter" && canGo) void showPicks();
                 }}
               />
-              {speech.supported ? (
-                <button
-                  type="button"
-                  onClick={speech.listening ? speech.stop : speech.start}
-                  aria-pressed={speech.listening}
-                  aria-label={speech.listening ? "Stop listening" : "Say it instead of typing"}
-                  className={cn(
-                    "absolute top-1/2 right-1.5 flex size-10 -translate-y-1/2 items-center justify-center rounded-lg",
-                    speech.listening ? "animate-pulse bg-honey text-ink" : "text-ink-2 hover:bg-surface-2",
-                  )}
-                >
-                  <Mic aria-hidden className="size-5" />
-                </button>
-              ) : null}
             </div>
           </div>
-          <p role="status" className="sr-only">
-            {speech.listening ? "Listening. Say what's eating your time." : ""}
-          </p>
           <Button size="lg" disabled={!canGo || busy} onClick={() => void showPicks()}>
             {busy ? "Finding your picks…" : "Show my picks"}
             <ArrowRight aria-hidden className="size-5" />

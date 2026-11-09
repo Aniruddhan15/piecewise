@@ -14,6 +14,9 @@ import { SbaHint } from "@/modules/sba/sba-panel";
 import { catalog } from "@/modules/taxonomy/catalog";
 import type { AccountingEdition } from "@/modules/taxonomy/types";
 import { OptionCard } from "@/modules/tool-start/option-card";
+import { hiddenSpecLabels, summarize } from "@/modules/tool-start/summary";
+import { OutcomeCard } from "@/modules/outcomes/outcome-card";
+import { outcomeFor } from "@/modules/outcomes/outcomes";
 import { formatUsd } from "@/modules/plan/cost";
 import { matchBlock, type Filters } from "./match";
 
@@ -51,6 +54,7 @@ export function BlockView({ blockId }: { blockId: string }) {
 
   const current = pieces[block.id];
   const options = [...results.fits, ...results.catches];
+  const hiddenSpecs = hiddenSpecLabels(options.map((m) => summarize(m, anchor?.name).specs));
   const notForYou = [...results.notAllowed, ...results.noFit];
 
   const nothingFits =
@@ -95,6 +99,10 @@ export function BlockView({ blockId }: { blockId: string }) {
             : block.description}
         </p>
       </header>
+
+      {outcomeFor(block.id, profile.archetypes) ? (
+        <OutcomeCard outcome={outcomeFor(block.id, profile.archetypes)!} jobName={block.plain_name} />
+      ) : null}
 
       {block.sba_resource ? <SbaHint id={block.sba_resource} /> : null}
 
@@ -204,6 +212,7 @@ export function BlockView({ blockId }: { blockId: string }) {
                 anchorName={anchor?.name}
                 best={i === 0 && options.length > 1}
                 inKit={current === m.tool.id}
+                hiddenSpecs={hiddenSpecs}
                 index={i}
                 onToggle={() => {
                   if (current === m.tool.id) {

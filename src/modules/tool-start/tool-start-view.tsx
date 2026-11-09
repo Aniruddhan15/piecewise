@@ -10,6 +10,8 @@ import { ReasonList } from "@/modules/board/seam-dialog";
 import { resolveAnchor } from "@/modules/compat-engine/engine";
 import { blocksForProfile, matchTool } from "@/modules/matcher/match";
 import { catalog } from "@/modules/taxonomy/catalog";
+import { OutcomeCard } from "@/modules/outcomes/outcome-card";
+import { outcomeFor } from "@/modules/outcomes/outcomes";
 import { accountSteps, summarize, vendorName } from "./summary";
 import { usePersonalizedSteps } from "./use-steps";
 
@@ -142,6 +144,17 @@ export function ToolStartView({ toolId, blockId }: { toolId: string; blockId?: s
           </div>
         </div>
       </Reveal>
+
+      {!blocked && outcomeFor(block.id, profile.archetypes) ? (
+        <Reveal>
+          <OutcomeCard
+            outcome={outcomeFor(block.id, profile.archetypes)!}
+            jobName={block.plain_name}
+            toolName={tool.name}
+            setupHours={tool.setup.hours_estimate}
+          />
+        </Reveal>
+      ) : null}
 
       {catchReason ? (
         <Reveal className="flex gap-3 rounded-2xl border-2 border-honey bg-honey-tint p-4">

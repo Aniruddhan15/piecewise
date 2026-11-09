@@ -15,9 +15,82 @@ export type ToolSummary = {
   /** "Works with Toast", or the catch. */
   fitLine: string;
   fitKind: "fits" | "catch" | "unknown";
-  /** Up to three short points. */
-  points: string[];
+  /** The same rows, in the same order, for every tool, so cards line up side by side. */
+  specs: SpecRow[];
 };
+
+/** One comparable fact. `known: false` means we have nothing to say, and the card shows it plainly. */
+export type SpecRow = { label: string; value: string; known: boolean };
+
+const AUDIENCE = /\b(contacts?|profiles?|subscribers?|customers?|clients?|callers?|users?|employees?|locations?|seats?|patients?|listings?|properties|staff)\b/i;
+const VOLUME = /\b(sends?|emails?|minutes?|calls?|messages?|texts?|sms|credits?|requests?|orders?|conversations?|invoices?|bookings?|reviews?|shipments?|labels?|transactions?|takeoffs?)\b/i;
+const HAS_AMOUNT = /\d|unlimited/i;
+// Price notes and plan notes are not allowances.
+const NOT_AN_ALLOWANCE = /^(plus|billed|a \$|ask|see|part of|added to|reported|availability|priced)\b|reported|sources conflict|add-on/i;
+
+const sentence = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+
+/** The first thing the plan includes that is an amount of the given kind, such as "250 contacts". */
+function allowance(includes: string[], kind: RegExp, skip?: RegExp): string | null {
+  for (const inc of includes) {
+    const text = trim(inc, 44);
+    if (!HAS_AMOUNT.test(text) || NOT_AN_ALLOWANCE.test(text)) continue;
+    if (skip?.test(text)) continue;
+    if (kind.test(text)) return sentence(text);
+  }
+  return null;
+}
+
+const NOT_LISTED = "Not listed";
+
+/**
+ * The same rows, in the same order, for every tool: how many people it covers, how much use it
+ * includes, the contract, what happens to your data, setup time, and whether you can try it
+ * free. A tool with nothing to say about a row still has the row ("Not listed"), so cards line
+ * up. Use `hiddenSpecLabels` to drop rows that no card in a comparison has anything for.
+ */
+export function specRows(tool: Tool, tierName?: string): SpecRow[] {
+  const includes = tool.tiers.find((t) => t.name === tierName)?.includes ?? tool.tiers[0]?.includes ?? [];
+  const people = allowance(includes, AUDIENCE, VOLUME);
+  const usage = allowance(includes, VOLUME);
+  const hours = tool.setup.hours_estimate;
+  const free = tool.free_tier ? "Free plan" : null;
+  const trial = tool.trial_days ? `${tool.trial_days}-day free trial` : null;
+  const trains = tool.privacy.trains_on_customer_data;
+  return [
+    { label: "People it covers", value: people ?? NOT_LISTED, known: people !== null },
+    { label: "Use included", value: usage ?? NOT_LISTED, known: usage !== null },
+    {
+      label: "Contract",
+      value: tool.contract_term ? sentence(trim(tool.contract_term, 44)) : "None we know of",
+      known: Boolean(tool.contract_term),
+    },
+    {
+      label: "Your data",
+      value: trains === null ? "Not confirmed" : trains ? "May train its AI on it" : "Not used to train its AI",
+      known: trains !== null,
+    },
+    {
+      label: "Setup time",
+      value: `About ${hours} ${hours === 1 ? "hour" : "hours"}${tool.setup.no_code ? ", no coding" : ""}`,
+      known: true,
+    },
+    { label: "Try it free", value: [free, trial].filter(Boolean).join(" and ") || "None we could confirm", known: true },
+  ];
+}
+
+/**
+ * Rows to leave out of a comparison: the ones where not a single tool has anything to show.
+ * Hiding them for every card at once keeps the cards symmetric without a column of blanks.
+ */
+export function hiddenSpecLabels(all: SpecRow[][]): Set<string> {
+  const hidden = new Set<string>();
+  if (all.length === 0) return hidden;
+  for (const [i, row] of all[0].entries()) {
+    if (all.every((rows) => !rows[i]?.known)) hidden.add(row.label);
+  }
+  return hidden;
+}
 
 function trim(text: string, max = 70): string {
   const clean = text.replace(/\s*\([^)]*\)\s*/g, " ").replace(/\s+/g, " ").trim();
@@ -49,21 +122,13 @@ export function summarize(match: Match, anchorName?: string): ToolSummary {
         ? `Works with ${anchorName}`
         : `Works with ${anchorName}, with a catch`;
 
-  const points: string[] = [];
-  // The first capability is already the one-liner, so the points start after it.
-  const lead = tool.ai_capabilities[0] ? 1 : 0;
-  for (const c of tool.ai_capabilities.slice(lead)) points.push(trim(c));
-  for (const inc of (tier?.includes ?? []).slice(lead ? 0 : 1)) points.push(trim(inc));
-  const setup = `About ${tool.setup.hours_estimate} ${tool.setup.hours_estimate === 1 ? "hour" : "hours"} to set up${tool.setup.no_code ? ", no coding" : ""}`;
-  const trial = tool.trial_days ? `${tool.trial_days}-day free trial` : tool.free_tier ? "Has a free plan" : null;
-
   return {
     oneLiner: trim(tool.ai_capabilities[0] ?? tier?.includes[0] ?? tool.name, 90),
     price,
     priceNote,
     fitLine,
     fitKind,
-    points: [...new Set([...points.slice(0, 2), setup, ...(trial ? [trial] : [])])].slice(0, 4),
+    specs: specRows(tool, cost.tier),
   };
 }
 

@@ -65,17 +65,28 @@ test("two taps get a new business to picks, with no LLM", async ({ page }) => {
   await page.getByRole("button", { name: /Retail/ }).click();
   await page.getByRole("button", { name: /Customers don't come back/ }).click();
   await page.getByRole("button", { name: "Show my picks" }).click();
-  await expect(page.getByRole("heading", { name: "Bring customers back", level: 1 })).toBeVisible();
-
-  // The payments question matters for retail, so it's asked, and answering it re-checks the picks.
+  // The payments question matters for retail, so it comes first, and nothing else moves on until it's answered.
   await expect(page.getByRole("heading", { name: "How do you take payments?" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Marketing & promotion", level: 1 })).toBeHidden();
+  await expect(page.getByRole("button", { name: /^Add to my kit/ })).toHaveCount(0);
+
+  // Answering it re-checks the picks and then shows the first job.
   await page.getByRole("button", { name: "Square POS" }).click();
   await expect(page.getByText("Updated your picks for Square POS.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "How do you take payments?" })).toBeHidden();
 
+  // The next question (books) also has to be answered before the first job shows.
+  await expect(page.getByRole("heading", { name: "What do you use for your books?" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Marketing & promotion", level: 1 })).toBeHidden();
+  await page.getByRole("button", { name: "Not sure" }).click();
+  await expect(page.getByRole("heading", { name: "Marketing & promotion", level: 1 })).toBeVisible();
+
   // Picking a tool fills the piece and moves on to the next job by itself.
   await page.getByRole("button", { name: /^Add to my kit/ }).first().click();
-  await expect(page.getByRole("status").filter({ hasText: /^Added .*Next:/ })).toBeVisible();
+  // Adding does not move the screen by itself: the guide says to click Next job, and that moves on.
+  await expect(page.getByRole("status").filter({ hasText: /^Added .*Next job/ })).toBeVisible();
+  await expect(page.getByText("Job 1 of")).toBeVisible();
+  await page.getByRole("button", { name: "Next job" }).click();
   await expect(page.getByText("Job 2 of")).toBeVisible();
   await page.getByRole("link", { name: "See my plan" }).first().click();
   await page.waitForURL("**/plan");
