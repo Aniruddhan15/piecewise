@@ -1,48 +1,141 @@
-# PieceWise
+# 🧩 PieceWise
 
-Helps non-technical small business owners find, compare and adopt AI tools. Each business
-function is a puzzle piece, and pieces show whether they really fit the systems the business
-already runs. Built for the UMD AI for Small Business Hack-a-thon, Fall 2026.
+### Find the AI tools that actually fit your business.
 
-## Run it
+**AI adoption shouldn't be a guessing game.**
+
+Small businesses are surrounded by AI tools promising to save time, reduce costs, and improve operations. But finding a tool is easy. Knowing whether it works with your existing systems, fits your budget, and solves a real problem is much harder.
+
+**PieceWise** is a vendor-neutral AI tool discovery and decision-support platform that helps small business owners find, compare, and evaluate AI solutions based on their actual business needs.
+
+Instead of recommending AI for the sake of AI, PieceWise focuses on **compatibility, transparency, and practical adoption**.
+
+🚀 **[Try PieceWise Live](https://piecewise-v1.vercel.app/)** | 💻 **[Explore the Source Code](https://github.com/Aniruddhan15/piecewise)**
+
+---
+
+## 💡 The Problem
+
+Small businesses often face three challenges when adopting AI:
+
+- **Discovery overload:** Hundreds of AI products, with little clarity on which ones solve their operational problems.
+- **Integration uncertainty:** A promising tool may not connect with the POS, accounting, booking, or management software they already use.
+- **Hidden costs and misleading recommendations:** Advertised prices don't always include the integrations a business needs.
+
+Most recommendation platforms answer: *"Which AI tools are popular?"*
+
+**PieceWise asks a better question: "Which AI tools actually make sense for your business?"**
+
+## ⚙️ How PieceWise Works
+
+**1. Understand the business**
+
+Choose a business type, such as a restaurant, coffee shop, salon, retail store, or service provider, and identify the systems already in use.
+
+**2. Break operations into pieces**
+
+PieceWise organizes business operations into six functional components, making it easier to identify opportunities for improvement.
+
+**3. Discover compatible tools**
+
+Explore AI solutions evaluated against the business's existing technology stack, with compatibility checks and supporting evidence.
+
+**4. Compare before committing**
+
+Examine integration requirements, relevant pricing, and a weighted fit score to understand the trade-offs between solutions.
+
+**5. Build an actionable plan**
+
+Put together a business-specific AI toolkit and explore adoption guidance, including free Small Business Administration advisory resources.
+
+## ✨ Key Features
+
+| Feature | What it delivers |
+|---|---|
+| 🧩 Modular Business Analysis | Breaks operations into manageable functional components |
+| 🔗 Compatibility Engine | Evaluates whether tools integrate with existing business systems |
+| 📊 Fit Scoring | Provides a weighted 0–100 score for comparing solutions |
+| 🤖 AI-Assisted Guidance | Uses structured LLM outputs to explain and classify recommendations |
+| 🔍 Evidence Verification | Connects supported claims to sources and distinguishes unverified information |
+| 💰 Pricing Transparency | Highlights relevant plan costs and integration requirements |
+| 🛡️ Vendor-Neutral Discovery | No paid placements influencing recommendations |
+| 🧰 Personalized AI Toolkit | Helps businesses assemble solutions around their operational needs |
+
+## 🏗️ Engineering Behind PieceWise
+
+PieceWise combines **deterministic decision logic with AI-assisted reasoning** rather than relying entirely on generative AI.
+
+**Compatibility Engine**
+
+A rules-based evaluation layer checks integration requirements and compatibility constraints. This keeps critical decisions grounded in defined conditions rather than potentially unreliable model-generated claims.
+
+**Weighted Fit Scoring**
+
+A configurable scoring engine evaluates candidate solutions on a 0–100 scale, supporting structured comparisons.
+
+**LLM Gateway**
+
+A server-side AI layer handles classification and natural-language explanations using structured outputs, caching, fallback behavior, and guardrails against unsupported claims.
+
+**Tool Discovery and Evidence Validation**
+
+A discovery workflow identifies potential tools, while source verification and human approval help maintain the reliability of the catalog.
+
+**Resilient Application Design**
+
+Core functionality remains available without an AI API key through deterministic fallback logic.
+
+## 🛠️ Tech Stack
+
+- **Frontend:** Next.js, React, TypeScript, Tailwind CSS
+- **AI Integration:** OpenAI-compatible SDK, OpenRouter
+- **Validation:** Zod
+- **Backend/Application Logic:** Next.js server-side modules
+- **Testing:** Vitest, Playwright, accessibility testing
+- **Infrastructure:** Vercel deployment, Firebase configuration
+- **Developer Tooling:** ESLint, Prettier, GitHub Actions
+
+## 🚀 Getting Started
+
+Clone the repository:
 
 ```bash
-npm i
+git clone https://github.com/Aniruddhan15/piecewise.git
+cd piecewise
+```
+
+Install dependencies and start the development server:
+
+```bash
+npm install
 npm run dev
 ```
 
-Open http://localhost:3000. The whole app works with no API key: AI steps fall back to plain rules.
+Visit `http://localhost:3000`.
 
-To turn on live AI, copy `.env.example` to `.env.local` and set `OPENROUTER_API_KEY`.
+The application supports a no-API-key mode. For live AI functionality, configure `OPENROUTER_API_KEY` in `.env.local`.
 
-## Commands
+### Testing and Validation
 
-| Command | What it does |
-|---|---|
-| `npm test` | Unit tests: rules, fit score, gateway |
-| `npx playwright test` | Browser tests: every demo to the plan page, accessibility, drag and drop |
-| `npm run validate` | Checks the catalog; also runs before every build |
-| `npm run discover -- --max 5` | Discovery agent: reads new listings into `data/candidates/` |
-| `npm run discover -- --dry-run` | Lists what it would read, with no AI calls |
-| `npm run pregen` | Pre-generates AI text for the demos into `data/cache/llm.json` |
-| `npm run check:evidence` | Re-checks every source link and reports any that look gone |
+```bash
+npm test
+npx playwright test
+npm run validate
+npm run check:evidence
+```
 
-## How it's built
+## 🎯 Our Philosophy
 
-- **`data/`**: the catalog as JSON, validated by Zod. Adding a business type only needs data changes.
-- **`src/modules/compat-engine/`**: the rules, as pure functions with no AI. Rule order follows the spec.
-- **`src/modules/fit-score/`**: the 0 to 100 score. Weights live in one object.
-- **`src/modules/llm/`**: the only code that talks to an AI model. Server side only, with structured
-  output, a fallback model, caching and limits. It can rephrase and classify, and guards reject output
-  that adds new numbers or quotes that aren't on the page.
-- **`scripts/discover.ts`**: finds new tools. Candidates stay `verified: false` until a person approves them.
+**The best AI solution isn't the most sophisticated one. It's the one that solves the right problem and fits the business using it.**
 
-## What "verified" means
+PieceWise was built around that principle: making AI adoption more accessible, explainable, and practical for the businesses that need it.
 
-`verified: true` means we fetched the source page during the build and it supported the claim. Anything
-else shows as "unverified" in the app. Setup hours are our estimates, and the app says so.
+## 🏆 Origin
 
-## Before adding a discovery source
+Developed for the **University of Maryland — AI for Small Business Hackathon, Fall 2026**.
 
-Read the site's terms as well as its robots.txt. The Shopify App Store allows crawling in robots.txt,
-but Shopify's terms bar automated access, so it isn't configured as a source.
+PieceWise explores how intelligent software systems can bridge the gap between rapidly evolving AI capabilities and the everyday operational challenges faced by small businesses.
+
+---
+
+**Built for small businesses. Designed for better decisions. Powered by practical AI.**
